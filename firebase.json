@@ -1,9 +1,0 @@
-{
-  "hosting": [
-    {
-      "target": "finance-tracker-app",
-      "source": ".",
-      "frameworksBackend": {}
-    }
-  ]
-}

@@ -1,0 +1,7 @@
+@import './assets/scss/reset.scss';
+
+[class*='-container'] {
+    max-width: 1396px;
+    padding: 0 15px;
+    margin: 0 auto;
+}

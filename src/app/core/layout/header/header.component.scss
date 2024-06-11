@@ -1,0 +1,16 @@
+.header {
+  background-color: #ffffff;
+  border-bottom: 1px solid #efefef;
+  z-index: 9999;
+  position: fixed;
+  width: 100%;
+
+  .header-container {
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 0;
+    }
+  }
+}
