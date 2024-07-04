@@ -1,1 +1,33 @@
-<p>home works!</p>
+<div class="home-container">
+
+  <section class="head">
+    <h1>Welcome to Finance Tracker</h1>
+    <p>This is your one-stop solution to track your finances effectively.</p>
+  </section>
+
+  <section class="menu">
+    <nav>
+      <ul class="list">
+        <li class="item">
+          <a routerLink="/accounts">Accounts</a>
+        </li>
+        <li class="item">
+          <a routerLink="/incomes">Incomes</a>
+        </li>
+        <li class="item">
+          <a routerLink="/expenses">Expenses</a>
+        </li>
+        <li class="item">
+          <a routerLink="/transfers">Transfers</a>
+        </li>
+        <li class="item">
+          <a routerLink="/goals">Goals</a>
+        </li>
+      </ul>
+    </nav>
+  </section>
+
+  <section class="content">
+    <router-outlet></router-outlet>
+  </section>
+</div>
