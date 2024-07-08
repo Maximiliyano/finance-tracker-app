@@ -1,33 +1,21 @@
-<div class="home-container">
-
-  <section class="head">
-    <h1>Welcome to Finance Tracker</h1>
-    <p>This is your one-stop solution to track your finances effectively.</p>
+<div class="body">
+  <section class="greetings-section">
+    <div class="grettings-container">
+      <a routerLink="/">
+        <div class="grettings">
+          <h1>Welcome to Finance Tracker</h1>
+          <p>This is your one-stop solution to track your finances effectively.</p>
+        </div>
+      </a>
+    </div>
   </section>
+  <br />
 
-  <section class="menu">
-    <nav>
-      <ul class="list">
-        <li class="item">
-          <a routerLink="/accounts">Accounts</a>
-        </li>
-        <li class="item">
-          <a routerLink="/incomes">Incomes</a>
-        </li>
-        <li class="item">
-          <a routerLink="/expenses">Expenses</a>
-        </li>
-        <li class="item">
-          <a routerLink="/transfers">Transfers</a>
-        </li>
-        <li class="item">
-          <a routerLink="/goals">Goals</a>
-        </li>
-      </ul>
-    </nav>
-  </section>
+  <section class="content-section">
+    <div class="content-container">
+      <app-menu-selector></app-menu-selector>
 
-  <section class="content">
-    <router-outlet></router-outlet>
+      <router-outlet></router-outlet>
+    </div>
   </section>
 </div>

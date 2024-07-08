@@ -7,19 +7,19 @@ import { ExpensesComponent } from './components/expenses/expenses.component';
 import { GoalsComponent } from './components/goals/goals.component';
 import { IncomesComponent } from './components/incomes/incomes.component';
 import { TransfersComponent } from './components/transfers/transfers.component';
-import { MenuContentComponent } from './components/menu-content/menu-content.component';
 import { ExpensesDialogComponent } from './components/expenses/expenses-dialog/expenses-dialog.component';
+import { MenuSelectorComponent } from './components/menu-selector/menu-selector.component';
 
 @NgModule({
   declarations: [
     HomeComponent,
-    MenuContentComponent,
     AccountsComponent,
     ExpensesComponent,
     GoalsComponent,
     IncomesComponent,
     TransfersComponent,
-    ExpensesDialogComponent
+    ExpensesDialogComponent,
+    MenuSelectorComponent
   ],
   imports: [HomeRoutingModule, SharedModule]
 })

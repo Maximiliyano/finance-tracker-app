@@ -6,17 +6,12 @@ import { IncomesComponent } from './components/incomes/incomes.component';
 import { ExpensesComponent } from './components/expenses/expenses.component';
 import { TransfersComponent } from './components/transfers/transfers.component';
 import { GoalsComponent } from './components/goals/goals.component';
-import { MenuContentComponent } from './components/menu-content/menu-content.component';
 
 const routes: Routes = [
   {
     path: '',
     component: HomeComponent,
     children: [
-      {
-        path: '',
-        component: MenuContentComponent
-      },
       {
         path: 'accounts',
         component: AccountsComponent
