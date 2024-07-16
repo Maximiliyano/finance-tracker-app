@@ -1,14 +1,18 @@
 .home-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
   section {
-    padding-top: 5px;
+    padding-top: 10px;
   }
 
   .head {
-
+    text-align: center;
   }
 
   .content {
     display: flex;
-    position: absolute;
   }
 }
