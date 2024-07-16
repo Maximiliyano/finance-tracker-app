@@ -1,30 +1,11 @@
 <div class="menu-content-container">
-  <div class="menu-content-block">
-    <a class="menu-block" routerLink="/">
+  <a class="menu-content-block" routerLink="/">
+    <div class="menu-block">
       Back to menu
-    </a>
-  </div>
-
-  <div class="menu-content-table">
-    <table>
-      <th>
-        Header 1
-        <tr>
-          Row
-        </tr>
-      </th>
-      <th>
-        Header 2
-        <tr>
-          Row
-        </tr>
-      </th>
-    </table>
-
-    <div class="actions">
-      <button>Add</button>
     </div>
-  </div>
+  </a>
 
-  <router-outlet></router-outlet>
+  <div class="menu-content">
+    <router-outlet></router-outlet>
+  </div>
 </div>

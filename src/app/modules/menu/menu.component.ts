@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-menu',
@@ -6,9 +7,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./menu.component.scss']
 })
 export class MenuComponent implements OnInit {
+  constructor(private readonly spinner: NgxSpinnerService) {}
 
-  constructor() { }
+  ngOnInit(): void {
+    this.spinner.show();
 
-  ngOnInit() {
+    setTimeout(() => {
+      this.spinner.hide();
+    }, 2000);
   }
 }
