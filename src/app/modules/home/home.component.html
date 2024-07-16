@@ -1,21 +1,15 @@
-<div class="body">
-  <section class="greetings-section">
-    <div class="grettings-container">
-      <a routerLink="/">
-        <div class="grettings">
-          <h1>Welcome to Finance Tracker</h1>
-          <p>This is your one-stop solution to track your finances effectively.</p>
-        </div>
-      </a>
-    </div>
+<div class="home-container">
+
+  <section class="head">
+    <h1>Welcome to Finance Tracker</h1>
+    <p>This is your one-stop solution to track your finances effectively.</p>
   </section>
-  <br />
 
-  <section class="content-section">
-    <div class="content-container">
-      <app-menu-selector></app-menu-selector>
+  <section class="menu">
+    <app-menu-list></app-menu-list>
+  </section>
 
-      <router-outlet></router-outlet>
-    </div>
+  <section class="content">
+    <router-outlet></router-outlet>
   </section>
 </div>

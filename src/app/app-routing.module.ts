@@ -8,14 +8,19 @@ const routes: Routes = [
       import('./modules/home/home.module').then((x) => x.HomeModule)
   },
   {
-    path: '**',
-    redirectTo: '404'
+    path: 'menu',
+    loadChildren: () =>
+      import('./modules/menu/menu.module').then((x) => x.MenuModule)
   },
+  // {
+  //   path: '**',
+  //   redirectTo: '/404'
+  // },
   {
     path: '404',
     pathMatch: 'full',
     loadComponent: () =>
-      import('./shared/components/not-found/not-found.component').then((x) => x.NotFoundComponent)
+      import('./core/layout/not-found/not-found.component').then((x) => x.NotFoundComponent)
   }
 ];
 

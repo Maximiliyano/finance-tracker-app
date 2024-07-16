@@ -1,12 +1,12 @@
+import { errorInterceptor } from './core/interceptors/error.interceptor';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HeaderComponent } from './core/layout/header/header.component';
 import { FooterComponent } from './core/layout/footer/footer.component';
 import { BrowserModule } from '@angular/platform-browser';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { AngularMaterialModule } from './shared/angular-material.module';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { errorInterceptor } from './core/interceptors/error.interceptor';
 
 @NgModule({
   declarations: [
@@ -16,13 +16,13 @@ import { errorInterceptor } from './core/interceptors/error.interceptor';
   ],
   imports: [
     AppRoutingModule,
-    BrowserModule
+    BrowserModule,
+    AngularMaterialModule
   ],
   bootstrap: [AppComponent],
   providers: [
-    provideAnimationsAsync(),
     provideHttpClient(
-      withInterceptors([errorInterceptor])
+      withInterceptors([ errorInterceptor ])
     )
   ]
 })
