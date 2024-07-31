@@ -1,0 +1,12 @@
+.table {
+  border: 1px #ccc solid;
+  margin-bottom: 10px;
+
+  .col {
+    border: 1px red solid;
+
+    .row {
+      border: 1px yellow solid;
+    }
+  }
+}
