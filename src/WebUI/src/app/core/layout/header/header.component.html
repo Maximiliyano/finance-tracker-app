@@ -1,0 +1,51 @@
+<header class="header">
+  <div class="header-container">
+    <div class="header-inner">
+      <a class="logo" routerLink="/">Finance Tracker</a>
+      <div class="exchange" *ngFor="let exchange of exchanges">
+        <div class="prices">
+          <span>{{ exchange?.buy }}</span>
+          <span>{{ exchange?.sale }}</span>
+        </div>
+        <div class="currencies">
+          <span>{{ exchange?.ccy }}</span>
+          <span>{{ exchange?.base_ccy }}</span>
+        </div>
+      </div>
+
+      <div class="exchange-button">
+        <mat-icon>attach_money</mat-icon>
+      </div>
+
+      <nav class="navigation">
+        <ul class="list">
+          <li class="item" routerLink="/menu/accounts">Accounts
+            <mat-icon>account_balance_wallet</mat-icon>
+          </li>
+          <li class="item" routerLink="/menu/incomes">Incomes
+            <mat-icon>monetization_on</mat-icon>
+          </li>
+          <li class="item" routerLink="/menu/expenses">Expenses
+            <mat-icon>money_off</mat-icon>
+          </li>
+          <li class="item" routerLink="/menu/transfers">Transfers
+            <mat-icon>import_export</mat-icon>
+          </li>
+          <li class="item" routerLink="/menu/goals">Goals
+            <mat-icon>star</mat-icon>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="burger-menu">
+        <mat-icon>menu</mat-icon>
+      </div>
+
+      <div class="profile">
+        <button class="button-account">
+          <mat-icon>account_circle</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>

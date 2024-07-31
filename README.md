@@ -1,27 +1,9 @@
+<hr />
+
 # FinanceTrackerApp
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.8.
+<h2>Creating migrations</h2>
 
-## Development server
+1. To create a migration, open project folder. In the terminal cmd, type command '<code>pushd finance-tracker-app</code>'.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+2. The next step is to delete the old migrations (if it has the same name of yours), if any, and that is the folder '<b>Migrations</b>' and enter: '<code>dotnet ef migrations add Initial --startup-project src/FinanceTracker/FinanceTracker.Api --project src/FinanceTracker/FinanceTracker.Infrastructure --output-dir Persistence/Migrations</code>', instead of '<b>Initial</b>' specify the desired name. After that, a new folder '<b>Migrations</b>' will appear with the current date and a snapshot of the database.

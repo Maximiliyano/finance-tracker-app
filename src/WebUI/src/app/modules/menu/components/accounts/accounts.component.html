@@ -1,0 +1,49 @@
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Balance</th>
+            <th>Total Incomes</th>
+            <th>Total Expenses</th>
+            <th>Transfer In</th>
+            <th>Transfer Out</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let account of accounts">
+            <td>
+                <input *ngIf="account.editable" [(ngModel)]="account.name">
+                <span *ngIf="!account.editable">{{ account.name }}</span>
+            </td>
+            <td>
+                <input *ngIf="account.editable" type="number" [(ngModel)]="account.balance">
+                <span *ngIf="!account.editable">{{ account.balance }}</span>
+            </td>
+            <td>
+                <input *ngIf="account.editable" type="number" [(ngModel)]="account.totalIncome">
+                <span *ngIf="!account.editable">{{ account.totalIncome }}</span>
+            </td>
+            <td>
+                <input *ngIf="account.editable" type="number" [(ngModel)]="account.totalExpense">
+                <span *ngIf="!account.editable">{{ account.totalExpense }}</span>
+            </td>
+            <td>
+                <input *ngIf="account.editable" type="number" [(ngModel)]="account.transferIn">
+                <span *ngIf="!account.editable">{{ account.transferIn }}</span>
+            </td>
+            <td>
+                <input *ngIf="account.editable" type="number" [(ngModel)]="account.transferOut">
+                <span *ngIf="!account.editable">{{ account.transferOut }}</span>
+            </td>
+            <td>
+                <a *ngIf="account.editable" (click)="saveAccount(account)">Save</a>
+                <div *ngIf="!account.editable">
+                    <a (click)="addAccount()">Add</a>
+                    <a (click)="editAccount(account)">Edit</a>
+                    <a (click)="removeAccount(account.id)">Remove</a>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>

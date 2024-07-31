@@ -1,0 +1,15 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    overflow: clip;
+    min-height: 100%;
+
+    &>main {
+        flex-grow: 1;
+    }
+
+    .page {
+        background-color: #f9f9f9;
+        margin-top: 60px;
+    }
+}

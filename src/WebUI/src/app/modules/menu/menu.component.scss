@@ -1,0 +1,28 @@
+.menu-content-container {
+  border: 3px #ccccccbb solid;
+  border-radius: 5px;
+
+  .menu-content-block {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px #ccc solid;
+    margin: 5px;
+    padding: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+    border-radius: 5px;
+
+    &:hover {
+      background-color: #efefef;
+    }
+
+    .menu-block {
+      display: flex;
+    }
+  }
+
+  .menu-content {
+    padding: 10px;
+  }
+}
