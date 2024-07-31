@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Exchange } from '../../models/exchange-model';
+import { environment } from '../../../../environments/environment.development';
 
 @Component({
   selector: 'app-header',
@@ -14,7 +15,7 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.httpClient
-      .get<Exchange[]>('https://localhost:8001/api/exchanges')
+      .get<Exchange[]>(environment.apiUrl + '/api/exchanges')
       .subscribe((exchanges) => {
         this.exchanges = exchanges;
       }, (error) => console.error(error));
