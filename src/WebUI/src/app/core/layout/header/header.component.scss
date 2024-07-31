@@ -1,6 +1,9 @@
+@import '../../../../assets/scss/variables.scss';
+@import '../../../../assets/scss/mixins.scss';
+
 .header {
-  background-color: #ffffff;
-  border-bottom: 2px solid #efefef;
+  background-color: $header-background;
+  border-bottom: 2px solid $header-border-color;
   z-index: 9999;
   position: fixed;
   width: 100%;
@@ -12,19 +15,31 @@
       justify-content: space-between;
       padding: 10px 0;
 
+      @include respond-to('md') {
+        padding: 15px 0;
+      }
+
       .logo {
         font-size: 17px;
         font-weight: 500;
-        color: black;
-        text-shadow: 1px 1px 2px #ccc;
+        color: $text-color;
+        text-shadow: $text-shadow;
+
+        @include respond-to('md') {
+          font-size: 20px;
+        }
       }
 
       .exchange {
-        display: inline-flex;
+        display: none;
         gap: 5px;
-        border: 1px #7a7979 solid;
+        border: 1px solid $exchange-border-color;
         border-radius: 5px;
         padding: 5px;
+
+        @include respond-to('sm') {
+          display: inline-flex;
+        }
 
         .prices {
           display: flex;
@@ -35,7 +50,15 @@
         .currencies {
           display: flex;
           flex-direction: column;
-          color: #7a7979;
+          color: $exchange-border-color;
+        }
+      }
+
+      .exchange-button {
+        display: flex;
+
+        @include respond-to('sm') {
+          display: none;
         }
       }
 
@@ -52,37 +75,68 @@
             font-weight: 500;
             font-size: 15px;
             padding: 10px;
-            border-bottom: 2px solid #efefef;
+            border-bottom: 2px solid $header-border-color;
             border-radius: 5px;
-            transition:
-              background-color 0.3s ease-in-out;
+            transition: background-color 0.3s ease-in-out;
 
             &:hover {
-
-              background-color: #efefef;
+              background-color: $navigation-item-hover-color;
               cursor: pointer;
+            }
+
+            @include respond-to('md') {
+              padding: 12px;
             }
           }
         }
       }
-    }
 
-    .profile {
-      display: flex;
-      gap: 10px;
-      color: white;
+      .burger-menu {
+        display: flex;
 
-      .button-account {
-        transition: color 0.3s ease-in;
-
-        &.active {
-          color: #f4ca93;
-        }
-
-        &:hover {
-          color: #7a7979;
+        @include respond-to('lg') {
+          display: none;
         }
       }
+
+      .profile {
+        display: flex;
+        gap: 10px;
+        color: black;
+
+        .button-account {
+          transition: color 0.3s ease-in;
+
+          &.active {
+            color: $button-active-color;
+          }
+
+          &:hover {
+            color: $exchange-border-color;
+          }
+        }
+      }
+    }
+  }
+
+
+  @media (max-width: 992px) {
+    .navigation {
+      display: none;
+    }
+
+    .burger-menu {
+      display: block;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .exchange {
+      display: none;
+    }
+
+    .exchange-button {
+      display: flex;
     }
   }
 }
