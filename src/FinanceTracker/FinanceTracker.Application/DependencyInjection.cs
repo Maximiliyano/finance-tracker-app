@@ -1,4 +1,3 @@
-using FinanceTracker.Api;
 using FinanceTracker.Application.Exchange;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

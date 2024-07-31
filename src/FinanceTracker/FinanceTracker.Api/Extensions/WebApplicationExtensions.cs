@@ -1,3 +1,4 @@
+using FinanceTracker.Application;
 using Microsoft.Extensions.Options;
 
 namespace FinanceTracker.Api.Extensions;
@@ -19,7 +20,9 @@ internal static class WebApplicationExtensions
             .AllowCredentials()
             .AllowAnyMethod()
             .AllowAnyHeader()
-            .WithOrigins(webUiSettings.BaseAddress));
+            .WithOrigins(
+              webUiSettings.BaseAddress,
+              webUiSettings.LocalAddress));
 
         return builder;
     }
