@@ -1,0 +1,88 @@
+.header {
+  background-color: #ffffff;
+  border-bottom: 2px solid #efefef;
+  z-index: 9999;
+  position: fixed;
+  width: 100%;
+
+  .header-container {
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 0;
+
+      .logo {
+        font-size: 17px;
+        font-weight: 500;
+        color: black;
+        text-shadow: 1px 1px 2px #ccc;
+      }
+
+      .exchange {
+        display: inline-flex;
+        gap: 5px;
+        border: 1px #7a7979 solid;
+        border-radius: 5px;
+        padding: 5px;
+
+        .prices {
+          display: flex;
+          flex-direction: column;
+          font-weight: 500;
+        }
+
+        .currencies {
+          display: flex;
+          flex-direction: column;
+          color: #7a7979;
+        }
+      }
+
+      .navigation {
+        .list {
+          display: flex;
+          flex-direction: row;
+          border-radius: 10px;
+          backdrop-filter: blur(5px);
+          gap: 15px;
+
+          .item {
+            color: rgb(34, 34, 34);
+            font-weight: 500;
+            font-size: 15px;
+            padding: 10px;
+            border-bottom: 2px solid #efefef;
+            border-radius: 5px;
+            transition:
+              background-color 0.3s ease-in-out;
+
+            &:hover {
+
+              background-color: #efefef;
+              cursor: pointer;
+            }
+          }
+        }
+      }
+    }
+
+    .profile {
+      display: flex;
+      gap: 10px;
+      color: white;
+
+      .button-account {
+        transition: color 0.3s ease-in;
+
+        &.active {
+          color: #f4ca93;
+        }
+
+        &:hover {
+          color: #7a7979;
+        }
+      }
+    }
+  }
+}
