@@ -4,10 +4,10 @@ import { Account } from '../../models/account';
 
 @Component({
   selector: 'app-accounts',
-  templateUrl: './accounts.component.html',
-  styleUrl: './accounts.component.scss'
+  templateUrl: './capitals.component.html',
+  styleUrl: './capitals.component.scss'
 })
-export class AccountsComponent implements OnInit {
+export class CapitalsComponent implements OnInit {
   accounts: Account[];
 
   constructor(private readonly accountService: AccountService) { }

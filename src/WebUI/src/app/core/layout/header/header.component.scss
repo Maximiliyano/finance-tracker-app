@@ -4,8 +4,6 @@
 .header {
   background-color: $header-background;
   border-bottom: 2px solid $header-border-color;
-  z-index: 9999;
-  position: fixed;
   width: 100%;
 
   .header-container {
@@ -13,52 +11,67 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 10px 0;
 
-      @include respond-to('md') {
+      @include respond-to('xs') {
         padding: 15px 0;
       }
 
-      .logo {
-        font-size: 17px;
-        font-weight: 500;
-        color: $text-color;
-        text-shadow: $text-shadow;
-
-        @include respond-to('md') {
-          font-size: 20px;
-        }
-      }
-
-      .exchange {
-        display: none;
-        gap: 5px;
-        border: 1px solid $exchange-border-color;
-        border-radius: 5px;
-        padding: 5px;
-
-        @include respond-to('sm') {
-          display: inline-flex;
-        }
-
-        .prices {
-          display: flex;
-          flex-direction: column;
-          font-weight: 500;
-        }
-
-        .currencies {
-          display: flex;
-          flex-direction: column;
-          color: $exchange-border-color;
-        }
-      }
-
-      .exchange-button {
+      .head {
         display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
 
-        @include respond-to('sm') {
+        .logo {
           display: none;
+          font-size: 15px;
+          font-weight: 500;
+          color: $text-color;
+          text-shadow: $text-shadow;
+
+          @include respond-to('sm') {
+            display: flex;
+            font-size: 20px;
+          }
+        }
+
+        .burger-menu {
+          display: flex;
+
+          @include respond-to('xl') {
+            display: none;
+          }
+        }
+      }
+
+
+      .exchanges {
+        display: flex;
+        justify-content: center;
+        gap: 5px;
+
+        .exchange {
+          display: none;
+          gap: 5px;
+          border: 1px solid $exchange-border-color;
+          border-radius: 5px;
+          padding: 5px;
+
+          @include respond-to('sm') {
+            display: inline-flex;
+          }
+
+          .prices {
+            display: flex;
+            flex-direction: column;
+            font-weight: 500;
+          }
+
+          .currencies {
+            display: flex;
+            flex-direction: column;
+            color: $exchange-border-color;
+          }
         }
       }
 
@@ -67,16 +80,18 @@
           display: flex;
           flex-direction: row;
           border-radius: 10px;
-          backdrop-filter: blur(5px);
           gap: 15px;
 
           .item {
+            display: flex;
+            align-items: center;
             color: rgb(34, 34, 34);
             font-weight: 500;
             font-size: 15px;
             padding: 10px;
-            border-bottom: 2px solid $header-border-color;
+            gap: 5px;
             border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             transition: background-color 0.3s ease-in-out;
 
             &:hover {
@@ -91,28 +106,37 @@
         }
       }
 
-      .burger-menu {
-        display: flex;
-
-        @include respond-to('lg') {
-          display: none;
-        }
-      }
-
       .profile {
         display: flex;
-        gap: 10px;
+        justify-content: center;
+        gap: 5px;
         color: black;
 
-        .button-account {
-          transition: color 0.3s ease-in;
+        .exchange-button,
+        .account-button {
+          display: flex;
+          align-items: center;
+          gap: 5px;
+          padding: 10px;
+          border-radius: 5px;
+          font-weight: 500;
+          font-size: 15px;
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+          color: rgb(49, 40, 40);
+          transition: background-color 0.3s ease-in-out;
 
           &.active {
             color: $button-active-color;
           }
 
           &:hover {
-            color: $exchange-border-color;
+            background-color: $navigation-item-hover-color;
+          }
+        }
+
+        .exchange-button {
+          @include respond-to('sm') {
+            display: none;
           }
         }
       }
@@ -120,7 +144,7 @@
   }
 
 
-  @media (max-width: 992px) {
+  @media (max-width: 1200px) {
     .navigation {
       display: none;
     }
@@ -137,6 +161,12 @@
 
     .exchange-button {
       display: flex;
+    }
+  }
+
+  @media (max-width: 320px) {
+    .logo {
+      display: none;
     }
   }
 }

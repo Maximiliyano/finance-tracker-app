@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AccountsComponent } from './components/accounts/accounts.component';
+import { CapitalsComponent } from './components/capitals/capitals.component';
 import { IncomesComponent } from './components/incomes/incomes.component';
 import { ExpensesComponent } from './components/expenses/expenses.component';
 import { TransfersComponent } from './components/transfers/transfers.component';
@@ -13,8 +13,8 @@ const routes: Routes = [
     component: MenuComponent,
     children: [
       {
-        path: 'accounts',
-        component: AccountsComponent
+        path: 'capitals',
+        component: CapitalsComponent
       },
       {
         path: 'incomes',
