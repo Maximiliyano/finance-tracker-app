@@ -1,23 +1,32 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Exchange } from '../../models/exchange-model';
-import { environment } from '../../../../environments/environment.development';
+import { ExchangeService } from '../../../shared/services/exchange.service';
+import { Subject, Subscription, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
   exchanges: Exchange[] | null;
+  authorizated: boolean;
 
-  constructor(private readonly httpClient: HttpClient) { }
+  private unsubscribe = new Subject<void>();
+
+  constructor(private readonly exchangeService: ExchangeService) { }
 
   ngOnInit(): void {
-    this.httpClient
-      .get<Exchange[]>(environment.apiUrl + '/api/exchanges')
-      .subscribe((exchanges) => {
-        this.exchanges = exchanges;
-      }, (error) => console.error(error));
+    this.exchangeService
+      .getAll()
+      .pipe(takeUntil(this.unsubscribe))
+      .subscribe(
+        (exchanges) => {
+          this.exchanges = exchanges;
+        });
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe.complete();
   }
 }

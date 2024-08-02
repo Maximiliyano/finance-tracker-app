@@ -32,7 +32,7 @@ app.UseExceptionHandler();
 
 app.UseHttpsRedirection();
 
-app.MapAccountEndpoints();
+app.MapCapitalEndpoints();
 
 app.MapExchangeEndpoints();
 

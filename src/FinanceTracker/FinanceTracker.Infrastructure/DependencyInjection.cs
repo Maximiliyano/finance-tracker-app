@@ -20,7 +20,7 @@ public static class DependencyInjection
 
     private static IServiceCollection AddRepositories(this IServiceCollection services)
     {
-        services.AddTransient<IAccountRepository, AccountRepository>();
+        services.AddTransient<ICapitalRepository, CapitalRepository>();
 
         return services;
     }

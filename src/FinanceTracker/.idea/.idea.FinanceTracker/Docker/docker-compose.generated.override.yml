@@ -16,6 +16,7 @@ services:
     image: "financetracker.api:dev"
     ports: []
     volumes:
+    - "C:\\Users\\mvasylyshyn\\AppData\\Roaming\\Microsoft\\UserSecrets:/home/app/.microsoft/usersecrets"
     - "C:\\Users\\mvasylyshyn\\.nuget\\packages:/home/app/.nuget/packages"
     - "C:\\Projects\\finance-tracker-app\\src\\FinanceTracker\\FinanceTracker.Api:/app:rw"
     - "C:\\Projects\\finance-tracker-app\\src\\FinanceTracker:/src:rw"

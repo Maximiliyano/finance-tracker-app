@@ -8,7 +8,6 @@ import { FooterComponent } from './core/layout/footer/footer.component';
 import { AngularMaterialModule } from './shared/angular-material.module';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { errorInterceptor } from './core/interceptors/error.interceptor';
-import { httpInterceptor } from './core/interceptors/http.interceptor';
 
 @NgModule({
   declarations: [

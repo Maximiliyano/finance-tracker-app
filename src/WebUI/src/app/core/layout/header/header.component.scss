@@ -57,7 +57,7 @@
           border-radius: 5px;
           padding: 5px;
 
-          @include respond-to('sm') {
+          @include respond-to('md') {
             display: inline-flex;
           }
 
@@ -111,6 +111,17 @@
         justify-content: center;
         gap: 5px;
         color: black;
+        font-weight: 500;
+        font-size: 15px;
+
+        .balance {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border-radius: 5px;
+          background-color: #e7e6e6;
+          padding: 5px;
+        }
 
         .exchange-button,
         .account-button {
@@ -119,8 +130,6 @@
           gap: 5px;
           padding: 10px;
           border-radius: 5px;
-          font-weight: 500;
-          font-size: 15px;
           box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
           color: rgb(49, 40, 40);
           transition: background-color 0.3s ease-in-out;
@@ -135,7 +144,7 @@
         }
 
         .exchange-button {
-          @include respond-to('sm') {
+          @include respond-to('md') {
             display: none;
           }
         }
@@ -154,7 +163,7 @@
     }
   }
 
-  @media (max-width: 576px) {
+  @media (max-width: 768px) {
     .exchange {
       display: none;
     }
