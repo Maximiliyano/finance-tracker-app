@@ -1,0 +1,23 @@
+.capitals-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+
+    .capitals {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+
+        .capital {
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+            transition: background-color 0.3s ease-in;
+
+            &:hover {
+                background-color: bisque;
+            }
+        }
+    }
+}

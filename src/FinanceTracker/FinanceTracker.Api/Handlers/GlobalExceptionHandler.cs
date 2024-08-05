@@ -8,12 +8,12 @@ namespace FinanceTracker.Api.Handlers;
 internal sealed class GlobalExceptionHandler
     : IExceptionHandler
 {
-    public async ValueTask<bool> TryHandleAsync(
+    public ValueTask<bool> TryHandleAsync(
         HttpContext httpContext,
         Exception exception,
         CancellationToken cancellationToken)
     {
-        const string exceptionOccured = "Exception occured";
+        /*const string exceptionOccured = "Exception occured";
 
         LoggerMessage.Define(
             LogLevel.Error,
@@ -30,7 +30,8 @@ internal sealed class GlobalExceptionHandler
 
         await httpContext.Response.WriteAsJsonAsync(problemDetails, cancellationToken);
 
-        return true;
+        return true;*/
+        throw new NotImplementedException();
     }
 
     private static ProblemDetails BuildProblemDetails(int statusCode, string title, Error error)

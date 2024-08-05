@@ -32,6 +32,8 @@ app.UseExceptionHandler();
 
 app.UseHttpsRedirection();
 
+app.MapHealthChecks("/health");
+
 app.MapCapitalEndpoints();
 
 app.MapExchangeEndpoints();

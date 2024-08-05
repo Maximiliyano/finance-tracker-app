@@ -1,4 +1,4 @@
-namespace FinanceTracker.Application;
+namespace FinanceTracker.Application.Abstractions;
 
 public sealed class WebUISettings
 {

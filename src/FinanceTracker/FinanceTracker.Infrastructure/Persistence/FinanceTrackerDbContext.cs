@@ -1,34 +1,21 @@
-using System.Data;
 using FinanceTracker.Domain.Entities;
-using FinanceTracker.Infrastructure.Persistence.Abstractions;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage;
 
 namespace FinanceTracker.Infrastructure.Persistence;
 
-public sealed class FinanceTrackerDbContext(DbContextOptions options) :
-    DbContext(options),
-    IDbContext,
-    IUnitOfWork
+public sealed class FinanceTrackerDbContext(DbContextOptions options) : DbContext(options)
 {
-    public async Task<IDbTransaction> BeginTransactionAsync()
-    {
-        var transaction = await Database.BeginTransactionAsync();
+    public DbSet<Capital> Capitals { get; init; } = null!;
 
-        return transaction.GetDbTransaction();
-    }
+    public DbSet<Transfer> Transfers { get; init; } = null!;
+
+    public DbSet<Income> Incomes { get; init; } = null!;
+
+    public DbSet<Expense> Expenses { get; init; } = null!;
 
     public new DbSet<TEntity> Set<TEntity>()
         where TEntity : Entity =>
             base.Set<TEntity>();
-
-    public new void Add<TEntity>(TEntity entity)
-        where TEntity : Entity =>
-            Set<TEntity>().Add(entity);
-
-    public new void Remove<TEntity>(TEntity entity)
-        where TEntity : Entity =>
-            Set<TEntity>().Remove(entity);
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

@@ -7,6 +7,8 @@ internal static class DependencyInjection
 {
     internal static IServiceCollection AddApi(this IServiceCollection services)
     {
+        services.AddHealthChecks();
+
         services.AddCors();
 
         services.AddProblemDetails();

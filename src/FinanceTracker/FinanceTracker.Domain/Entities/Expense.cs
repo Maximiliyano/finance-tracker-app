@@ -1,10 +1,18 @@
 namespace FinanceTracker.Domain.Entities;
 
-public sealed class Expense : AuditableEntity, ISoftDeletableEntity
+public sealed class Expense : Entity, IAuditableEntity, ISoftDeletableEntity
 {
-    public required DateTimeOffset DeletedAt { get; init; }
+    public DateTimeOffset CreatedAt { get; init; }
 
-    public required bool IsDeleted { get; init; }
+    public int CreatedBy { get; init; }
+
+    public DateTimeOffset? UpdatedAt { get; init; }
+
+    public int? UpdatedBy { get; init; }
+
+    public DateTimeOffset DeletedAt { get; init; }
+
+    public bool IsDeleted { get; init; }
 
     public int? AccountId { get; init; }
 }
