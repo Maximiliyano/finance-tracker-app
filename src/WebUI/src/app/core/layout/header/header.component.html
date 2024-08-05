@@ -2,12 +2,11 @@
   <div class="header-container">
     <div class="header-inner">
       <div class="head">
-        <div class="burger-menu">
-          <button>
-            <mat-icon>menu</mat-icon>
-
-          </button>
-        </div>
+        <button class="burger-menu" (click)="toggleMenu()">
+          <mat-icon>
+            list
+          </mat-icon>
+        </button>
 
         <a class="logo" routerLink="/">Finance Tracker</a>
       </div>
@@ -29,7 +28,7 @@
         <ul class="list">
           <li class="item" routerLink="/menu/capitals">
             <mat-icon>account_balance_wallet</mat-icon>
-            Capital
+            Capitals
           </li>
           <li class="item" routerLink="/menu/incomes">
             <mat-icon>monetization_on</mat-icon>
@@ -51,19 +50,20 @@
       </nav>
 
       <div class="profile">
+        <div class="balance" *ngIf="authorizated">
+          0 грн / 0 $
+        </div>
+
         <button class="exchange-button">
           <mat-icon>attach_money</mat-icon>
           Exchange
         </button>
 
-        <div class="balance" *ngIf="authorizated">
-          0 грн / 0 $
-        </div>
-
         <button class="account-button">
           <mat-icon>account_circle</mat-icon>
           Profile
         </button>
+
       </div>
     </div>
   </div>

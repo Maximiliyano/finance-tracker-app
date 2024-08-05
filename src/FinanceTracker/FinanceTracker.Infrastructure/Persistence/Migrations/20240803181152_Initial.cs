@@ -12,7 +12,7 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Accounts",
+                name: "Capital",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -31,11 +31,11 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Accounts", x => x.Id);
+                    table.PrimaryKey("PK_Capital", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Expenses",
+                name: "Expense",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -43,6 +43,7 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
                     DeletedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     AccountId = table.Column<int>(type: "int", nullable: true),
+                    CapitalId = table.Column<int>(type: "int", nullable: true),
                     CreatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     CreatedBy = table.Column<int>(type: "int", nullable: false),
                     UpdatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
@@ -50,16 +51,42 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Expenses", x => x.Id);
+                    table.PrimaryKey("PK_Expense", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Expenses_Accounts_AccountId",
-                        column: x => x.AccountId,
-                        principalTable: "Accounts",
+                        name: "FK_Expense_Capital_CapitalId",
+                        column: x => x.CapitalId,
+                        principalTable: "Capital",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "Incomes",
+                name: "Income",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Count = table.Column<int>(type: "int", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DeletedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    CapitalId = table.Column<int>(type: "int", nullable: true),
+                    CreatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    CreatedBy = table.Column<int>(type: "int", nullable: false),
+                    UpdatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    UpdatedBy = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Income", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Income_Capital_CapitalId",
+                        column: x => x.CapitalId,
+                        principalTable: "Capital",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Transfer",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -67,6 +94,7 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
                     DeletedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     AccountId = table.Column<int>(type: "int", nullable: true),
+                    CapitalId = table.Column<int>(type: "int", nullable: true),
                     CreatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     CreatedBy = table.Column<int>(type: "int", nullable: false),
                     UpdatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
@@ -74,68 +102,44 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Incomes", x => x.Id);
+                    table.PrimaryKey("PK_Transfer", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Incomes_Accounts_AccountId",
-                        column: x => x.AccountId,
-                        principalTable: "Accounts",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Transfers",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    DeletedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    AccountId = table.Column<int>(type: "int", nullable: true),
-                    CreatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
-                    CreatedBy = table.Column<int>(type: "int", nullable: false),
-                    UpdatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    UpdatedBy = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Transfers", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Transfers_Accounts_AccountId",
-                        column: x => x.AccountId,
-                        principalTable: "Accounts",
+                        name: "FK_Transfer_Capital_CapitalId",
+                        column: x => x.CapitalId,
+                        principalTable: "Capital",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Expenses_AccountId",
-                table: "Expenses",
-                column: "AccountId");
+                name: "IX_Expense_CapitalId",
+                table: "Expense",
+                column: "CapitalId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Incomes_AccountId",
-                table: "Incomes",
-                column: "AccountId");
+                name: "IX_Income_CapitalId",
+                table: "Income",
+                column: "CapitalId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Transfers_AccountId",
-                table: "Transfers",
-                column: "AccountId");
+                name: "IX_Transfer_CapitalId",
+                table: "Transfer",
+                column: "CapitalId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Expenses");
+                name: "Expense");
 
             migrationBuilder.DropTable(
-                name: "Incomes");
+                name: "Income");
 
             migrationBuilder.DropTable(
-                name: "Transfers");
+                name: "Transfer");
 
             migrationBuilder.DropTable(
-                name: "Accounts");
+                name: "Capital");
         }
     }
 }

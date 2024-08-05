@@ -1,6 +1,6 @@
 namespace FinanceTracker.Domain.Entities;
 
-public sealed class Account : AuditableEntity, ISoftDeletableEntity
+public sealed class Capital : AuditableEntity, ISoftDeletableEntity
 {
     public required string Name { get; init; }
 
@@ -12,9 +12,9 @@ public sealed class Account : AuditableEntity, ISoftDeletableEntity
 
     public required int TotalTransferOut { get; init; }
 
-    public required DateTimeOffset DeletedAt { get; init; }
+    public DateTimeOffset DeletedAt { get; init; }
 
-    public required bool IsDeleted { get; init; }
+    public bool IsDeleted { get; init; }
 
     public IEnumerable<Income>? Incomes { get; init; }
 

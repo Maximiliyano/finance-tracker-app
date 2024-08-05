@@ -1,4 +1,5 @@
 using FinanceTracker.Infrastructure.Persistence;
+using FinanceTracker.Infrastructure.Persistence.Abstractions;
 using FinanceTracker.Infrastructure.Persistence.Accounts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -37,6 +38,10 @@ public static class DependencyInjection
 
             options.UseSqlServer(databaseSettings.Connection);
         });
+
+        services.AddScoped<IUnitOfWork>(serviceProvider => serviceProvider.GetRequiredService<FinanceTrackerDbContext>());
+
+        services.AddScoped<IDbContext>(serviceProvider => serviceProvider.GetRequiredService<FinanceTrackerDbContext>());
 
         return services;
     }

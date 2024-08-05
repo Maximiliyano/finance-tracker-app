@@ -22,7 +22,7 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("FinanceTracker.Domain.Entities.Account", b =>
+            modelBuilder.Entity("FinanceTracker.Domain.Entities.Capital", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -66,7 +66,7 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Accounts");
+                    b.ToTable("Capital");
                 });
 
             modelBuilder.Entity("FinanceTracker.Domain.Entities.Expense", b =>
@@ -80,6 +80,9 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
                     b.Property<int?>("AccountId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("CapitalId")
+                        .HasColumnType("int");
+
                     b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetimeoffset");
 
@@ -100,9 +103,9 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AccountId");
+                    b.HasIndex("CapitalId");
 
-                    b.ToTable("Expenses");
+                    b.ToTable("Expense");
                 });
 
             modelBuilder.Entity("FinanceTracker.Domain.Entities.Income", b =>
@@ -113,7 +116,10 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("AccountId")
+                    b.Property<int?>("CapitalId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Count")
                         .HasColumnType("int");
 
                     b.Property<DateTimeOffset>("CreatedAt")
@@ -124,6 +130,9 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
 
                     b.Property<DateTimeOffset>("DeletedAt")
                         .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -136,9 +145,9 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AccountId");
+                    b.HasIndex("CapitalId");
 
-                    b.ToTable("Incomes");
+                    b.ToTable("Income");
                 });
 
             modelBuilder.Entity("FinanceTracker.Domain.Entities.Transfer", b =>
@@ -152,6 +161,9 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
                     b.Property<int?>("AccountId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("CapitalId")
+                        .HasColumnType("int");
+
                     b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetimeoffset");
 
@@ -172,33 +184,35 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AccountId");
+                    b.HasIndex("CapitalId");
 
-                    b.ToTable("Transfers");
+                    b.ToTable("Transfer");
                 });
 
             modelBuilder.Entity("FinanceTracker.Domain.Entities.Expense", b =>
                 {
-                    b.HasOne("FinanceTracker.Domain.Entities.Account", null)
+                    b.HasOne("FinanceTracker.Domain.Entities.Capital", null)
                         .WithMany("Expenses")
-                        .HasForeignKey("AccountId");
+                        .HasForeignKey("CapitalId");
                 });
 
             modelBuilder.Entity("FinanceTracker.Domain.Entities.Income", b =>
                 {
-                    b.HasOne("FinanceTracker.Domain.Entities.Account", null)
+                    b.HasOne("FinanceTracker.Domain.Entities.Capital", "Capital")
                         .WithMany("Incomes")
-                        .HasForeignKey("AccountId");
+                        .HasForeignKey("CapitalId");
+
+                    b.Navigation("Capital");
                 });
 
             modelBuilder.Entity("FinanceTracker.Domain.Entities.Transfer", b =>
                 {
-                    b.HasOne("FinanceTracker.Domain.Entities.Account", null)
+                    b.HasOne("FinanceTracker.Domain.Entities.Capital", null)
                         .WithMany("Transfers")
-                        .HasForeignKey("AccountId");
+                        .HasForeignKey("CapitalId");
                 });
 
-            modelBuilder.Entity("FinanceTracker.Domain.Entities.Account", b =>
+            modelBuilder.Entity("FinanceTracker.Domain.Entities.Capital", b =>
                 {
                     b.Navigation("Expenses");
 

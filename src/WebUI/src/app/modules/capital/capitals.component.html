@@ -1,0 +1,22 @@
+<div class="capitals-container">
+  <section class="title">
+    <h1>Capitals</h1>
+    <span>0 amount</span>
+  </section>
+
+  <section>
+    <div class="content">
+      <ul class="items">
+        <li class="item">
+          <span>Add new</span>
+        </li>
+        <li class="item">
+          <span>Test</span>
+        </li>
+        <li class="item" *ngFor="let capital of capitals">
+          <span>{{ capital.name }}</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+</div>

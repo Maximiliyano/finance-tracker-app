@@ -1,7 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Exchange } from '../../models/exchange-model';
 import { ExchangeService } from '../../../shared/services/exchange.service';
-import { Subject, Subscription, takeUntil } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { MenuDialogComponent } from '../../../modules/menu/components/menu-dialog/menu-dialog.component';
 
 @Component({
   selector: 'app-header',
@@ -14,7 +16,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   private unsubscribe = new Subject<void>();
 
-  constructor(private readonly exchangeService: ExchangeService) { }
+  constructor(
+    private readonly dialog: MatDialog,
+    private readonly exchangeService: ExchangeService) { }
 
   ngOnInit(): void {
     this.exchangeService
@@ -28,5 +32,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.unsubscribe.complete();
+  }
+
+  toggleMenu(): void {
+    this.dialog.open(MenuDialogComponent);
   }
 }

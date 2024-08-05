@@ -4,5 +4,9 @@ namespace FinanceTracker.Infrastructure.Persistence.Accounts;
 
 public interface ICapitalRepository
 {
-    Task<IEnumerable<Account>> GetAll();
+    Task<IEnumerable<Capital>> GetAllAsync();
+
+    void Create(Capital capital);
+
+    void Delete(Capital capital);
 }

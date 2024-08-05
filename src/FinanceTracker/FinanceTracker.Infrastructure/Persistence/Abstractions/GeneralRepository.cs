@@ -3,19 +3,19 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FinanceTracker.Infrastructure.Persistence.Abstractions;
 
-internal abstract class GeneralRepository<TEntity>(FinanceTrackerDbContext context)
+internal abstract class GeneralRepository<TEntity>(IDbContext context)
     where TEntity : Entity
 {
-    protected FinanceTrackerDbContext DbContext { get; } = context;
+    protected IDbContext DbContext { get; } = context;
 
-    protected async Task<IEnumerable<TEntity>> GetAll() =>
+    protected async Task<IEnumerable<TEntity>> GetAllAsync() =>
         await DbContext.Set<TEntity>()
             .AsNoTracking()
             .ToListAsync();
 
     protected void Add(TEntity entity) =>
-        DbContext.Set<TEntity>().Add(entity);
+        DbContext.Add(entity);
 
     protected void Remove(TEntity entity) =>
-        DbContext.Set<TEntity>().Remove(entity);
+        DbContext.Remove(entity);
 }

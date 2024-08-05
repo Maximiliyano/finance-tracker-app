@@ -1,3 +1,8 @@
+using FinanceTracker.Domain.Results;
+using MediatR;
+
 namespace FinanceTracker.Application.Abstractions;
 
-public interface ICommand;
+internal interface ICommand : IRequest<Result>;
+
+internal interface ICommand<TResponse> : IRequest<Result<TResponse>>;
