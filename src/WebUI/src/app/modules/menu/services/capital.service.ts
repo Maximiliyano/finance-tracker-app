@@ -15,4 +15,8 @@ export class CapitalService {
   getAll(): Observable<Capital[]> {
     return this.httpClient.get<Capital[]>(this.baseApiUrl);
   }
+
+  add(capital: Capital) {
+    return this.httpClient.post(this.baseApiUrl, capital);
+  }
 }

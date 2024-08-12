@@ -8,11 +8,11 @@ import { environment } from '../../../environments/environment.development';
   providedIn: 'root'
 })
 export class ExchangeService {
-  private baseApiUrl = '/api/exchanges/';
+  private baseApiUrl = environment.apiUrl + '/api/exchanges/';
 
   constructor(private readonly http: HttpClient) { }
 
   getAll(): Observable<Exchange[]> {
-    return this.http.get<Exchange[]>(environment.apiUrl + this.baseApiUrl);
+    return this.http.get<Exchange[]>(this.baseApiUrl);
   }
 }

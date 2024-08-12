@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { CapitalsComponent } from './components/capitals/capitals.component';
 import { IncomesComponent } from './components/incomes/incomes.component';
 import { ExpensesComponent } from './components/expenses/expenses.component';
 import { TransfersComponent } from './components/transfers/transfers.component';
@@ -13,8 +14,7 @@ const routes: Routes = [
     children: [
       {
         path: 'capitals',
-        loadChildren: () =>
-          import('../capital/capital.module').then((x) => x.CapitalModule)
+        component: CapitalsComponent
       },
       {
         path: 'incomes',

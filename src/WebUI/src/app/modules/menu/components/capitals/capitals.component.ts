@@ -3,6 +3,7 @@ import { Capital } from '../../models/capital-model';
 import { CapitalService } from '../../services/capital.service';
 import { Subject, takeUntil } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
+import { CapitalDialogComponent } from './capital-dialog/capital-dialog.component';
 
 @Component({
   selector: 'app-accounts',
@@ -31,7 +32,7 @@ export class CapitalsComponent implements OnInit, OnDestroy {
     this.unsubcribe.complete();
   }
 
-  createCapital(): void {
-
+  redirectToCreateCapitalDialog(): void {
+    this.dialog.open(CapitalDialogComponent);
   }
 }

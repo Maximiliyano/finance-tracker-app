@@ -1,6 +1,7 @@
 using FinanceTracker.Domain.Repositories;
 using FinanceTracker.Infrastructure.Persistence;
-using FinanceTracker.Infrastructure.Persistence.Accounts;
+using FinanceTracker.Infrastructure.Persistence.Interceptors;
+using FinanceTracker.Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -32,12 +33,18 @@ public static class DependencyInjection
 
         services.Configure<DatabaseSettings>(configuration.GetSection(nameof(DatabaseSettings)));
 
+        services.AddSingleton<UpdateAuditableEntitiesInterceptor>();
+
         services.AddDbContext<FinanceTrackerDbContext>((sp, options) =>
         {
             var databaseSettings = sp.GetRequiredService<IOptions<DatabaseSettings>>().Value;
+            var auditableInterceptor = sp.GetRequiredService<UpdateAuditableEntitiesInterceptor>();
 
-            options.UseSqlServer(databaseSettings.Connection);
+            options.UseSqlServer(databaseSettings.Connection)
+                .AddInterceptors(auditableInterceptor);
         });
+
+        services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<FinanceTrackerDbContext>());
 
         return services;
     }

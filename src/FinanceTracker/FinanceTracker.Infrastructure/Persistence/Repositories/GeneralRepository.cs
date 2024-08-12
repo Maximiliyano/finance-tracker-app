@@ -1,4 +1,6 @@
 using FinanceTracker.Domain.Entities;
+using FinanceTracker.Domain.Repositories;
+using FinanceTracker.Infrastructure.Persistence.Abstractions;
 using Microsoft.EntityFrameworkCore;
 
 namespace FinanceTracker.Infrastructure.Persistence.Repositories;
@@ -8,7 +10,7 @@ internal abstract class GeneralRepository<TEntity>(FinanceTrackerDbContext conte
 {
     protected FinanceTrackerDbContext DbContext { get; } = context;
 
-    protected async Task<IEnumerable<TEntity>> GetAll() =>
+    protected async Task<IEnumerable<TEntity>> GetAllAsync() =>
         await DbContext.Set<TEntity>()
             .AsNoTracking()
             .ToListAsync();
@@ -18,4 +20,12 @@ internal abstract class GeneralRepository<TEntity>(FinanceTrackerDbContext conte
 
     protected void Remove(TEntity entity) =>
         DbContext.Set<TEntity>().Remove(entity);
+
+    protected async Task<bool> AnyAsync(ISpecification<TEntity> specification) =>
+        await ApplySpecification(specification)
+            .AnyAsync();
+
+    private IQueryable<TEntity> ApplySpecification(ISpecification<TEntity>? specification)
+        => SpecificationEvaluator.GetQuery(
+                DbContext.Set<TEntity>(), specification);
 }

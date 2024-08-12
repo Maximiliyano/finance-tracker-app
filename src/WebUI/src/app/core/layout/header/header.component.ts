@@ -3,7 +3,7 @@ import { Exchange } from '../../models/exchange-model';
 import { ExchangeService } from '../../../shared/services/exchange.service';
 import { Subject, takeUntil } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
-import { MenuDialogComponent } from '../../../modules/menu/components/menu-dialog/menu-dialog.component';
+import { ExchangeDialogComponent } from '../../../modules/home/components/exchange-dialog/exchange-dialog.component';
 
 @Component({
   selector: 'app-header',
@@ -13,6 +13,7 @@ import { MenuDialogComponent } from '../../../modules/menu/components/menu-dialo
 export class HeaderComponent implements OnInit, OnDestroy {
   exchanges: Exchange[] | null;
   authorizated: boolean;
+  isSidebarExpanded: boolean;
 
   private unsubscribe = new Subject<void>();
 
@@ -34,7 +35,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.unsubscribe.complete();
   }
 
-  toggleMenu(): void {
-    this.dialog.open(MenuDialogComponent);
+  openExchangeDialog(): void {
+    this.dialog.open(ExchangeDialogComponent);
+  }
+
+  openAuthDialog(): void {
+
   }
 }

@@ -35,6 +35,14 @@
           }
         }
 
+        .home {
+          display: flex;
+
+          @include respond-to('sm') {
+            display: none;
+          }
+        }
+
         .burger-menu {
           display: flex;
 
@@ -42,7 +50,14 @@
             display: none;
           }
         }
+
+        .exchange-button {
+          @include respond-to('sm') {
+            display: none;
+          }
+        }
       }
+
 
       .exchanges {
         display: flex;
@@ -56,7 +71,7 @@
           border-radius: 5px;
           padding: 5px;
 
-          @include respond-to('md') {
+          @include respond-to('sm') {
             display: inline-flex;
           }
 
@@ -117,14 +132,11 @@
           display: flex;
           justify-content: center;
           align-items: center;
-          border-radius: 10px;
-          background-color: #ccc;
-          border: 1px rgb(67, 66, 66) solid;
-          color: white;
-          padding: 10px;
+          border-radius: 5px;
+          background-color: #e7e6e6;
+          padding: 5px;
         }
 
-        .exchange-button,
         .account-button {
           display: flex;
           align-items: center;
@@ -143,16 +155,69 @@
             background-color: $navigation-item-hover-color;
           }
         }
+      }
+    }
+  }
 
-        .exchange-button {
-          @include respond-to('md') {
-            display: none;
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: -250px;
+    width: 250px;
+    height: 100%;
+    background-color: $header-background;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    transition: left 0.3s ease-in-out;
+
+    &.expanded {
+      left: 0;
+    }
+
+    .sidebar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #e7e6e6;
+      border-bottom: 1px solid #ccc;
+      padding: 6px;
+
+      span {
+        font-weight: 500;
+        font-size: 15px;
+      }
+    }
+
+    .sidebar-content {
+      .sidebar-nav {
+        .sidebar-nav-list {
+          display: flex;
+          flex-direction: column;
+          padding: 20px;
+          gap: 10px;
+
+          .sidebar-nav-item {
+            display: flex;
+            justify-content: left;
+            align-items: center;
+            gap: 5px;
+            padding: 10px;
+            border: 1px #ccc solid;
+            border-radius: 5px;
+            cursor: pointer;
+            transition:
+              transform 0.3s ease,
+              background-color 0.3s ease;
+
+            &:hover {
+              background-color: #dba736;
+              transform: scale(105%);
+            }
           }
         }
       }
     }
   }
-
 
   @media (max-width: 1200px) {
     .navigation {

@@ -2,13 +2,19 @@
   <div class="header-container">
     <div class="header-inner">
       <div class="head">
-        <button class="burger-menu" (click)="toggleMenu()">
-          <mat-icon>
-            list
-          </mat-icon>
+        <button class="burger-menu" (click)="isSidebarExpanded=true">
+          <mat-icon>menu</mat-icon>
         </button>
 
         <a class="logo" routerLink="/">Finance Tracker</a>
+
+        <button class="home" routerLink="/">
+          <mat-icon>home</mat-icon>
+        </button>
+
+        <button class="exchange-button" (click)="openExchangeDialog()">
+          <mat-icon>attach_money</mat-icon>
+        </button>
       </div>
 
       <div class="exchanges">
@@ -28,7 +34,7 @@
         <ul class="list">
           <li class="item" routerLink="/menu/capitals">
             <mat-icon>account_balance_wallet</mat-icon>
-            Capitals
+            Capital
           </li>
           <li class="item" routerLink="/menu/incomes">
             <mat-icon>monetization_on</mat-icon>
@@ -54,17 +60,47 @@
           0 грн / 0 $
         </div>
 
-        <button class="exchange-button">
-          <mat-icon>attach_money</mat-icon>
-          Exchange
-        </button>
-
-        <button class="account-button">
+        <button class="account-button" (click)="openAuthDialog()">
           <mat-icon>account_circle</mat-icon>
           Profile
         </button>
-
       </div>
+    </div>
+  </div>
+
+  <div class="sidebar" [class.expanded]="isSidebarExpanded">
+    <div class="sidebar-header">
+      <span>Menu</span>
+      <button class="sidebar-btn-close" (click)="isSidebarExpanded=!isSidebarExpanded">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+
+    <div class="sidebar-content">
+      <nav class="sidebar-nav">
+        <ul class="sidebar-nav-list">
+          <li class="sidebar-nav-item" routerLink="/menu/capitals" (click)="isSidebarExpanded=!isSidebarExpanded">
+            <mat-icon>account_balance_wallet</mat-icon>
+            Capital
+          </li>
+          <li class="sidebar-nav-item" routerLink="/menu/incomes" (click)="isSidebarExpanded=!isSidebarExpanded">
+            <mat-icon>monetization_on</mat-icon>
+            Incomes
+          </li>
+          <li class="sidebar-nav-item" routerLink="/menu/expenses" (click)="isSidebarExpanded=!isSidebarExpanded">
+            <mat-icon>money_off</mat-icon>
+            Expenses
+          </li>
+          <li class="sidebar-nav-item" routerLink="/menu/transfers" (click)="isSidebarExpanded=!isSidebarExpanded">
+            <mat-icon>import_export</mat-icon>
+            Transfers
+          </li>
+          <li class="sidebar-nav-item" routerLink="/menu/goals" (click)="isSidebarExpanded=!isSidebarExpanded">
+            <mat-icon>star</mat-icon>
+            Goals
+          </li>
+        </ul>
+      </nav>
     </div>
   </div>
 </header>

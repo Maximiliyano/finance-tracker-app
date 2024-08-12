@@ -1,0 +1,32 @@
+@import '../../../../../assets/scss/variables.scss';
+@import '../../../../../assets/scss/mixins.scss';
+
+.exchanges {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+
+    .exchange {
+        display: none;
+        gap: 5px;
+        border: 1px solid $exchange-border-color;
+        border-radius: 5px;
+        padding: 5px;
+
+        @include respond-to('sm') {
+            display: inline-flex;
+        }
+
+        .prices {
+            display: flex;
+            flex-direction: column;
+            font-weight: 500;
+        }
+
+        .currencies {
+            display: flex;
+            flex-direction: column;
+            color: $exchange-border-color;
+        }
+    }
+}

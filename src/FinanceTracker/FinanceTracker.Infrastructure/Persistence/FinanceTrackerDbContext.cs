@@ -1,9 +1,10 @@
 using FinanceTracker.Domain.Entities;
+using FinanceTracker.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace FinanceTracker.Infrastructure.Persistence;
 
-public sealed class FinanceTrackerDbContext(DbContextOptions options) : DbContext(options)
+public sealed class FinanceTrackerDbContext(DbContextOptions options) : DbContext(options), IUnitOfWork
 {
     public DbSet<Capital> Capitals { get; init; } = null!;
 

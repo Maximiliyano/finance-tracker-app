@@ -1,4 +1,8 @@
-using FinanceTracker.Domain.Repositories;
+using FinanceTracker.Api.Extensions;
+using FinanceTracker.Application.Capitals.Queries.Add;
+using FinanceTracker.Application.Capitals.Queries.GetAll;
+using FinanceTracker.Application.Capitals.Requests;
+using MediatR;
 
 namespace FinanceTracker.Api.Endpoints;
 
@@ -10,13 +14,18 @@ internal static class CapitalsEndpoints
 
         group.MapGet(string.Empty, GetAll);
 
+        group.MapPost(string.Empty, Add);
+
         return app;
     }
 
-    private static async Task<IResult> GetAll(ICapitalRepository repository)
-    {
-        var result = await repository.GetAll();
+    private static async Task<IResult> GetAll(ISender sender)
+        => (await sender
+            .Send(new GetAllCapitalsQuery()))
+            .Process();
 
-        return Results.Ok(result);
-    }
+    private static async Task<IResult> Add(ISender sender, AddCapitalRequest request)
+        => (await sender
+                .Send(new AddCapitalCommand(request.Name, request.Balance)))
+                .Process();
 }

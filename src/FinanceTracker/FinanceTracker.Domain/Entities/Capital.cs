@@ -1,7 +1,16 @@
 namespace FinanceTracker.Domain.Entities;
 
-public sealed class Capital(int id) : Entity(id), IAuditableEntity, ISoftDeletableEntity
+public sealed class Capital : Entity, IAuditableEntity, ISoftDeletableEntity
 {
+    public Capital(int id)
+        : base(id)
+    {
+    }
+
+    public Capital()
+    {
+    }
+
     public required string Name { get; init; }
 
     public required float Balance { get; init; }
