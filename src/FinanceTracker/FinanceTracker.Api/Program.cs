@@ -17,12 +17,9 @@ builder.Services
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwaggerDependencies();
+app.UseSwaggerDependencies();
 
-    await app.AutoMigrateDatabaseAsync();
-}
+await app.AutoMigrateDatabaseAsync();
 
 app.UseSerilogRequestLogging();
 
