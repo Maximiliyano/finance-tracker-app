@@ -1,6 +1,7 @@
 using FinanceTracker.Domain.Entities;
 using FinanceTracker.Domain.Providers;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace FinanceTracker.Infrastructure.Persistence.Interceptors;
@@ -13,39 +14,40 @@ internal sealed class UpdateAuditableEntitiesInterceptor(IDateTimeProvider dateT
         InterceptionResult<int> result,
         CancellationToken cancellationToken = default)
     {
-        var dbContext = eventData.Context;
-
-        if (dbContext is null)
+        if (eventData.Context is not null)
         {
-            return base.SavingChangesAsync(
-                eventData,
-                result,
-                cancellationToken);
+            UpdateAuditableEntities(eventData.Context);
         }
 
-        var entries =
-            dbContext
-                .ChangeTracker
-                .Entries<IAuditableEntity>();
+        return base.SavingChangesAsync(eventData, result, cancellationToken);
+    }
 
-        foreach (var entityEntry in entries)
+    private void UpdateAuditableEntities(DbContext context)
+    {
+        var entries = context
+            .ChangeTracker
+            .Entries<IAuditableEntity>()
+            .ToList();
+
+        foreach (var entry in entries)
         {
-            if (entityEntry.State == EntityState.Added)
+            if (entry.State == EntityState.Added)
             {
-                entityEntry.Property(a => a.CreatedAt).CurrentValue = dateTimeProvider.UtcNow;
-                entityEntry.Property(a => a.CreatedBy).CurrentValue = 0;
+                SetCurrentPropertyValue(entry, nameof(IAuditableEntity.CreatedAt), dateTimeProvider.UtcNow);
             }
 
-            if (entityEntry.State == EntityState.Modified)
+            if (entry.State == EntityState.Modified)
             {
-                entityEntry.Property(a => a.UpdatedAt).CurrentValue = dateTimeProvider.UtcNow;
-                entityEntry.Property(a => a.UpdatedBy).CurrentValue = 0;
+                SetCurrentPropertyValue(entry, nameof(IAuditableEntity.UpdatedAt), dateTimeProvider.UtcNow);
             }
         }
 
-        return base.SavingChangesAsync(
-            eventData,
-            result,
-            cancellationToken);
+        return;
+
+        static void SetCurrentPropertyValue(
+            EntityEntry entry,
+            string propertyName,
+            DateTimeOffset utcNow)
+                => entry.Property(propertyName).CurrentValue = utcNow;
     }
 }
