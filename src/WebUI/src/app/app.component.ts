@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { LoadingService } from './shared/services/loading.service';
 
 @Component({
   selector: 'app-root',
@@ -7,7 +6,4 @@ import { LoadingService } from './shared/services/loading.service';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  loading$ = this.loadingService.loading$;
-
-  constructor(private loadingService: LoadingService) {}
 }
