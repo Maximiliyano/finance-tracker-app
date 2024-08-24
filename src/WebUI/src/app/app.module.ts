@@ -8,6 +8,7 @@ import { FooterComponent } from './core/layout/footer/footer.component';
 import { AngularMaterialModule } from './shared/angular-material.module';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { errorInterceptor } from './core/interceptors/error.interceptor';
+import { loadingInterceptor } from './core/interceptors/loading.interceptor';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,7 @@ import { errorInterceptor } from './core/interceptors/error.interceptor';
   bootstrap: [AppComponent],
   providers: [
     provideHttpClient(
-      withInterceptors([errorInterceptor])
+      withInterceptors([errorInterceptor, loadingInterceptor])
     )
   ]
 })
