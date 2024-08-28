@@ -36,10 +36,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   openExchangeDialog(): void {
-    this.dialog.open(ExchangeDialogComponent);
-  }
-
-  openAuthDialog(): void {
-
+    this.dialog.open(ExchangeDialogComponent, {
+      data: this.exchanges
+    });
   }
 }

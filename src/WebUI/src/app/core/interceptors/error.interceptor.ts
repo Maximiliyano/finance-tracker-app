@@ -1,17 +1,21 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { catchError, throwError } from 'rxjs';
+import { SnackbarService } from '../../shared/services/snackbar.service';
 
 export const errorInterceptor: HttpInterceptorFn = (req, next) => {
-  const snackBarService = inject(MatSnackBar);
+  const snackBarService = inject(SnackbarService);
 
 
   return next(req).pipe(
     catchError((response) => {
       const error = response.error;
 
-      snackBarService.open(error);
+      console.log(error);
+
+      snackBarService.open(error.message, 'x', {
+
+      });
 
       return throwError(error);
     })

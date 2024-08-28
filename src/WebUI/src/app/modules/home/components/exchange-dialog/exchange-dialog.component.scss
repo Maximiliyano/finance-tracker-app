@@ -3,19 +3,17 @@
 
 .exchanges {
     display: flex;
+    align-items: center;
     justify-content: center;
+    padding: 5px;
     gap: 5px;
+    background-color: white;
+    border-radius: 5px;
 
     .exchange {
-        display: none;
+        display: flex;
         gap: 5px;
-        border: 1px solid $exchange-border-color;
-        border-radius: 5px;
         padding: 5px;
-
-        @include respond-to('sm') {
-            display: inline-flex;
-        }
 
         .prices {
             display: flex;
@@ -27,6 +25,16 @@
             display: flex;
             flex-direction: column;
             color: $exchange-border-color;
+        }
+    }
+
+    .exchange-actions {
+        display: flex;
+        justify-content: center;
+        
+        .close-bth {
+            border-left: 1px #ccc solid;
+            padding: 5px;
         }
     }
 }

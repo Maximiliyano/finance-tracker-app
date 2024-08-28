@@ -1,6 +1,7 @@
 <div class="capitals-container">
     <div class="capitals">
         <button class="capital" *ngFor="let capital of capitals">
+            <a [routerLink]="[capital.id]"></a>
             <span>{{ capital.name }}</span>
             <span>{{ capital.balance }}</span>
         </button>

@@ -9,6 +9,7 @@ import { AngularMaterialModule } from './shared/angular-material.module';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { errorInterceptor } from './core/interceptors/error.interceptor';
 import { loadingInterceptor } from './core/interceptors/loading.interceptor';
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { loadingInterceptor } from './core/interceptors/loading.interceptor';
   providers: [
     provideHttpClient(
       withInterceptors([errorInterceptor, loadingInterceptor])
-    )
+    ),
+    provideAnimations()
   ]
 })
 export class AppModule { }
