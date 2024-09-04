@@ -10,6 +10,16 @@ public static class SpecificationEvaluator
         ISpecification<TEntity>? specification = null)
             where TEntity : Entity
     {
+        if (specification is null)
+        {
+            return queryable;
+        }
+
+        if (specification.Criteria is not null)
+        {
+            queryable = queryable.Where(specification.Criteria);
+        }
+
         return queryable;
     }
 }

@@ -10,6 +10,9 @@ internal sealed class CapitalRepository(
     public new async Task<IEnumerable<Capital>> GetAllAsync()
         => await base.GetAllAsync();
 
+    public new async Task<Capital?> GetAsync(ISpecification<Capital> specification)
+        => await base.GetAsync(specification);
+
     public new void Add(Capital capital)
         => base.Add(capital);
 

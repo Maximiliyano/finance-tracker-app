@@ -1,6 +1,6 @@
 using FinanceTracker.Application.Abstractions;
 
-namespace FinanceTracker.Application.Capitals.Queries.Add;
+namespace FinanceTracker.Application.Capitals.Commands.Add;
 
 public sealed record AddCapitalCommand(
     string Name,

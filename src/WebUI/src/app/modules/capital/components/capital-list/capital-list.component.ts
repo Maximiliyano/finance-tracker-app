@@ -1,0 +1,51 @@
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { Subject, takeUntil } from 'rxjs';
+import { Capital } from '../../../menu/models/capital-model';
+import { CapitalService } from '../../../menu/services/capital.service';
+import { CapitalDialogComponent } from '../capital-dialog/capital-dialog.component';
+
+@Component({
+  selector: 'app-capital-list',
+  templateUrl: './capital-list.component.html',
+  styleUrl: './capital-list.component.scss'
+})
+export class CapitalListComponent implements OnInit, OnDestroy {
+  capitals: Capital[];
+
+  private unsubcribe = new Subject<void>;
+
+  constructor(
+    private readonly dialog: MatDialog,
+    private readonly capitalService: CapitalService) { }
+
+  ngOnInit(): void {
+    this.refresh();
+  }
+
+  ngOnDestroy(): void {
+    this.unsubcribe.complete();
+  }
+
+  openToCreateCapitalDialog(): void {
+    let dialogRef = this.dialog.open(CapitalDialogComponent);
+
+    dialogRef
+      .afterClosed()
+      .pipe(takeUntil(this.unsubcribe))
+      .subscribe((response) => {
+        if (response) {
+          this.refresh();
+        }
+      });
+  }
+
+  private refresh(): void {
+    this.capitalService
+      .getAll()
+      .pipe(takeUntil(this.unsubcribe))
+      .subscribe((response) => {
+        this.capitals = response;
+      });
+  }
+}

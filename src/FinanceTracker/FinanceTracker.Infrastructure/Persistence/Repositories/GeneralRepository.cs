@@ -15,6 +15,10 @@ internal abstract class GeneralRepository<TEntity>(FinanceTrackerDbContext conte
             .AsNoTracking()
             .ToListAsync();
 
+    protected async Task<TEntity?> GetAsync(ISpecification<TEntity> specification) =>
+        await ApplySpecification(specification)
+            .FirstOrDefaultAsync();
+
     protected void Add(TEntity entity) =>
         DbContext.Set<TEntity>().Add(entity);
 

@@ -20,6 +20,11 @@ const routes: Routes = [
       import('./modules/profile/profile.module').then((x) => x.ProfileModule)
   },
   {
+    path: 'capitals',
+    loadChildren: () =>
+      import('./modules/capital/capital.module').then((x) => x.CapitalModule)
+  },
+  {
     path: '**',
     redirectTo: '404'
   },

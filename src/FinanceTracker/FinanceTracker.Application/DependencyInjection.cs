@@ -1,4 +1,5 @@
 using FinanceTracker.Application.Abstractions;
+using FinanceTracker.Application.Behaviours;
 using FinanceTracker.Application.Exchange;
 using FluentValidation;
 using Microsoft.Extensions.Configuration;
@@ -24,6 +25,8 @@ public static class DependencyInjection
         services.AddMediatR(config =>
         {
             config.RegisterServicesFromAssembly(AssemblyReference.Assembly);
+
+            config.AddOpenBehavior(typeof(ValidationPipelineBehavior<,>));
         });
 
         return services;

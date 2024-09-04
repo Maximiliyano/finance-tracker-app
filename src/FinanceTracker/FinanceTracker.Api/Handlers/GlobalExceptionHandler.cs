@@ -13,9 +13,9 @@ internal sealed class GlobalExceptionHandler
         Exception exception,
         CancellationToken cancellationToken)
     {
-        var error = ParseException(exception);
+        var error = ParseException(exception).First();
 
-        var statusCode = ParseErrorType(error.Type);
+        var statusCode = ErrorExtensions.GetStatusCode(error.Type);
 
         var problemDetails = BuildProblemDetails(statusCode, exception.Message, error);
 
@@ -38,16 +38,9 @@ internal sealed class GlobalExceptionHandler
             }
         };
 
-    private static Error ParseException(Exception exception)
+    private static Error[] ParseException(Exception exception)
         => exception switch
         {
-            _ => DomainErrors.General.Exception(exception.Message)
-        };
-
-    private static int ParseErrorType(ErrorType type)
-        => type switch
-        {
-            ErrorType.BadRequest => StatusCodes.Status400BadRequest,
-            _ => StatusCodes.Status500InternalServerError
+            _ => new[] { DomainErrors.General.Exception(exception.Message) }
         };
 }

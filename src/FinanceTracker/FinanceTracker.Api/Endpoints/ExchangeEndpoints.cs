@@ -1,4 +1,7 @@
+using FinanceTracker.Api.Extensions;
 using FinanceTracker.Application.Exchange;
+using FinanceTracker.Application.Exchange.Queries.GetAll;
+using MediatR;
 
 namespace FinanceTracker.Api.Endpoints;
 
@@ -11,12 +14,8 @@ internal static class ExchangeEndpoints
         return app;
     }
 
-    private static async Task<IResult> GetAll(IExchangeHttpService service)
-    {
-        var result = await service.GetCurrencyAsync();
-
-        return result.IsSuccess
-            ? Results.Ok(result.Value)
-            : Results.BadRequest(result.Error);
-    }
+    private static async Task<IResult> GetAll(ISender sender)
+        => (await sender
+            .Send(new GetAllExchangeQuery()))
+            .Process();
 }

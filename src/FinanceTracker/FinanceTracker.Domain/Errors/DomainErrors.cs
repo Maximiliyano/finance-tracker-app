@@ -18,4 +18,10 @@ public static class DomainErrors
         public static Error Serialization
             => Error.Failure(nameof(Serialization), "The content execution into exchange was failed.");
     }
+
+    public static class Capital
+    {
+        public static Error NotFound
+            => Error.NotFound(nameof(NotFound), "The capital was not found.");
+    }
 }

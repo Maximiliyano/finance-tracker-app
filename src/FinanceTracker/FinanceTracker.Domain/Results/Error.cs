@@ -20,6 +20,12 @@ public sealed record Error
     public static Error Failure(string code, string message)
         => new(code, message, ErrorType.Failure);
 
+    public static Error Validation(string code, string message)
+        => new(code, message, ErrorType.Validation);
+
     public static Error BadRequest(string code, string message)
         => new(code, message, ErrorType.BadRequest);
+
+    public static Error NotFound(string code, string message)
+        => new(code, message, ErrorType.NotFound);
 }

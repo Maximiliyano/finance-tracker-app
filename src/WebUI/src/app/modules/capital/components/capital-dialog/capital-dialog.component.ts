@@ -1,16 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { CapitalService } from '../../../services/capital.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Capital } from '../../../models/capital-model';
+import { Subject, takeUntil } from 'rxjs';
+import { Capital } from '../../../menu/models/capital-model';
+import { CapitalService } from '../../../menu/services/capital.service';
 
 @Component({
   selector: 'app-capital-dialog',
   templateUrl: './capital-dialog.component.html',
   styleUrl: './capital-dialog.component.scss'
 })
-export class CapitalDialogComponent implements OnInit {
+export class CapitalDialogComponent implements OnInit, OnDestroy {
   addCapitalForm: FormGroup;
+  
+  private unsubcribe = new Subject<void>;
 
   constructor(
     private readonly capitalService: CapitalService,
@@ -18,8 +21,13 @@ export class CapitalDialogComponent implements OnInit {
   
   ngOnInit(): void {
     this.addCapitalForm = new FormGroup({
-      Name: new FormControl('', [Validators.required])
+      Name: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(24)]),
+      Balance: new FormControl('')
     })
+  }
+
+  ngOnDestroy(): void {
+    this.unsubcribe.complete();
   }
 
   addNewCapital(): void {
@@ -35,13 +43,18 @@ export class CapitalDialogComponent implements OnInit {
     };
     
     this.capitalService.add(capital)
-      .subscribe((x) => x, (error) => console.error(error));
-
-    this.close();
+      .pipe(takeUntil(this.unsubcribe))
+      .subscribe(
+        () => {
+          this.close(true);
+        },
+        () => {
+          this.close(false);
+        });
   }
 
-  close(): void {
-    this.dialogRef.close();
+  close(response: boolean): void {
+    this.dialogRef.close(response);
   }
 
   getFormValue(fieldName: string): any {

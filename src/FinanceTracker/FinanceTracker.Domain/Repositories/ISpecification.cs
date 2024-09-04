@@ -1,3 +1,8 @@
+using System.Linq.Expressions;
+
 namespace FinanceTracker.Domain.Repositories;
 
-public interface ISpecification<TEntity>;
+public interface ISpecification<TEntity>
+{
+    Expression<Func<TEntity, bool>>? Criteria { get; }
+}

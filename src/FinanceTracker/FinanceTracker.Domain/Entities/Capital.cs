@@ -1,27 +1,19 @@
 namespace FinanceTracker.Domain.Entities;
 
-public sealed class Capital : Entity, IAuditableEntity, ISoftDeletableEntity
+public sealed class Capital(string name, float balance)
+    : Entity, IAuditableEntity, ISoftDeletableEntity
 {
-    public Capital(int id)
-        : base(id)
-    {
-    }
+    public string Name { get; init; } = name;
 
-    public Capital()
-    {
-    }
+    public float Balance { get; init; } = balance;
 
-    public required string Name { get; init; }
+    public float TotalIncome { get; init; }
 
-    public required float Balance { get; init; }
+    public float TotalExpense { get; init; }
 
-    public required float TotalIncome { get; init; }
+    public float TotalTransferIn { get; init; }
 
-    public required float TotalExpense { get; init; }
-
-    public required float TotalTransferIn { get; init; }
-
-    public required float TotalTransferOut { get; init; }
+    public float TotalTransferOut { get; init; }
 
     public DateTimeOffset CreatedAt { get; init; }
 

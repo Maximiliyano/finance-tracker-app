@@ -3,7 +3,7 @@ using FinanceTracker.Domain.Entities;
 using FinanceTracker.Domain.Repositories;
 using FinanceTracker.Domain.Results;
 
-namespace FinanceTracker.Application.Capitals.Queries.Add;
+namespace FinanceTracker.Application.Capitals.Commands.Add;
 
 public sealed class AddCapitalCommandHandler(
     ICapitalRepository repository,
@@ -12,7 +12,7 @@ public sealed class AddCapitalCommandHandler(
 {
     public async Task<Result> Handle(AddCapitalCommand request, CancellationToken cancellationToken)
     {
-        var capital = BuildCapital(request.Name, request.Balance);
+        var capital = new Capital(request.Name, request.Balance);
 
         repository.Add(capital);
 
@@ -20,15 +20,4 @@ public sealed class AddCapitalCommandHandler(
 
         return Result.Success();
     }
-
-    private static Capital BuildCapital(string name, float balance)
-        => new()
-        {
-            Name = name,
-            Balance = balance,
-            TotalIncome = 0,
-            TotalExpense = 0,
-            TotalTransferIn = 0,
-            TotalTransferOut = 0
-        };
 }

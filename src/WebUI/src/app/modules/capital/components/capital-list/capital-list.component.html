@@ -1,0 +1,13 @@
+<div class="actions">
+    <button class="add-capital" (click)="openToCreateCapitalDialog()">
+        <mat-icon>note_add</mat-icon>
+    </button>
+</div>
+<div class="capitals">
+    <div class="capital" *ngFor="let capital of capitals">
+        <a [routerLink]="[capital.id]">
+            <p>Name: {{ capital.name }}</p>
+            <p>Balance: {{ capital.balance }}</p>
+        </a>
+    </div>
+</div>

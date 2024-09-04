@@ -1,6 +1,7 @@
 using FinanceTracker.Api.Extensions;
-using FinanceTracker.Application.Capitals.Queries.Add;
+using FinanceTracker.Application.Capitals.Commands.Add;
 using FinanceTracker.Application.Capitals.Queries.GetAll;
+using FinanceTracker.Application.Capitals.Queries.GetById;
 using FinanceTracker.Application.Capitals.Requests;
 using MediatR;
 
@@ -14,6 +15,8 @@ internal static class CapitalsEndpoints
 
         group.MapGet(string.Empty, GetAll);
 
+        group.MapGet("{id:int}", GetById);
+
         group.MapPost(string.Empty, Add);
 
         return app;
@@ -24,8 +27,13 @@ internal static class CapitalsEndpoints
             .Send(new GetAllCapitalsQuery()))
             .Process();
 
+    private static async Task<IResult> GetById(ISender sender, int id)
+        => (await sender
+            .Send(new GetByIdCapitalQuery(id)))
+            .Process();
+
     private static async Task<IResult> Add(ISender sender, AddCapitalRequest request)
         => (await sender
-                .Send(new AddCapitalCommand(request.Name, request.Balance)))
-                .Process();
+            .Send(new AddCapitalCommand(request.Name, request.Balance)))
+            .Process();
 }

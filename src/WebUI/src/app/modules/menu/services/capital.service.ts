@@ -16,6 +16,10 @@ export class CapitalService {
     return this.httpClient.get<Capital[]>(this.baseApiUrl);
   }
 
+  getById(id: number): Observable<Capital> {
+    return this.httpClient.get<Capital>(`${this.baseApiUrl}/${id}`);
+  }
+
   add(capital: Capital) {
     return this.httpClient.post(this.baseApiUrl, capital);
   }

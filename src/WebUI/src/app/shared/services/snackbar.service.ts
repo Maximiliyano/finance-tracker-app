@@ -1,31 +1,35 @@
 import { Injectable, NgZone } from '@angular/core';
-import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarConfig, MatSnackBarRef, TextOnlySnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SnackbarService {
+  private readonly defaultDuration = 3000;
+  private readonly defaultConfig: MatSnackBarConfig = {
+    duration: this.defaultDuration
+  };
+
   constructor(private readonly snackBar: MatSnackBar,
               private readonly zone: NgZone) { }
 
-  success(message: string): void {
-    this.show(message, { panelClass: ['snackbar-container', 'success'] });
+  display(message: string): void {
+    this.show(message);
   }
 
-  warning(message: string): void {
-    this.show(message, { panelClass: ['snackbar-container']});
-  }
-
-  private show(message: string, customConfig: MatSnackBarConfig = {}): void {
-    const customClasses = coerceToArray(customConfig.panelClass)
-      .filter((v) => typeof v === 'string') as string[];
-
-    this.zone.run(() => {
-      this.snackBar.open(
-        message,
-        'x',
-        { ...customConfig, panelClass: ['snackbar-container', ...customClasses]}
-      );
+  private show(message: string, customConfig: MatSnackBarConfig = {}): Promise<MatSnackBarRef<any>> {
+    return new Promise(resolve => {
+      this.zone.run(() => {
+        const finalConfig: MatSnackBarConfig = {
+          ...this.defaultConfig,
+          ...customConfig,
+          panelClass: [...(customConfig.panelClass || [])]
+        };
+  
+        const snackBarRef = this.snackBar.open(message, 'x', finalConfig);
+      
+        snackBarRef.afterDismissed().subscribe(() => resolve(snackBarRef));
+      })
     })
   }
 }
