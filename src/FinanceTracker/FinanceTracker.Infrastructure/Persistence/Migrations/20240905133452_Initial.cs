@@ -41,13 +41,15 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Amount = table.Column<float>(type: "real", nullable: false),
+                    Purpose = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Type = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     CreatedBy = table.Column<int>(type: "int", nullable: false),
                     UpdatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     UpdatedBy = table.Column<int>(type: "int", nullable: true),
                     DeletedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    AccountId = table.Column<int>(type: "int", nullable: true),
                     CapitalId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -66,13 +68,15 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Amount = table.Column<float>(type: "real", nullable: false),
+                    Purpose = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Type = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     CreatedBy = table.Column<int>(type: "int", nullable: false),
                     UpdatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     UpdatedBy = table.Column<int>(type: "int", nullable: true),
                     DeletedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    AccountId = table.Column<int>(type: "int", nullable: true),
                     CapitalId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -91,23 +95,31 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Amount = table.Column<float>(type: "real", nullable: false),
                     CreatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     CreatedBy = table.Column<int>(type: "int", nullable: false),
                     UpdatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     UpdatedBy = table.Column<int>(type: "int", nullable: true),
                     DeletedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    AccountId = table.Column<int>(type: "int", nullable: true),
-                    CapitalId = table.Column<int>(type: "int", nullable: true)
+                    SourceCapitalId = table.Column<int>(type: "int", nullable: true),
+                    DestinationCapitalId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Transfers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Transfers_Capitals_CapitalId",
-                        column: x => x.CapitalId,
+                        name: "FK_Transfers_Capitals_DestinationCapitalId",
+                        column: x => x.DestinationCapitalId,
                         principalTable: "Capitals",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Transfers_Capitals_SourceCapitalId",
+                        column: x => x.SourceCapitalId,
+                        principalTable: "Capitals",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -127,9 +139,14 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
                 column: "CapitalId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Transfers_CapitalId",
+                name: "IX_Transfers_DestinationCapitalId",
                 table: "Transfers",
-                column: "CapitalId");
+                column: "DestinationCapitalId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Transfers_SourceCapitalId",
+                table: "Transfers",
+                column: "SourceCapitalId");
         }
 
         /// <inheritdoc />

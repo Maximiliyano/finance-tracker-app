@@ -1,7 +1,15 @@
+using FinanceTracker.Domain.Enums;
+
 namespace FinanceTracker.Domain.Entities;
 
 public sealed class Expense : Entity, IAuditableEntity, ISoftDeletableEntity
 {
+    public required float Amount { get; init; }
+
+    public string Purpose { get; init; } = null!;
+
+    public ExpenseType Type { get; init; }
+
     public DateTimeOffset CreatedAt { get; init; }
 
     public int CreatedBy { get; init; }
@@ -14,5 +22,7 @@ public sealed class Expense : Entity, IAuditableEntity, ISoftDeletableEntity
 
     public bool IsDeleted { get; init; }
 
-    public int? AccountId { get; init; }
+    public int? CapitalId { get; init; }
+
+    public Capital? Capital { get; init; }
 }

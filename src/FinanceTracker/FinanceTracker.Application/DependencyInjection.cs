@@ -1,6 +1,7 @@
 using FinanceTracker.Application.Abstractions;
 using FinanceTracker.Application.Behaviours;
-using FinanceTracker.Application.Exchange;
+using FinanceTracker.Application.Exchanges;
+using FinanceTracker.Application.Exchanges.Service;
 using FluentValidation;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,6 +17,8 @@ public static class DependencyInjection
         services.AddValidatorsFromAssembly(AssemblyReference.Assembly, includeInternalTypes: true);
 
         services.AddSettings();
+
+        services.AddHttpClient<IExchangeHttpService, ExchangeHttpService>();
 
         return services;
     }
@@ -38,7 +41,7 @@ public static class DependencyInjection
 
         services.Configure<PBApiSettings>(configuration.GetRequiredSection(nameof(PBApiSettings)));
 
-        services.Configure<WebUISettings>(configuration.GetRequiredSection(nameof(WebUISettings)));
+        services.Configure<WebUrlSettings>(configuration.GetRequiredSection(nameof(WebUrlSettings)));
 
         return services;
     }

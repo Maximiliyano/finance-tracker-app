@@ -2,7 +2,7 @@ using System.Globalization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace FinanceTracker.Application.Exchange;
+namespace FinanceTracker.Domain.Conventers;
 
 public class StringToFloatConverter : JsonConverter<float>
 {

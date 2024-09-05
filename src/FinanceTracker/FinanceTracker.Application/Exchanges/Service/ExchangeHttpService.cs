@@ -1,9 +1,10 @@
 using System.Text.Json;
+using FinanceTracker.Domain.Entities;
 using FinanceTracker.Domain.Errors;
 using FinanceTracker.Domain.Results;
 using Microsoft.Extensions.Options;
 
-namespace FinanceTracker.Application.Exchange;
+namespace FinanceTracker.Application.Exchanges.Service;
 
 public sealed class ExchangeHttpService(
     IOptions<PBApiSettings> options,

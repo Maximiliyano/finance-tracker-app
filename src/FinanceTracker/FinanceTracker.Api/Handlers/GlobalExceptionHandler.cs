@@ -1,3 +1,4 @@
+using FinanceTracker.Api.Extensions;
 using FinanceTracker.Domain.Errors;
 using FinanceTracker.Domain.Results;
 using Microsoft.AspNetCore.Diagnostics;
@@ -15,7 +16,7 @@ internal sealed class GlobalExceptionHandler
     {
         var error = ParseException(exception).First();
 
-        var statusCode = ErrorExtensions.GetStatusCode(error.Type);
+        var statusCode = error.Type.GetStatusCode();
 
         var problemDetails = BuildProblemDetails(statusCode, exception.Message, error);
 
@@ -41,6 +42,6 @@ internal sealed class GlobalExceptionHandler
     private static Error[] ParseException(Exception exception)
         => exception switch
         {
-            _ => new[] { DomainErrors.General.Exception(exception.Message) }
+            _ =>[DomainErrors.General.Exception(exception.Message)]
         };
 }

@@ -5,8 +5,8 @@
             <span>{{ exchange?.sale }}</span>
         </div>
         <div class="currencies">
-            <span>{{ exchange?.ccy }}</span>
-            <span>{{ exchange?.base_ccy }}</span>
+            <span>{{ exchange?.targetCurrency ?? 'None' }}</span>
+            <span>{{ exchange?.nationalCurrency ?? 'None' }}</span>
         </div>
     </div>
     <div class="exchange-actions">

@@ -1,10 +1,10 @@
 using FinanceTracker.Domain.Results;
 
-namespace FinanceTracker.Api;
+namespace FinanceTracker.Api.Extensions;
 
-public static class ErrorExtensions
+internal static class ErrorExtensions
 {
-    public static int GetStatusCode(this ErrorType type)
+    internal static int GetStatusCode(this ErrorType type)
         => type switch
         {
             ErrorType.NotFound => StatusCodes.Status404NotFound,

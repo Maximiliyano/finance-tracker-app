@@ -1,11 +1,10 @@
 using FinanceTracker.Api.Extensions;
-using FinanceTracker.Application.Exchange;
-using FinanceTracker.Application.Exchange.Queries.GetAll;
+using FinanceTracker.Application.Exchanges.Queries.GetAll;
 using MediatR;
 
 namespace FinanceTracker.Api.Endpoints;
 
-internal static class ExchangeEndpoints
+internal static class ExchangesEndpoints
 {
     internal static IEndpointRouteBuilder MapExchangeEndpoints(this IEndpointRouteBuilder app)
     {

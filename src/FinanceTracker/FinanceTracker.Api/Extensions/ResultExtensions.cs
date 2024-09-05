@@ -4,14 +4,14 @@ namespace FinanceTracker.Api.Extensions;
 
 internal static class ResultExtensions
 {
-    public static IResult Process(this Result result, ResultType type = ResultType.Ok)
+    internal static IResult Process(this Result result, ResultType type = ResultType.Ok)
     {
         return result.IsSuccess
             ? ToResult(type)
             : ToProblemDetails(result.Errors);
     }
 
-    public static IResult Process<TValue>(this Result<TValue> result, ResultType type = ResultType.Ok)
+    internal static IResult Process<TValue>(this Result<TValue> result, ResultType type = ResultType.Ok)
     {
         return result.IsSuccess
             ? ToResult(type, result.Value)
@@ -22,7 +22,7 @@ internal static class ResultExtensions
         => type switch
         {
             ResultType.Ok => Results.Ok(value),
-            ResultType.Created => Results.CreatedAtRoute(value: value), // TODO exception: No route matches the supplied values
+            ResultType.Created => Results.CreatedAtRoute(value: value),
             ResultType.NoContent => Results.NoContent(),
             _ => throw new ArgumentException(ResultConstants.InvalidResultTypeMessage)
         };
@@ -32,7 +32,7 @@ internal static class ResultExtensions
         var error = errors.First();
 
         return Results.Problem(
-            statusCode: ErrorExtensions.GetStatusCode(error.Type),
+            statusCode: error.Type.GetStatusCode(),
             title: error.Code,
             type: error.Type.ToString(),
             extensions: new Dictionary<string, object?>

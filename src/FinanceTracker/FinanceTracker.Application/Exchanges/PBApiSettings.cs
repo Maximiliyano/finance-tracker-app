@@ -1,4 +1,4 @@
-namespace FinanceTracker.Application.Exchange;
+namespace FinanceTracker.Application.Exchanges;
 
 public sealed class PBApiSettings
 {

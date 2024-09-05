@@ -24,6 +24,10 @@ public static class DependencyInjection
     {
         services.AddTransient<ICapitalRepository, CapitalRepository>();
 
+        services.AddTransient<IExpenseRepository, ExpenseRepository>();
+
+        services.AddTransient<IIncomeRepository, IncomeRepository>();
+
         return services;
     }
 

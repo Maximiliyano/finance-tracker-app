@@ -14,7 +14,7 @@ internal static class WebApplicationExtensions
     {
         using var serviceScope = builder.ApplicationServices.CreateScope();
 
-        var webUiSettings = serviceScope.ServiceProvider.GetRequiredService<IOptions<WebUISettings>>().Value;
+        var webUiSettings = serviceScope.ServiceProvider.GetRequiredService<IOptions<WebUrlSettings>>().Value;
 
         builder.UseCors(policyBuilder => policyBuilder
             .AllowCredentials()

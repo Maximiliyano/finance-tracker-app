@@ -1,6 +1,7 @@
 using System.Text.Json.Serialization;
+using FinanceTracker.Domain.Conventers;
 
-namespace FinanceTracker.Application.Exchange;
+namespace FinanceTracker.Domain.Entities;
 
 public sealed class Exchange(
     string currencyCode,

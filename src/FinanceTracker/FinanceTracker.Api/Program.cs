@@ -33,6 +33,10 @@ app.MapHealthChecks("/health");
 
 app.MapCapitalEndpoints();
 
+app.MapIncomesEndpoints();
+
+app.MapExpensesEndpoints();
+
 app.MapExchangeEndpoints();
 
 await app.RunAsync();

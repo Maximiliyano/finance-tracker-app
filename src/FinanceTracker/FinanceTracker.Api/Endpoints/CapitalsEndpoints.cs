@@ -1,8 +1,12 @@
 using FinanceTracker.Api.Extensions;
-using FinanceTracker.Application.Capitals.Commands.Add;
+using FinanceTracker.Application;
+using FinanceTracker.Application.Capitals.Commands.Create;
+using FinanceTracker.Application.Capitals.Commands.Delete;
+using FinanceTracker.Application.Capitals.Commands.Update;
 using FinanceTracker.Application.Capitals.Queries.GetAll;
 using FinanceTracker.Application.Capitals.Queries.GetById;
 using FinanceTracker.Application.Capitals.Requests;
+using FinanceTracker.Domain.Results;
 using MediatR;
 
 namespace FinanceTracker.Api.Endpoints;
@@ -17,9 +21,13 @@ internal static class CapitalsEndpoints
 
         group.MapGet("{id:int}", GetById);
 
-        group.MapPost(string.Empty, Add);
+        group.MapPost(string.Empty, Create);
 
-        return app;
+        group.MapPut(string.Empty, Update);
+
+        group.MapDelete("{id:int}", Delete);
+
+        return group;
     }
 
     private static async Task<IResult> GetAll(ISender sender)
@@ -32,8 +40,18 @@ internal static class CapitalsEndpoints
             .Send(new GetByIdCapitalQuery(id)))
             .Process();
 
-    private static async Task<IResult> Add(ISender sender, AddCapitalRequest request)
+    private static async Task<IResult> Create(ISender sender, AddCapitalRequest request)
         => (await sender
-            .Send(new AddCapitalCommand(request.Name, request.Balance)))
+            .Send(new CreateCapitalCommand(request.Name, request.Balance)))
+            .Process(ResultType.Created);
+
+    private static async Task<IResult> Update(ISender sender, UpdateCapitalRequest request)
+        => (await sender
+            .Send(new UpdateCapitalCommand(request.Id, request.Name, request.Balance)))
             .Process();
+
+    private static async Task<IResult> Delete(ISender sender, int id)
+        => (await sender
+            .Send(new DeleteCapitalCommand(id)))
+            .Process(ResultType.NoContent);
 }

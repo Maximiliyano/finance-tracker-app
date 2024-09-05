@@ -83,8 +83,8 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("AccountId")
-                        .HasColumnType("int");
+                    b.Property<float>("Amount")
+                        .HasColumnType("real");
 
                     b.Property<int?>("CapitalId")
                         .HasColumnType("int");
@@ -100,6 +100,13 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<string>("Purpose")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
 
                     b.Property<DateTimeOffset?>("UpdatedAt")
                         .HasColumnType("datetimeoffset");
@@ -122,8 +129,8 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("AccountId")
-                        .HasColumnType("int");
+                    b.Property<float>("Amount")
+                        .HasColumnType("real");
 
                     b.Property<int?>("CapitalId")
                         .HasColumnType("int");
@@ -139,6 +146,13 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<string>("Purpose")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
 
                     b.Property<DateTimeOffset?>("UpdatedAt")
                         .HasColumnType("datetimeoffset");
@@ -161,11 +175,8 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("AccountId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("CapitalId")
-                        .HasColumnType("int");
+                    b.Property<float>("Amount")
+                        .HasColumnType("real");
 
                     b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetimeoffset");
@@ -176,8 +187,14 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
                     b.Property<DateTimeOffset>("DeletedAt")
                         .HasColumnType("datetimeoffset");
 
+                    b.Property<int?>("DestinationCapitalId")
+                        .HasColumnType("int");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<int?>("SourceCapitalId")
+                        .HasColumnType("int");
 
                     b.Property<DateTimeOffset?>("UpdatedAt")
                         .HasColumnType("datetimeoffset");
@@ -187,30 +204,46 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CapitalId");
+                    b.HasIndex("DestinationCapitalId");
+
+                    b.HasIndex("SourceCapitalId");
 
                     b.ToTable("Transfers", (string)null);
                 });
 
             modelBuilder.Entity("FinanceTracker.Domain.Entities.Expense", b =>
                 {
-                    b.HasOne("FinanceTracker.Domain.Entities.Capital", null)
+                    b.HasOne("FinanceTracker.Domain.Entities.Capital", "Capital")
                         .WithMany("Expenses")
                         .HasForeignKey("CapitalId");
+
+                    b.Navigation("Capital");
                 });
 
             modelBuilder.Entity("FinanceTracker.Domain.Entities.Income", b =>
                 {
-                    b.HasOne("FinanceTracker.Domain.Entities.Capital", null)
+                    b.HasOne("FinanceTracker.Domain.Entities.Capital", "Capital")
                         .WithMany("Incomes")
                         .HasForeignKey("CapitalId");
+
+                    b.Navigation("Capital");
                 });
 
             modelBuilder.Entity("FinanceTracker.Domain.Entities.Transfer", b =>
                 {
-                    b.HasOne("FinanceTracker.Domain.Entities.Capital", null)
-                        .WithMany("Transfers")
-                        .HasForeignKey("CapitalId");
+                    b.HasOne("FinanceTracker.Domain.Entities.Capital", "DestinationCapital")
+                        .WithMany("TransfersIn")
+                        .HasForeignKey("DestinationCapitalId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("FinanceTracker.Domain.Entities.Capital", "SourceCapital")
+                        .WithMany("TransfersOut")
+                        .HasForeignKey("SourceCapitalId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("DestinationCapital");
+
+                    b.Navigation("SourceCapital");
                 });
 
             modelBuilder.Entity("FinanceTracker.Domain.Entities.Capital", b =>
@@ -219,7 +252,9 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
 
                     b.Navigation("Incomes");
 
-                    b.Navigation("Transfers");
+                    b.Navigation("TransfersIn");
+
+                    b.Navigation("TransfersOut");
                 });
 #pragma warning restore 612, 618
         }

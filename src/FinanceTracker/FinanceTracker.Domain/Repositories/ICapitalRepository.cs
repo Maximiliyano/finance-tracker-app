@@ -8,7 +8,11 @@ public interface ICapitalRepository
 
     Task<Capital?> GetAsync(ISpecification<Capital> specification);
 
-    void Add(Capital capital);
+    void Create(Capital capital);
+
+    Task<int> UpdateAsync(int id, Capital capital);
+
+    Task<int> DeleteAsync(int id);
 
     Task<bool> AnyAsync(ISpecification<Capital> specification);
 }

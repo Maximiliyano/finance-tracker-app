@@ -1,6 +1,7 @@
+using FinanceTracker.Domain.Entities;
 using FinanceTracker.Domain.Results;
 
-namespace FinanceTracker.Application.Exchange;
+namespace FinanceTracker.Application.Exchanges.Service;
 
 public interface IExchangeHttpService
 {

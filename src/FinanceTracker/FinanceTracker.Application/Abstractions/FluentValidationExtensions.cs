@@ -1,3 +1,4 @@
+using FinanceTracker.Domain.Constants;
 using FinanceTracker.Domain.Results;
 using FluentValidation;
 
@@ -10,7 +11,7 @@ public static class FluentValidationExtensions
     {
         if (error is null)
         {
-            throw new ArgumentNullException(nameof(error), "The error instance is required");
+            throw new ArgumentNullException(nameof(error), ValidationConstants.ErrorIsRequired);
         }
 
         return ruleBuilder
