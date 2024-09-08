@@ -1,5 +1,43 @@
 .capital {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 5px;
+
+    .capital-details {
+        border: 1px solid orange;
+    }
+    
+    .incomes {
+        border: 1px solid red;
+    
+        .income-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+
+            .action {
+                &:hover {
+                    color: #ccc;
+                }
+            }
+        }
+    }
+    
+    .expenses {
+        border: 1px solid green;
+    
+        .expense-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+
+            .action {
+                &:hover {
+                    color: #ccc;
+                }
+            }
+        }
+    }
 }

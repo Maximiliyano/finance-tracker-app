@@ -6,7 +6,7 @@ using FinanceTracker.Domain.Results;
 
 namespace FinanceTracker.Application.Capitals.Queries.GetAll;
 
-internal sealed class GetAllCapitalsQueryHandler(
+public sealed class GetAllCapitalsQueryHandler(
     ICapitalRepository repository)
     : IQueryHandler<GetAllCapitalsQuery, IEnumerable<CapitalResponse>>
 {
@@ -15,7 +15,14 @@ internal sealed class GetAllCapitalsQueryHandler(
         var capitals = await repository.GetAllAsync();
 
         var capitalResponses = capitals
-            .Select(c => new CapitalResponse(c.Id, c.Name, c.Balance));
+            .Select(c => new CapitalResponse(
+                c.Id,
+                c.Name,
+                c.Balance,
+                c.TotalIncome,
+                c.TotalExpense,
+                c.TotalTransferIn,
+                c.TotalTransferOut));
 
         return Result.Success(capitalResponses);
     }

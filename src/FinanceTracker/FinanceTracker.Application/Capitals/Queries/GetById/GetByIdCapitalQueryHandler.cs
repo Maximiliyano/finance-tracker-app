@@ -20,7 +20,14 @@ internal sealed class GetByIdCapitalQueryHandler(ICapitalRepository repository)
             return Result.Failure<CapitalResponse>(DomainErrors.Capital.NotFound);
         }
 
-        var capitalResponse = new CapitalResponse(capital.Id, capital.Name, capital.Balance);
+        var capitalResponse = new CapitalResponse(
+            capital.Id,
+            capital.Name,
+            capital.Balance,
+            capital.TotalIncome,
+            capital.TotalExpense,
+            capital.TotalTransferIn,
+            capital.TotalTransferOut);
 
         return Result.Success(capitalResponse);
     }

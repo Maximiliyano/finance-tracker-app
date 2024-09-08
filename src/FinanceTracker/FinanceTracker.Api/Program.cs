@@ -4,7 +4,9 @@ using FinanceTracker.Api.Extensions;
 using FinanceTracker.Application;
 using FinanceTracker.Infrastructure;
 using FinanceTracker.Infrastructure.Persistence.Extensions;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Serilog;
+using AssemblyReference = FinanceTracker.Api.AssemblyReference;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,11 +17,15 @@ builder.Services
     .AddApplication()
     .AddInfrastructure();
 
+builder.Services.AddEndpoints(AssemblyReference.Assembly);
+
 var app = builder.Build();
+
+app.MapEndpoints();
 
 app.UseSwaggerDependencies();
 
-await app.AutoMigrateDatabaseAsync();
+app.ApplyMigrations();
 
 app.UseSerilogRequestLogging();
 
@@ -29,14 +35,6 @@ app.UseExceptionHandler();
 
 app.UseHttpsRedirection();
 
-app.MapHealthChecks("/health");
-
-app.MapCapitalEndpoints();
-
-app.MapIncomesEndpoints();
-
-app.MapExpensesEndpoints();
-
-app.MapExchangeEndpoints();
+app.MapHealthChecks("health");
 
 await app.RunAsync();

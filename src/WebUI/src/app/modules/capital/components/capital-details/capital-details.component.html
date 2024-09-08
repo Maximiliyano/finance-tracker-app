@@ -1,5 +1,30 @@
 <a routerLink="../">Back</a>
 <div class="capital">
-    <p>Name: {{ capital.name }}</p>
-    <p>Balance: {{ capital.balance }}</p>
+    <div class="capital-details">
+        <p>Name: {{ capital.name }}</p>
+        <p>Balance: {{ capital.balance }}</p>
+    </div>
+
+    <div class="incomes">
+        <div class="income-details">
+            Incomes
+        </div>
+    
+        <div class="income-actions">
+            <button class="action" (click)="addIncome()">Add</button>
+            <button class="action">Edit</button>
+            <button class="action">Remove</button>
+        </div>
+    </div>
+    <div class="expenses">
+        <div class="expense-details">
+            Expenses
+        </div>
+    
+        <div class="expense-actions">
+            <button class="action" (click)="addExpense()">Add</button>
+            <button class="action">Edit</button>
+            <button class="action">Remove</button>
+        </div>
+    </div>
 </div>

@@ -10,7 +10,7 @@ public interface ICapitalRepository
 
     void Create(Capital capital);
 
-    Task<int> UpdateAsync(int id, Capital capital);
+    void Update(Capital capital);
 
     Task<int> DeleteAsync(int id);
 

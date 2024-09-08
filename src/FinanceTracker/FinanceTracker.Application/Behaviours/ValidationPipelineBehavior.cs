@@ -39,7 +39,7 @@ internal sealed class ValidationPipelineBehavior<TRequest, TResponse>(
         return await next();
     }
 
-    private static TResult CreateResult<TResult>(Error[] errors)
+    private static TResult CreateResult<TResult>(IList<Error> errors)
         where TResult : Result
     {
         if (typeof(TResult) == typeof(Result))

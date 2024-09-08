@@ -1,5 +1,7 @@
+using FinanceTracker.Domain.Constants;
 using FinanceTracker.Domain.Entities;
 using FinanceTracker.Domain.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace FinanceTracker.Infrastructure.Persistence.Repositories;
 
@@ -8,7 +10,11 @@ internal sealed class CapitalRepository(
     : GeneralRepository<Capital>(context), ICapitalRepository
 {
     public new async Task<IEnumerable<Capital>> GetAllAsync()
-        => await base.GetAllAsync();
+    {
+        var capitals = await DbContext.Capitals.AsNoTracking().ToListAsync();
+
+        return capitals;
+    }
 
     public new async Task<Capital?> GetAsync(ISpecification<Capital> specification)
     {
@@ -19,10 +25,10 @@ internal sealed class CapitalRepository(
             return capital;
         }
 
-        capital.TotalExpense = capital.Expenses?.Sum(e => e.Amount) ?? 0;
-        capital.TotalIncome = capital.Incomes?.Sum(i => i.Amount) ?? 0;
-        capital.TotalTransferIn = capital.TransfersIn?.Sum(t => t.Amount) ?? 0;
-        capital.TotalTransferOut = capital.TransfersOut?.Sum(t => t.Amount) ?? 0;
+        capital.TotalExpense = capital.Expenses?.Sum(e => e.Amount) ?? ValidationConstants.ZeroValue;
+        capital.TotalIncome = capital.Incomes?.Sum(i => i.Amount) ?? ValidationConstants.ZeroValue;
+        capital.TotalTransferIn = capital.TransfersIn?.Sum(t => t.Amount) ?? ValidationConstants.ZeroValue;
+        capital.TotalTransferOut = capital.TransfersOut?.Sum(t => t.Amount) ?? ValidationConstants.ZeroValue;
 
         return capital;
     }
@@ -30,8 +36,8 @@ internal sealed class CapitalRepository(
     public new void Create(Capital capital)
         => base.Create(capital);
 
-    public new async Task<int> UpdateAsync(int id, Capital capital)
-        => await base.UpdateAsync(id, capital);
+    public new void Update(Capital capital)
+        => base.Update(capital);
 
     public new async Task<int> DeleteAsync(int id)
         => await base.DeleteAsync(id);

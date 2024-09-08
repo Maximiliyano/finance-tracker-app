@@ -22,11 +22,8 @@ internal abstract class GeneralRepository<TEntity>(FinanceTrackerDbContext conte
     protected void Create(TEntity entity) =>
         DbContext.Set<TEntity>().Add(entity);
 
-    protected async Task<int> UpdateAsync(int id, TEntity entity) =>
-        await DbContext.Set<TEntity>()
-            .Where(e => e.Id == id)
-            .ExecuteUpdateAsync(property => property
-                .SetProperty(e => e, entity));
+    protected void Update(TEntity entity) =>
+        DbContext.Set<TEntity>().Update(entity);
 
     protected async Task<int> DeleteAsync(int id) =>
         await DbContext.Set<TEntity>()

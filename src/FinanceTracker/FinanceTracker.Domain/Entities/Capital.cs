@@ -1,8 +1,20 @@
+using System.Security.Cryptography;
+using FinanceTracker.Domain.Constants;
+
 namespace FinanceTracker.Domain.Entities;
 
 public sealed class Capital
     : Entity, IAuditableEntity, ISoftDeletableEntity
 {
+    public Capital(int id)
+        : base(id)
+    {
+    }
+
+    public Capital()
+    {
+    }
+
     public string Name { get; init; } = null!;
 
     public float Balance { get; init; }
@@ -23,9 +35,9 @@ public sealed class Capital
 
     public int? UpdatedBy { get; init; }
 
-    public DateTimeOffset DeletedAt { get; init; }
+    public DateTimeOffset? DeletedAt { get; init; }
 
-    public bool IsDeleted { get; init; }
+    public bool? IsDeleted { get; init; }
 
     public IEnumerable<Income>? Incomes { get; init; }
 

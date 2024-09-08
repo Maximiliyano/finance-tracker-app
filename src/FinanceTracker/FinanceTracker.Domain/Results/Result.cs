@@ -41,6 +41,8 @@ public class Result<TValue> : Result
 
     public static implicit operator Result<TValue>(TValue value) => Success(value);
 
+    public new static Result<TValue> Failure(IList<Error> errors) => new(default!, false, errors);
+
     public TValue Value => IsSuccess
         ? _value
         : throw new InvalidOperationException(ResultConstants.CannotAccessedValue);

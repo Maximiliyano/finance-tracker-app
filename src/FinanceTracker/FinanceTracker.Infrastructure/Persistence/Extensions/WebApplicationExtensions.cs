@@ -6,13 +6,13 @@ namespace FinanceTracker.Infrastructure.Persistence.Extensions;
 
 public static class WebApplicationExtensions
 {
-    public static async Task<IApplicationBuilder> AutoMigrateDatabaseAsync(this IApplicationBuilder app)
+    public static IApplicationBuilder ApplyMigrations(this IApplicationBuilder app)
     {
-        await using var serviceScope = app.ApplicationServices.CreateAsyncScope();
+        using var serviceScope = app.ApplicationServices.CreateScope();
 
         var dbContext = serviceScope.ServiceProvider.GetRequiredService<FinanceTrackerDbContext>();
 
-        await dbContext.Database.MigrateAsync();
+        dbContext.Database.Migrate();
 
         return app;
     }

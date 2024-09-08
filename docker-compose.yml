@@ -1,0 +1,34 @@
+version: "3.4"
+
+networks:
+  financetracker:
+
+services:
+  financetracker.api:
+    image: ${DOCKER_REGISTRY-}financetracker.api
+    container_name: web-api
+    build:
+      context: .
+      dockerfile: src/FinanceTracker.Api/Dockerfile
+    ports:
+      - 8000:8000
+      - 8001:8001
+    depends_on:
+      - financetracker.db
+      
+  financetracker.db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: mssql
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=Passw0rd.
+    ports:
+      - 8002:1433
+  
+  financetracker.seq:
+    image: datalust/seq:latest
+    container_name: seq
+    environment:
+      - ACCEPT_EULA=Y
+    ports:
+      - 8081:80

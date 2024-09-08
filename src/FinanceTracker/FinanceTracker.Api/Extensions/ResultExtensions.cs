@@ -22,14 +22,13 @@ internal static class ResultExtensions
         => type switch
         {
             ResultType.Ok => Results.Ok(value),
-            ResultType.Created => Results.CreatedAtRoute(value: value),
             ResultType.NoContent => Results.NoContent(),
             _ => throw new ArgumentException(ResultConstants.InvalidResultTypeMessage)
         };
 
     private static IResult ToProblemDetails(IList<Error> errors)
     {
-        var error = errors.First();
+        var error = errors[0];
 
         return Results.Problem(
             statusCode: error.Type.GetStatusCode(),
