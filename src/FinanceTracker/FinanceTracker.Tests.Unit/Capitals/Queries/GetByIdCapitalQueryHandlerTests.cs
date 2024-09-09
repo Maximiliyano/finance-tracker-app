@@ -1,3 +1,3 @@
-namespace FinanceTracker.UnitTests.Capitals;
+namespace FinanceTracker.UnitTests.Capitals.Queries;
 
 public class GetByIdCapitalQueryHandlerTests;

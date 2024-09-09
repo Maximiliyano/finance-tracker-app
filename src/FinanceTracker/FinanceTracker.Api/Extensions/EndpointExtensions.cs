@@ -1,4 +1,5 @@
 using System.Reflection;
+using FinanceTracker.Api.Endpoints;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace FinanceTracker.Api.Extensions;

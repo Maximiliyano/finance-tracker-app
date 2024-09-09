@@ -6,7 +6,7 @@ using FluentAssertions;
 using FluentAssertions.Execution;
 using NSubstitute;
 
-namespace FinanceTracker.UnitTests.Capitals;
+namespace FinanceTracker.UnitTests.Capitals.Queries;
 
 public sealed class GetAllCapitalQueryHandlerTests
 {

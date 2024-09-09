@@ -9,7 +9,7 @@ services:
     container_name: web-api
     build:
       context: .
-      dockerfile: src/FinanceTracker.Api/Dockerfile
+      dockerfile: src/FinanceTracker/FinanceTracker.Api/Dockerfile
     ports:
       - 8000:8000
       - 8001:8001

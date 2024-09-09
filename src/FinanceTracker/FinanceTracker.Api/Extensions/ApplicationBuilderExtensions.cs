@@ -3,7 +3,7 @@ using Microsoft.Extensions.Options;
 
 namespace FinanceTracker.Api.Extensions;
 
-internal static class WebApplicationExtensions
+internal static class ApplicationBuilderExtensions
 {
     internal static IApplicationBuilder UseSwaggerDependencies(this IApplicationBuilder builder)
         => builder

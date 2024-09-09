@@ -3,5 +3,6 @@
 public enum ResultType
 {
     Ok,
+    Created,
     NoContent,
 }

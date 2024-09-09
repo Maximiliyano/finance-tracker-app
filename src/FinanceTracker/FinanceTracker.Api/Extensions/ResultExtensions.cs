@@ -22,6 +22,7 @@ internal static class ResultExtensions
         => type switch
         {
             ResultType.Ok => Results.Ok(value),
+            ResultType.Created => Results.CreatedAtRoute(value: value),
             ResultType.NoContent => Results.NoContent(),
             _ => throw new ArgumentException(ResultConstants.InvalidResultTypeMessage)
         };

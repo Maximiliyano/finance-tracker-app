@@ -1,10 +1,9 @@
-using Microsoft.AspNetCore.Builder;
+using FinanceTracker.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 
-namespace FinanceTracker.Infrastructure.Persistence.Extensions;
+namespace FinanceTracker.Api.Extensions;
 
-public static class WebApplicationExtensions
+public static class MigrationExtensions
 {
     public static IApplicationBuilder ApplyMigrations(this IApplicationBuilder app)
     {

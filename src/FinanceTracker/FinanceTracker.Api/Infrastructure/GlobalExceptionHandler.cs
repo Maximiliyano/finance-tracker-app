@@ -4,7 +4,7 @@ using FinanceTracker.Domain.Results;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 
-namespace FinanceTracker.Api.Handlers;
+namespace FinanceTracker.Api.Infrastructure;
 
 internal sealed class GlobalExceptionHandler
     : IExceptionHandler
@@ -14,13 +14,13 @@ internal sealed class GlobalExceptionHandler
         Exception exception,
         CancellationToken cancellationToken)
     {
-        var error = ParseException(exception).First();
-
+        var error = ParseException(exception)[0];
+        
         var statusCode = error.Type.GetStatusCode();
-
+        
         var problemDetails = BuildProblemDetails(statusCode, exception.Message, error);
 
-        httpContext.Response.StatusCode = statusCode;
+        httpContext.Response.StatusCode = problemDetails.Status!.Value;
 
         await httpContext.Response.WriteAsJsonAsync(problemDetails, cancellationToken);
 

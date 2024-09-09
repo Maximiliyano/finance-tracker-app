@@ -1,4 +1,4 @@
-namespace FinanceTracker.Api;
+namespace FinanceTracker.Api.Endpoints;
 
 public interface IEndpoint
 {

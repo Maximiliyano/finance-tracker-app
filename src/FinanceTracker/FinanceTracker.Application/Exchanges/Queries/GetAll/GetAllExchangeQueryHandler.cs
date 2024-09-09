@@ -19,6 +19,6 @@ internal sealed class GetAllExchangeQueryHandler(IExchangeHttpService service)
         }
 
         return Result.Success(exchanges.Value
-            .Select(e => new ExchangeResponse(e.CurrencyCode, e.NationalCurrencyCode, e.Buy, e.Sale)));
+            .Select(e => new ExchangeResponse(e.TargetCurrencyCode, e.NationalCurrencyCode, e.Buy, e.Sale)));
     }
 }

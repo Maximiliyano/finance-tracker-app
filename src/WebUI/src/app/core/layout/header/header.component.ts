@@ -28,7 +28,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
       .subscribe(
         (exchanges) => {
           this.exchanges = exchanges;
-        });
+        },
+      (error) => console.error(error));
   }
 
   ngOnDestroy(): void {
