@@ -12,6 +12,7 @@ import { CapitalDialogComponent } from '../capital-dialog/capital-dialog.compone
 })
 export class CapitalListComponent implements OnInit, OnDestroy {
   capitals: Capital[];
+  editMode: boolean;
 
   private unsubcribe = new Subject<void>;
 
@@ -25,6 +26,10 @@ export class CapitalListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.unsubcribe.complete();
+  }
+
+  toggleEditMode(): void {
+    this.editMode = !this.editMode;
   }
 
   openToCreateCapitalDialog(): void {

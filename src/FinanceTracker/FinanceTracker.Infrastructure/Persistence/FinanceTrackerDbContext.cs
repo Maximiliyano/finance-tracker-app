@@ -23,7 +23,5 @@ public sealed class FinanceTrackerDbContext(DbContextOptions options) : DbContex
         base.OnModelCreating(modelBuilder);
 
         modelBuilder.ApplyConfigurationsFromAssembly(AssemblyReference.Assembly);
-
-        modelBuilder.HasDefaultSchema("public");
     }
 }

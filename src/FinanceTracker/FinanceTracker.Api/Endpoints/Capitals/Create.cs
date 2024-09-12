@@ -14,7 +14,7 @@ internal sealed class Create : IEndpoint
         app.MapPost("api/capitals", async (AddCapitalRequest request, ISender sender) =>
             (await sender
                 .Send(new CreateCapitalCommand(request.Name, request.Balance)))
-                .Process(ResultType.Created))
+                .Process())
             .WithTags(nameof(Capital));
     }
 }
