@@ -14,6 +14,8 @@ public sealed class FinanceTrackerDbContext(DbContextOptions options) : DbContex
 
     public DbSet<Expense> Expenses { get; init; } = null!;
 
+    public DbSet<Exchange> Exchanges { get; init; } = null!;
+
     public new DbSet<TEntity> Set<TEntity>()
         where TEntity : Entity =>
             base.Set<TEntity>();

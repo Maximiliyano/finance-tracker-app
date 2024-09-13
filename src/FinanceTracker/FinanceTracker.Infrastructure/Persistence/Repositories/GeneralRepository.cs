@@ -22,15 +22,14 @@ internal abstract class GeneralRepository<TEntity>(FinanceTrackerDbContext conte
     protected void Create(TEntity entity) =>
         DbContext.Set<TEntity>().Add(entity);
 
+    protected void CreateRange(IEnumerable<TEntity> entities) =>
+        DbContext.Set<TEntity>().AddRange(entities);
+
     protected void Update(TEntity entity) =>
         DbContext.Set<TEntity>().Update(entity);
 
-    protected async Task<int> DeleteAsync(int id) =>
-        await DbContext.Set<TEntity>()
-            .Where(x => x.Id == id)
-            .ExecuteUpdateAsync(property => property
-                .SetProperty(e => e.IsDeleted, true)
-                .SetProperty(e => e.DeletedAt, DateTimeOffset.UtcNow));
+    protected void Delete(TEntity entity) =>
+        DbContext.Set<TEntity>().Remove(entity);
 
     protected async Task<bool> AnyAsync(ISpecification<TEntity> specification) =>
         await ApplySpecification(specification)

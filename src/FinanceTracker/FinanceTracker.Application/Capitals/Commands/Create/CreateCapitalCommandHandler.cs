@@ -5,17 +5,17 @@ using FinanceTracker.Domain.Results;
 
 namespace FinanceTracker.Application.Capitals.Commands.Create;
 
-internal sealed class CreateCapitalCommandHandler(
+public sealed class CreateCapitalCommandHandler(
     ICapitalRepository repository,
     IUnitOfWork unitOfWork)
     : ICommandHandler<CreateCapitalCommand, int>
 {
-    public async Task<Result<int>> Handle(CreateCapitalCommand request, CancellationToken cancellationToken)
+    public async Task<Result<int>> Handle(CreateCapitalCommand command, CancellationToken cancellationToken)
     {
         var capital = new Capital
         {
-            Name = request.Name,
-            Balance = request.Balance
+            Name = command.Name,
+            Balance = command.Balance
         };
 
         repository.Create(capital);

@@ -4,6 +4,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { Capital } from '../../../menu/models/capital-model';
 import { CapitalService } from '../../../menu/services/capital.service';
 import { CapitalDialogComponent } from '../capital-dialog/capital-dialog.component';
+import { SnackbarService } from '../../../../shared/services/snackbar.service';
 
 @Component({
   selector: 'app-capital-list',
@@ -18,7 +19,8 @@ export class CapitalListComponent implements OnInit, OnDestroy {
 
   constructor(
     private readonly dialog: MatDialog,
-    private readonly capitalService: CapitalService) { }
+    private readonly capitalService: CapitalService,
+    private readonly snackBarService: SnackbarService) { }
 
   ngOnInit(): void {
     this.refresh();
@@ -41,7 +43,18 @@ export class CapitalListComponent implements OnInit, OnDestroy {
       .subscribe((response) => {
         if (response) {
           this.refresh();
+          this.snackBarService.display("The capital was successful added.")
         }
+      });
+  }
+
+  removeCapital(id: number): void {
+    this.editMode = false;
+    this.capitalService
+      .remove(id)
+      .subscribe(() => {
+        this.refresh();
+        this.snackBarService.display("The capital was successful removed.");
       });
   }
 

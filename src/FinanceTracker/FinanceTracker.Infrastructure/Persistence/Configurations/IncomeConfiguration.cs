@@ -11,6 +11,6 @@ internal sealed class IncomeConfiguration : IEntityTypeConfiguration<Income>
     {
         builder.HasKey(i => i.Id);
 
-        builder.ToTable(TableConfigurationConstrants.Incomes);
+        builder.ToTable(TableConfigurationConstants.Incomes);
     }
 }

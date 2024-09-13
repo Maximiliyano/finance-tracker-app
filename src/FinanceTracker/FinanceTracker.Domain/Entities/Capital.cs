@@ -15,9 +15,9 @@ public sealed class Capital
     {
     }
 
-    public string Name { get; init; } = null!;
+    public string Name { get; set; } = null!;
 
-    public float Balance { get; init; }
+    public float Balance { get; set; }
 
     public float TotalIncome { get; set; }
 

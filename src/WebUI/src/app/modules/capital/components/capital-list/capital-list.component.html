@@ -1,14 +1,19 @@
 <div class="cp-list">
     <div class="cp"*ngFor="let capital of capitals">
-        <button class="delete-capital" *ngIf="editMode">
-            <mat-icon>delete_forever</mat-icon>
-        </button>
         <a [routerLink]="[capital.id]">
-            <p>Name: {{ capital.name }}</p>
-            <p>Balance: {{ capital.balance }}</p>
+            <p><b>{{ capital.name }}</b></p>
+            <p>{{ capital.balance | currency }}</p>
         </a>
+        <button class="cp-delete" *ngIf="editMode" (click)="removeCapital(capital.id)">
+            <mat-icon>clear</mat-icon>
+        </button>
     </div>
+
     <div class="cp cp-add" (click)="openToCreateCapitalDialog()">
         <mat-icon>add_circle</mat-icon>
+    </div>
+
+    <div class="cp cp-edit" (click)="toggleEditMode()">
+        <mat-icon>edit</mat-icon>
     </div>
 </div>

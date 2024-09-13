@@ -37,6 +37,6 @@ internal sealed class CapitalConfiguration : IEntityTypeConfiguration<Capital>
             .HasForeignKey(t => t.SourceCapitalId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        builder.ToTable(TableConfigurationConstrants.Capitals);
+        builder.ToTable(TableConfigurationConstants.Capitals);
     }
 }

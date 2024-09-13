@@ -1,8 +1,8 @@
 <a routerLink="../">Back</a>
 <div class="capital">
     <div class="capital-details">
-        <p>Name: {{ capital.name }}</p>
-        <p>Balance: {{ capital.balance }}</p>
+        <p>Name: {{ capital?.name }}</p>
+        <p>Balance: {{ capital?.balance }}</p>
     </div>
 
     <div class="incomes">
@@ -11,7 +11,7 @@
         </div>
     
         <div class="income-actions">
-            <button class="action" (click)="addIncome()">Add</button>
+            <button class="action" (click)="openAddIncomeDialog()">Add</button>
             <button class="action">Edit</button>
             <button class="action">Remove</button>
         </div>

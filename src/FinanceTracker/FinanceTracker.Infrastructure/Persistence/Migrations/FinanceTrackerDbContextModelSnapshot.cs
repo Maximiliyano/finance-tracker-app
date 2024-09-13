@@ -75,6 +75,53 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
                     b.ToTable("Capitals", (string)null);
                 });
 
+            modelBuilder.Entity("FinanceTracker.Domain.Entities.Exchange", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<float>("Buy")
+                        .HasColumnType("real");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<int>("CreatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTimeOffset?>("DeletedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<bool?>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("NationalCurrencyCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasAnnotation("Relational:JsonPropertyName", "base_ccy");
+
+                    b.Property<float>("Sale")
+                        .HasColumnType("real");
+
+                    b.Property<string>("TargetCurrencyCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasAnnotation("Relational:JsonPropertyName", "ccy");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<int?>("UpdatedBy")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Exchanges", (string)null);
+                });
+
             modelBuilder.Entity("FinanceTracker.Domain.Entities.Expense", b =>
                 {
                     b.Property<int>("Id")

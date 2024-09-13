@@ -43,6 +43,8 @@ public static class DependencyInjection
 
         services.Configure<WebUrlSettings>(configuration.GetRequiredSection(nameof(WebUrlSettings)));
 
+        services.Configure<BackgroundJobsSettings>(configuration.GetRequiredSection(nameof(BackgroundJobsSettings)));
+
         return services;
     }
 }

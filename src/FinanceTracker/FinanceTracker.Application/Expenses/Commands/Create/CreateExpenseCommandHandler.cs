@@ -5,7 +5,9 @@ using FinanceTracker.Domain.Results;
 
 namespace FinanceTracker.Application.Expenses.Commands.Create;
 
-internal sealed class CreateExpenseCommandHandler(IExpenseRepository repository, IUnitOfWork unitOfWork)
+internal sealed class CreateExpenseCommandHandler(
+    IExpenseRepository repository,
+    IUnitOfWork unitOfWork)
     : ICommandHandler<CreateExpenseCommand, int>
 {
     public async Task<Result<int>> Handle(CreateExpenseCommand request, CancellationToken cancellationToken)

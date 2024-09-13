@@ -14,7 +14,7 @@ internal sealed class Create : IEndpoint
         app.MapPost("api/expenses", async (CreateExpenseRequest request, ISender sender) =>
             (await sender
                 .Send(new CreateExpenseCommand(request.CapitalId, request.Amount, request.Purpose, request.Type)))
-                .Process(ResultType.Created))
+                .Process())
             .WithTags(nameof(Expense));
     }
 }

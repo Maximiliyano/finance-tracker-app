@@ -11,7 +11,7 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrl: './capital-details.component.scss'
 })
 export class CapitalDetailsComponent implements OnInit {
-  capital: Capital;
+  capital: Capital | null;
 
   constructor(
     private readonly dialog: MatDialog,
@@ -26,8 +26,10 @@ export class CapitalDetailsComponent implements OnInit {
       .subscribe((response) => this.capital = response);
   }
 
-  addIncome(): void {
+  openAddIncomeDialog(): void {
     let dialogRef = this.dialog.open(IncomeDialogComponent);
+
+    dialogRef.afterClosed();
   }
 
   addExpense(): void {

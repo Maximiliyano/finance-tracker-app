@@ -22,7 +22,7 @@ export class CapitalDialogComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.addCapitalForm = new FormGroup({
       Name: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(24)]),
-      Balance: new FormControl('')
+      Balance: new FormControl('', [Validators.min(0)])
     })
   }
 
@@ -34,7 +34,7 @@ export class CapitalDialogComponent implements OnInit, OnDestroy {
     const capital: Capital = {
       id: 0,
       name: this.getFormValue('Name'),
-      balance: 0,
+      balance: this.getFormValue('Balance'),
       totalIncome: 0,
       totalExpense: 0,
       transferOut: 0,

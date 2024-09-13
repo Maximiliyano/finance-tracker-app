@@ -8,5 +8,5 @@ public interface IIncomeRepository
 
     void Create(Income income);
 
-    Task<int> DeleteAsync(int id);
+    void Delete(Income income);
 }

@@ -7,14 +7,24 @@ using FinanceTracker.Domain.Results;
 
 namespace FinanceTracker.Application.Capitals.Commands.Delete;
 
-internal sealed class DeleteCapitalCommandHandler(ICapitalRepository repository)
+internal sealed class DeleteCapitalCommandHandler(
+    ICapitalRepository repository,
+    IUnitOfWork unitOfWork)
     : ICommandHandler<DeleteCapitalCommand>
 {
     public async Task<Result> Handle(DeleteCapitalCommand request, CancellationToken cancellationToken)
     {
-        var removed = await repository.DeleteAsync(request.Id) > ValidationConstants.ZeroValue;
-        return !removed
-            ? Result.Failure(DomainErrors.Capital.NotFound)
-            : Result.Success();
+        var capital = await repository.GetAsync(new CapitalByIdSpecification(request.Id));
+
+        if (capital is null)
+        {
+            return Result.Failure(DomainErrors.Capital.NotFound);
+        }
+
+        repository.Delete(capital);
+
+        await unitOfWork.SaveChangesAsync(cancellationToken);
+        
+        return Result.Success();
     }
 }

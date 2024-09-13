@@ -1,6 +1,6 @@
 .cp-list {
     display: grid;
-    grid-template-columns: repeat(1, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 10px;
     
     .cp {
@@ -12,6 +12,12 @@
         padding: 10px;
         text-align: center;
         transition: background-color 0.3s ease-out;
+        gap: 5px;
+        cursor: pointer;
+
+        .cp-delete {
+            color: red;
+        }
     
         &:hover {
             background-color: bisque;
@@ -19,6 +25,8 @@
     }
 
     .cp-add {
-        cursor: pointer;
+    }
+
+    .cp-edit {
     }
 }

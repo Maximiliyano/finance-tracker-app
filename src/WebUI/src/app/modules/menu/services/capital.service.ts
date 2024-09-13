@@ -23,4 +23,8 @@ export class CapitalService {
   add(capital: Capital) {
     return this.httpClient.post(this.baseApiUrl, capital);
   }
+
+  remove(id: number) {
+    return this.httpClient.delete(`${this.baseApiUrl}/${id}`);
+  }
 }

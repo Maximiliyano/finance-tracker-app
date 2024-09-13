@@ -11,15 +11,13 @@ internal sealed class UpdateCapitalCommandValidator : AbstractValidator<UpdateCa
 {
     public UpdateCapitalCommandValidator(ICapitalRepository repository)
     {
-        RuleFor(c => c.Id)
-            .MustAsync(async (id, _) => await repository.AnyAsync(new CapitalByIdSpecification(id)))
-            .WithError(ValidationErrors.Capital.AlreadyExists);
-
         RuleFor(c => c.Balance)
             .GreaterThanOrEqualTo(ValidationConstants.ZeroValue);
 
         RuleFor(c => c.Name)
             .NotEmpty()
-            .MaximumLength(ValidationConstants.MaxLenghtName);
+            .MaximumLength(ValidationConstants.MaxLenghtName)
+            .MustAsync(async (name, _) => await repository.AnyAsync(new CapitalByNameSpecification(name)))
+            .WithError(ValidationErrors.Capital.AlreadyExists);
     }
 }

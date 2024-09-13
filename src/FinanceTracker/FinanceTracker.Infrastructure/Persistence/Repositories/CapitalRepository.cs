@@ -39,8 +39,8 @@ internal sealed class CapitalRepository(
     public new void Update(Capital capital)
         => base.Update(capital);
 
-    public new async Task<int> DeleteAsync(int id)
-        => await base.DeleteAsync(id);
+    public new void Delete(Capital capital)
+        => base.Delete(capital);
 
     public new async Task<bool> AnyAsync(ISpecification<Capital> specification)
         => await base.AnyAsync(specification);

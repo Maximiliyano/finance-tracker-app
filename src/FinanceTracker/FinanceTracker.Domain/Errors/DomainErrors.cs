@@ -17,11 +17,20 @@ public static class DomainErrors
 
         public static Error Serialization
             => Error.Failure(nameof(Serialization), "The content execution into exchange was failed.");
+        
+        public static Error AlreadyExists
+            => Error.Conflict(nameof(AlreadyExists), "The exchange already exists.");
     }
 
     public static class Capital
     {
         public static Error NotFound
             => Error.NotFound(nameof(NotFound), "The capital was not found.");
+    }
+
+    public static class Expense
+    {
+        public static Error NotFound
+            => Error.NotFound(nameof(NotFound), "The expense was not found.");
     }
 }

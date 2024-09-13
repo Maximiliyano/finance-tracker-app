@@ -12,7 +12,7 @@ public interface ICapitalRepository
 
     void Update(Capital capital);
 
-    Task<int> DeleteAsync(int id);
+    void Delete(Capital capital);
 
     Task<bool> AnyAsync(ISpecification<Capital> specification);
 }

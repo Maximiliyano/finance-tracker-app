@@ -1,6 +1,6 @@
 <form [formGroup]="addCapitalForm">
     <h1 mat-dialog-title>Add new capital</h1>
-    <div mat-dialog-content>
+    <div mat-dialog-content class="dialog-content">
         <mat-form-field>
             <mat-label>Name</mat-label>
             <input matInput placeholder="Name" type="text" formControlName="Name" name="Name">
@@ -21,6 +21,10 @@
         <mat-form-field>
             <mat-label>Balance</mat-label>
             <input matInput placeholder="Balance" type="number" formControlName="Balance" name="Balance">
+
+            <mat-error *ngIf="hasError('Balance', 'min')">
+                The balance not be lower than 0
+            </mat-error>
         </mat-form-field>
     </div>
     <div mat-dialog-actions>

@@ -1,4 +1,5 @@
 using FinanceTracker.Domain.Repositories;
+using FinanceTracker.Infrastructure.BackgroundJobs;
 using FinanceTracker.Infrastructure.Persistence;
 using FinanceTracker.Infrastructure.Persistence.Interceptors;
 using FinanceTracker.Infrastructure.Persistence.Repositories;
@@ -6,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using Quartz;
 
 namespace FinanceTracker.Infrastructure;
 
@@ -17,6 +19,20 @@ public static class DependencyInjection
 
         services.AddRepositories();
 
+        services.AddBackgroundJobs();
+
+        return services;
+    }
+
+    private static IServiceCollection AddBackgroundJobs(this IServiceCollection services)
+    {
+        services.AddQuartz();
+
+        services.AddQuartzHostedService(options
+            => options.WaitForJobsToComplete = true);
+
+        services.ConfigureOptions<SaveLatestExchangeJobSetup>();
+        
         return services;
     }
 
@@ -25,6 +41,8 @@ public static class DependencyInjection
         services.AddTransient<ICapitalRepository, CapitalRepository>();
 
         services.AddTransient<IExpenseRepository, ExpenseRepository>();
+
+        services.AddTransient<IExchangeRepository, ExchangeRepository>();
 
         services.AddTransient<IIncomeRepository, IncomeRepository>();
 

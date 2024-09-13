@@ -19,27 +19,10 @@ internal sealed class UpdateCapitalCommandHandler(ICapitalRepository repository,
             return Result.Failure(DomainErrors.Capital.NotFound);
         }
 
-        var updatedCapital = new Capital(request.Id)
-        {
-            Name = request.Name ?? capital.Name,
-            Balance = request.Balance ?? capital.Balance,
-            TotalIncome = capital.TotalIncome,
-            TotalExpense = capital.TotalExpense,
-            TotalTransferIn = capital.TotalTransferIn,
-            TotalTransferOut = capital.TotalTransferOut,
-            CreatedAt = capital.CreatedAt,
-            CreatedBy = capital.CreatedBy,
-            UpdatedAt = capital.UpdatedAt,
-            UpdatedBy = capital.UpdatedBy,
-            DeletedAt = capital.DeletedAt,
-            IsDeleted = capital.IsDeleted,
-            Incomes = capital.Incomes,
-            Expenses = capital.Expenses,
-            TransfersIn = capital.TransfersIn,
-            TransfersOut = capital.TransfersOut
-        };
+        capital.Name = request.Name ?? capital.Name;
+        capital.Balance = request.Balance ?? capital.Balance;
 
-        repository.Update(updatedCapital);
+        repository.Update(capital);
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
 

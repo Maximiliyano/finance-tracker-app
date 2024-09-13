@@ -30,6 +30,11 @@ const routes: Routes = [
       import('./modules/income/income.module').then((x) => x.IncomeModule)
   },
   {
+    path: 'expenses',
+    loadChildren: () =>
+      import('./modules/expense/expense.module').then((x) => x.ExpenseModule)
+  },
+  {
     path: '**',
     redirectTo: '404'
   },
