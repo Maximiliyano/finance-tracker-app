@@ -20,7 +20,7 @@ export class CapitalService {
     return this.httpClient.get<Capital>(`${this.baseApiUrl}/${id}`);
   }
 
-  add(capital: Capital) {
+  add(capital: any) {
     return this.httpClient.post(this.baseApiUrl, capital);
   }
 

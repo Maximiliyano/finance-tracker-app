@@ -1,30 +1,41 @@
-<a routerLink="../">Back</a>
+<a routerLink="../" class="back-link">Back</a>
+
 <div class="capital">
     <div class="capital-details">
-        <p>Name: {{ capital?.name }}</p>
-        <p>Balance: {{ capital?.balance }}</p>
+        <h2>{{ capital?.name }}</h2>
+        <p>Balance: {{ capital?.balance | currency: capital?.currency }}</p>
     </div>
 
-    <div class="incomes">
-        <div class="income-details">
-            Incomes
+    <div class="section incomes">
+        <h3>Incomes</h3>
+        
+        <div *ngFor="let income of incomes" class="income-content">
+            <p><strong>Income #{{ income.id }}</strong></p>
+            <p>Amount: {{ income.amount | currency }}</p>
+            <p>Purpose: {{ income.purpose }}</p>
+            <p>Type: {{ income.type }}</p>
+            <p>Created At: {{ income.createdAt | date }}</p>
         </div>
-    
-        <div class="income-actions">
-            <button class="action" (click)="openAddIncomeDialog()">Add</button>
-            <button class="action">Edit</button>
-            <button class="action">Remove</button>
+
+        <div class="actions income-actions">
+            <button (click)="openAddIncomeDialog()">Add</button>
+            <button>Edit</button>
+            <button>Remove</button>
         </div>
     </div>
-    <div class="expenses">
-        <div class="expense-details">
-            Expenses
+
+    <div class="section expenses">
+        <h3>Expenses</h3>
+
+        <div *ngFor="let expense of expenses" class="expense-content">
+            <p><strong>Amount: {{ expense.amount | currency }}</strong></p>
+            <p>Purpose: {{ expense.purpose }}</p>
         </div>
-    
-        <div class="expense-actions">
-            <button class="action" (click)="addExpense()">Add</button>
-            <button class="action">Edit</button>
-            <button class="action">Remove</button>
+
+        <div class="actions expense-actions">
+            <button (click)="openAddExpenseDialog()">Add</button>
+            <button>Edit</button>
+            <button>Remove</button>
         </div>
     </div>
 </div>

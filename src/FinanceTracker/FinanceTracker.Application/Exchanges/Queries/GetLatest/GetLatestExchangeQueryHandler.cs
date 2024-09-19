@@ -15,7 +15,7 @@ public sealed class GetLatestExchangeQueryHandler(
     {
         var latestExchanges = repository
             .GetLatest()
-            .Select(x => new ExchangeResponse(x.TargetCurrencyCode, x.NationalCurrencyCode, x.Buy, x.Sale));
+            .ToResponses();
 
         if (latestExchanges.Count() < 2)
         {
@@ -25,11 +25,11 @@ public sealed class GetLatestExchangeQueryHandler(
             {
                 return Result.Failure<IEnumerable<ExchangeResponse>>(result.Errors);
             }
-            
+
             var actualExchanges = result.Value
                 .OrderBy(x => x.CreatedAt)
                 .Take(2)
-                .Select(x => new ExchangeResponse(x.TargetCurrencyCode, x.NationalCurrencyCode, x.Buy, x.Sale));
+                .ToResponses();
 
             return Result.Success(actualExchanges);
         }

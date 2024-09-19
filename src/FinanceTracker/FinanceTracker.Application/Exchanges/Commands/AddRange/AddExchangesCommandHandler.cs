@@ -1,6 +1,5 @@
 using FinanceTracker.Application.Abstractions;
 using FinanceTracker.Domain.Entities;
-using FinanceTracker.Domain.Errors;
 using FinanceTracker.Domain.Repositories;
 using FinanceTracker.Domain.Results;
 
@@ -13,13 +12,7 @@ public sealed class AddExchangesCommandHandler(
 {
     public async Task<Result> Handle(AddExchangesCommand request, CancellationToken cancellationToken)
     {
-        var exchanges = request.Exchanges.Select(x => new Exchange
-        {
-            NationalCurrencyCode = x.NationalCurrency,
-            TargetCurrencyCode = x.TargetCurrency,
-            Buy = x.Buy,
-            Sale = x.Sale
-        });
+        var exchanges = request.Exchanges.ToEntities();
         
         repository.AddRange(exchanges);
 

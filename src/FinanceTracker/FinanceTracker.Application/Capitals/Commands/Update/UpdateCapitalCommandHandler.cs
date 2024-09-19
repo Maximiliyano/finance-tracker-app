@@ -1,6 +1,5 @@
 ﻿using FinanceTracker.Application.Abstractions;
 using FinanceTracker.Application.Capitals.Specifications;
-using FinanceTracker.Domain.Entities;
 using FinanceTracker.Domain.Errors;
 using FinanceTracker.Domain.Repositories;
 using FinanceTracker.Domain.Results;
@@ -16,7 +15,7 @@ internal sealed class UpdateCapitalCommandHandler(ICapitalRepository repository,
 
         if (capital is null)
         {
-            return Result.Failure(DomainErrors.Capital.NotFound);
+            return Result.Failure(DomainErrors.General.NotFound);
         }
 
         capital.Name = request.Name ?? capital.Name;

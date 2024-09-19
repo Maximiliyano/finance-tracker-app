@@ -1,36 +1,19 @@
-import { ApplicationRef, ComponentFactoryResolver, Injectable, Injector } from '@angular/core';
-import { LoadingComponent } from '../components/loading/loading.component';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoadingService {
-  private spinnerRef: any;
+  private loadingSubject = new BehaviorSubject<boolean>(false);
 
-  constructor(
-    private componentFactoryResolver: ComponentFactoryResolver,
-    private appRef: ApplicationRef,
-    private injector: Injector
-  ) {}
+  isLoading$ = this.loadingSubject.asObservable();
 
   show(): void {
-    if(!this.spinnerRef) {
-      const factory = this.componentFactoryResolver.resolveComponentFactory(LoadingComponent);
-
-      this.spinnerRef = factory.create(this.injector);
-      this.appRef.attachView(this.spinnerRef.hostView);
-
-      const domElem = (this.spinnerRef.hostView as any).rootNodes[0] as HTMLElement;
-
-      document.body.appendChild(domElem);
-    }
+    this.loadingSubject.next(true);
   }
 
   hide(): void {
-    if(this.spinnerRef) {
-      this.appRef.detachView(this.spinnerRef.hostView);
-      this.spinnerRef.destroy();
-      this.spinnerRef = null;
-    }
+    this.loadingSubject.next(false);
   }
 }

@@ -6,15 +6,16 @@ public sealed record CapitalResponse
     {
     }
 
-    public CapitalResponse(int id, string name, float balance, float totalIncome, float totalExpense, float totalTransferIn, float totalTransferOut)
+    public CapitalResponse(int id, string name, float balance, string currency, float totalIncome, float totalExpense, float totalTransferIn, float totalTransferOut)
     {
         Id = id;
         Balance = balance;
+        Name = name;
+        Currency = currency;
         TotalIncome = totalIncome;
         TotalExpense = totalExpense;
         TotalTransferIn = totalTransferIn;
         TotalTransferOut = totalTransferOut;
-        Name = name;
     }
 
     public int Id { get; init; }
@@ -22,6 +23,8 @@ public sealed record CapitalResponse
     public string Name { get; init; } = string.Empty;
 
     public float Balance { get; init; }
+    
+    public string Currency { get; init; }
 
     public float TotalIncome { get; init; }
 

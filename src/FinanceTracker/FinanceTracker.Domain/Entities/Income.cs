@@ -4,11 +4,11 @@ namespace FinanceTracker.Domain.Entities;
 
 public sealed class Income : Entity, IAuditableEntity, ISoftDeletableEntity
 {
-    public required float Amount { get; init; }
+    public required float Amount { get; set; }
 
-    public string Purpose { get; init; } = null!;
+    public string Purpose { get; set; } = null!;
 
-    public IncomeType Type { get; init; }
+    public IncomeType Type { get; set; }
 
     public DateTimeOffset CreatedAt { get; init; }
 

@@ -10,6 +10,8 @@ public interface IExpenseRepository
 
     void Create(Expense expense);
 
+    void Update(Expense expense);
+
     void Delete(Expense expense);
     
 }

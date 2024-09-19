@@ -20,8 +20,8 @@
       <div class="exchanges">
         <div class="exchange" *ngFor="let exchange of exchanges">
           <div class="prices">
-            <span>{{ exchange?.buy ?? '0' }}</span>
-            <span>{{ exchange?.sale ?? '0' }}</span>
+            <span>{{ exchange?.buy ?? '0' | number: '1.2-2' }}</span>
+            <span>{{ exchange?.sale ?? '0' | number: '1.2-2' }}</span>
           </div>
           <div class="currencies">
             <span>{{ exchange?.targetCurrency ?? 'None' }}</span>

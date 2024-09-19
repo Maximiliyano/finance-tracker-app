@@ -1,3 +1,4 @@
-<div class="spinner-container">
-    <mat-spinner diameter="50"></mat-spinner>
+<div *ngIf="isLoading$ | async" class="loading-overlay">
+    <div class="spinner"></div>
+    <div class="loading-text">Loading...</div>
 </div>

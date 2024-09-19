@@ -1,7 +1,6 @@
 ﻿using FinanceTracker.Domain.Results;
 using FluentValidation;
 using MediatR;
-using Microsoft.AspNetCore.Mvc;
 
 namespace FinanceTracker.Application.Behaviours;
 

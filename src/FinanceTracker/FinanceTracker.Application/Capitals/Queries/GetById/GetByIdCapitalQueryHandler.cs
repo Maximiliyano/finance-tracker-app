@@ -1,7 +1,6 @@
 ﻿using FinanceTracker.Application.Abstractions;
 using FinanceTracker.Application.Capitals.Responses;
 using FinanceTracker.Application.Capitals.Specifications;
-using FinanceTracker.Domain.Entities;
 using FinanceTracker.Domain.Errors;
 using FinanceTracker.Domain.Repositories;
 using FinanceTracker.Domain.Results;
@@ -17,17 +16,10 @@ internal sealed class GetByIdCapitalQueryHandler(ICapitalRepository repository)
 
         if (capital is null)
         {
-            return Result.Failure<CapitalResponse>(DomainErrors.Capital.NotFound);
+            return Result.Failure<CapitalResponse>(DomainErrors.General.NotFound);
         }
 
-        var capitalResponse = new CapitalResponse(
-            capital.Id,
-            capital.Name,
-            capital.Balance,
-            capital.TotalIncome,
-            capital.TotalExpense,
-            capital.TotalTransferIn,
-            capital.TotalTransferOut);
+        var capitalResponse = capital.ToResponse();
 
         return Result.Success(capitalResponse);
     }

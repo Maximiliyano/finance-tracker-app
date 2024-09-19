@@ -31,6 +31,7 @@ public sealed class GetAllCapitalQueryHandlerTests
                 x.Id,
                 x.Name,
                 x.Balance,
+                x.Currency,
                 x.TotalIncome,
                 x.TotalExpense,
                 x.TotalTransferIn,

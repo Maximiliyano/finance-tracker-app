@@ -1,6 +1,5 @@
 ﻿using FinanceTracker.Api.Extensions;
 using FinanceTracker.Application.Capitals.Queries.GetById;
-using FinanceTracker.Domain.Entities;
 using MediatR;
 
 namespace FinanceTracker.Api.Endpoints.Capitals;
@@ -13,6 +12,6 @@ internal sealed class GetById : IEndpoint
             (await sender
                 .Send(new GetByIdCapitalQuery(id)))
                 .Process())
-            .WithTags(nameof(Capital));
+            .WithTags(nameof(Capitals));
     }
 }

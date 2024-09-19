@@ -12,6 +12,7 @@ internal sealed class Delete : IEndpoint
         app.MapDelete("api/expenses/{id:int}", async (int id, ISender sender) => 
             (await sender
                 .Send(new DeleteExpenseCommand(id)))
-                .Process(ResultType.NoContent));
+                .Process(ResultType.NoContent))
+            .WithTags(nameof(Expenses));
     }
 }

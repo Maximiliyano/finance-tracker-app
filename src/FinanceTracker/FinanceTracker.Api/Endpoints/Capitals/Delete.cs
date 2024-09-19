@@ -1,6 +1,5 @@
 ﻿using FinanceTracker.Api.Extensions;
 using FinanceTracker.Application.Capitals.Commands.Delete;
-using FinanceTracker.Domain.Entities;
 using FinanceTracker.Domain.Results;
 using MediatR;
 
@@ -14,6 +13,6 @@ internal sealed class Delete : IEndpoint
             (await sender
                 .Send(new DeleteCapitalCommand(id)))
                 .Process(ResultType.NoContent))
-            .WithTags(nameof(Capital));
+            .WithTags(nameof(Capitals));
     }
 }

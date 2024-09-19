@@ -13,7 +13,7 @@ public sealed class GetAllExpensesQueryHandler(
     {
         var expenses = await repository.GetAllAsync();
 
-        var expenseResponses = expenses.Select(ex => new ExpenseResponse());
+        var expenseResponses = expenses.ToResponses();
 
         return Result.Success(expenseResponses);
     }

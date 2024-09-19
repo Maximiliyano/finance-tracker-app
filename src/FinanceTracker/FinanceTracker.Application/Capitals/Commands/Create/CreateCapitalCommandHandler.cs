@@ -12,11 +12,7 @@ public sealed class CreateCapitalCommandHandler(
 {
     public async Task<Result<int>> Handle(CreateCapitalCommand command, CancellationToken cancellationToken)
     {
-        var capital = new Capital
-        {
-            Name = command.Name,
-            Balance = command.Balance
-        };
+        var capital = command.ToEntity();
 
         repository.Create(capital);
 

@@ -8,6 +8,9 @@ public static class DomainErrors
     {
         public static Error Exception(string message)
             => Error.Failure(nameof(Exception), $"The exception occured with message: {message}");
+        
+        public static Error NotFound
+            => Error.NotFound(nameof(NotFound), "The entity was not found.");
     }
 
     public static class Exchange
@@ -20,17 +23,11 @@ public static class DomainErrors
         
         public static Error AlreadyExists
             => Error.Conflict(nameof(AlreadyExists), "The exchange already exists.");
-    }
+        
+        public static Error TargetCurrencyUnavailable
+            => Error.BadRequest(nameof(TargetCurrencyUnavailable), "The target currency unavailable.");
 
-    public static class Capital
-    {
-        public static Error NotFound
-            => Error.NotFound(nameof(NotFound), "The capital was not found.");
-    }
-
-    public static class Expense
-    {
-        public static Error NotFound
-            => Error.NotFound(nameof(NotFound), "The expense was not found.");
+        public static Error InvalidOperation
+            => Error.BadRequest(nameof(InvalidOperation), "The operation is invalid.");
     }
 }

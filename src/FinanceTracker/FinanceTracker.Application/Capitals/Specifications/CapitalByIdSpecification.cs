@@ -9,12 +9,9 @@ internal sealed class CapitalByIdSpecification
     public CapitalByIdSpecification(int id)
         : base(c => c.Id == id)
     {
-        Includes =
-        [
-            c => c.Expenses!,
-            c => c.Incomes!,
-            c => c.TransfersIn!,
-            c => c.TransfersOut!
-        ];
+        AddInclude(c => c.Expenses);
+        AddInclude(c => c.Incomes);
+        AddInclude(c => c.TransfersIn);
+        AddInclude(c => c.TransfersOut);
     }
 }

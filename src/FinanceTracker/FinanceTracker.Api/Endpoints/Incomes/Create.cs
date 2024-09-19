@@ -1,6 +1,18 @@
+using FinanceTracker.Api.Extensions;
+using FinanceTracker.Application.Incomes.Commands.Create;
+using FinanceTracker.Application.Incomes.Requests;
+using MediatR;
+
 namespace FinanceTracker.Api.Endpoints.Incomes;
 
-public class Create
+internal sealed class Create : IEndpoint
 {
-    
+    public void MapEndpoint(IEndpointRouteBuilder app)
+    {
+        app.MapPost("api/incomes", async (CreateIncomeRequest request, ISender sender) =>
+            (await sender
+                .Send(new CreateIncomeCommand(request.CapitalId, request.Amount, request.Purpose, request.Type)))
+                .Process())
+            .WithTags(nameof(Incomes));
+    }
 }

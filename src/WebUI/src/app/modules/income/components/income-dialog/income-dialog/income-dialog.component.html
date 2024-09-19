@@ -1,9 +1,21 @@
 <form [formGroup]="addIncomeForm">
     <h1 mat-dialog-title>Add</h1>
-    <div mat-dialog-content>
+    <div mat-dialog-content class="dialog-content">
         <mat-form-field>
             <mat-label>Amount</mat-label>
-            <input matInput placeholder="Amount" type="text" formControlName="Amount" name="Amount">
+            <input matInput placeholder="Amount" type="number" formControlName="Amount">
+        </mat-form-field>
+        
+        <mat-form-field>
+            <mat-label>Purpose</mat-label>
+            <input matInput placeholder="Purpose" type="text" formControlName="Purpose">
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Type</mat-label>
+            <mat-select formControlName="Type">
+                <mat-option [value]="incomeType.Salary">Salary</mat-option>
+            </mat-select>
         </mat-form-field>
     </div>
     <div mat-dialog-actions>

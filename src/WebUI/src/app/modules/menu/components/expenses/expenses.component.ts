@@ -7,13 +7,9 @@ import { MatSort } from '@angular/material/sort';
 export interface Expense {
   name: string;
   amount: number;
+  purpose: string;
   date: Date;
 }
-
-const ELEMENT_DATA: Expense[] = [
-  {name: 'Rent', amount: 1000, date: new Date('2024-07-01')},
-  {name: 'Groceries', amount: 200, date: new Date('2024-07-02')},
-];
 
 @Component({
   selector: 'app-expenses',
@@ -22,7 +18,7 @@ const ELEMENT_DATA: Expense[] = [
 })
 export class ExpensesComponent implements OnInit {
   displayedColumns: string[] = ['name', 'amount', 'date', 'actions'];
-  dataSource = new MatTableDataSource<Expense>(ELEMENT_DATA);
+  dataSource = new MatTableDataSource<Expense>();
 
   @ViewChild(MatSort) sort!: MatSort;
 

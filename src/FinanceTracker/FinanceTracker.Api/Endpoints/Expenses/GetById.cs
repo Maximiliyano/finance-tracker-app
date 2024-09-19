@@ -1,6 +1,5 @@
 using FinanceTracker.Api.Extensions;
 using FinanceTracker.Application.Expenses.Queries.GetById;
-using FinanceTracker.Domain.Entities;
 using MediatR;
 
 namespace FinanceTracker.Api.Endpoints.Expenses;
@@ -13,6 +12,6 @@ internal sealed class GetById : IEndpoint
             (await sender
                 .Send(new GetExpenseByIdQuery(id)))
                 .Process())
-            .WithTags(nameof(Expense));
+            .WithTags(nameof(Expenses));
     }
 }

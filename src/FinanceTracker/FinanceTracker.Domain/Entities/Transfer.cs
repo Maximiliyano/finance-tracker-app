@@ -26,6 +26,6 @@ public sealed class Transfer : Entity, IAuditableEntity, ISoftDeletableEntity
     /*
      * TODO current: available transfers amount from capital to capital
      * future: add ability to add transfers from different users
-     * future: add boolean 'Backcash' which define this amount should be returned
+     * future: add boolean 'Backcash' & BackUserId which define this amount should be returned
      */
 }

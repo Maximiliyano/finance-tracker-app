@@ -22,8 +22,26 @@
             <mat-label>Balance</mat-label>
             <input matInput placeholder="Balance" type="number" formControlName="Balance" name="Balance">
 
+            <mat-error *ngIf="hasError('Balance', 'required')">
+                The field is required
+            </mat-error>
+
             <mat-error *ngIf="hasError('Balance', 'min')">
                 The balance not be lower than 0
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Currency</mat-label>
+            <mat-select formControlName="Currency">
+                <mat-option [value]="CurrencyType.UAH">UAH</mat-option>
+                <mat-option [value]="CurrencyType.USD">USD</mat-option>
+                <mat-option [value]="CurrencyType.EUR">EUR</mat-option>
+                <mat-option [value]="CurrencyType.PLN">PLN</mat-option>
+            </mat-select>
+
+            <mat-error *ngIf="hasError('Currency', 'required')">
+                The field is required
             </mat-error>
         </mat-form-field>
     </div>

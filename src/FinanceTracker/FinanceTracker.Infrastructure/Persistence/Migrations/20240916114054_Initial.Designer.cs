@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FinanceTracker.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(FinanceTrackerDbContext))]
-    [Migration("20240912201127_Initial")]
+    [Migration("20240916114054_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -41,6 +41,10 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
 
                     b.Property<int>("CreatedBy")
                         .HasColumnType("int");
+
+                    b.Property<string>("Currency")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTimeOffset?>("DeletedAt")
                         .HasColumnType("datetimeoffset");

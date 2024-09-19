@@ -1,6 +1,3 @@
-using System.Security.Cryptography;
-using FinanceTracker.Domain.Constants;
-
 namespace FinanceTracker.Domain.Entities;
 
 public sealed class Capital
@@ -18,6 +15,8 @@ public sealed class Capital
     public string Name { get; set; } = null!;
 
     public float Balance { get; set; }
+    
+    public string Currency { get; set; }
 
     public float TotalIncome { get; set; }
 

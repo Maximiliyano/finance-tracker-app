@@ -2,8 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
-import { Capital } from '../../../menu/models/capital-model';
 import { CapitalService } from '../../../menu/services/capital.service';
+import { CurrencyType } from '../../../../core/models/currency-type';
 
 @Component({
   selector: 'app-capital-dialog',
@@ -12,8 +12,9 @@ import { CapitalService } from '../../../menu/services/capital.service';
 })
 export class CapitalDialogComponent implements OnInit, OnDestroy {
   addCapitalForm: FormGroup;
+  CurrencyType = CurrencyType;
   
-  private unsubcribe = new Subject<void>;
+  private unsubscribe = new Subject<void>;
 
   constructor(
     private readonly capitalService: CapitalService,
@@ -22,28 +23,24 @@ export class CapitalDialogComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.addCapitalForm = new FormGroup({
       Name: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(24)]),
-      Balance: new FormControl('', [Validators.min(0)])
+      Balance: new FormControl('', [Validators.required, Validators.min(0)]),
+      Currency: new FormControl(CurrencyType.UAH, [Validators.required])
     })
   }
 
   ngOnDestroy(): void {
-    this.unsubcribe.complete();
+    this.unsubscribe.complete();
   }
 
   addNewCapital(): void {
-    const capital: Capital = {
-      id: 0,
+    const capital = {
       name: this.getFormValue('Name'),
       balance: this.getFormValue('Balance'),
-      totalIncome: 0,
-      totalExpense: 0,
-      transferOut: 0,
-      transferIn: 0,
-      editable: false
+      currency: this.getFormValue('Currency')
     };
     
     this.capitalService.add(capital)
-      .pipe(takeUntil(this.unsubcribe))
+      .pipe(takeUntil(this.unsubscribe))
       .subscribe(
         () => {
           this.close(true);

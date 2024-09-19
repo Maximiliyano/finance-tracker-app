@@ -2,6 +2,7 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 10px;
+    padding: 10px;
     
     .cp {
         display: flex;
@@ -14,19 +15,32 @@
         transition: background-color 0.3s ease-out;
         gap: 5px;
         cursor: pointer;
-
-        .cp-delete {
-            color: red;
-        }
     
         &:hover {
             background-color: bisque;
         }
     }
+}
 
-    .cp-add {
-    }
+.cp-actions {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
 
-    .cp-edit {
+    .cp-act-item {
+        width: 100%;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        padding: 10px;
+        transition: background-color 0.3s ease-out;
+        gap: 5px;
+        cursor: pointer;
+
+        &:hover {
+            background-color: bisque;
+        }
     }
 }

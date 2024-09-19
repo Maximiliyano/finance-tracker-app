@@ -4,9 +4,9 @@ namespace FinanceTracker.Domain.Entities;
 
 public sealed class Expense : Entity, IAuditableEntity, ISoftDeletableEntity
 {
-    public required float Amount { get; init; }
+    public required float Amount { get; set; }
 
-    public string? Purpose { get; init; }
+    public string? Purpose { get; set; }
 
     public ExpenseType Type { get; init; }
 

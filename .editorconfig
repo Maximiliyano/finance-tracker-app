@@ -358,7 +358,7 @@ dotnet_diagnostic.S112.severity = none
 # S125: Sections of code should not be commented out
 dotnet_diagnostic.S125.severity = none
 
-# S1135: Track uses of "TODO" tags
+# S1135: Track uses of to do tags
 dotnet_diagnostic.S1135.severity = none
 
 # S2094: Utility classes should not have public constructors

@@ -4,7 +4,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { Capital } from '../../../menu/models/capital-model';
 import { CapitalService } from '../../../menu/services/capital.service';
 import { CapitalDialogComponent } from '../capital-dialog/capital-dialog.component';
-import { SnackbarService } from '../../../../shared/services/snackbar.service';
+import { PopupMessageService } from '../../../../shared/services/popup-message.service';
 
 @Component({
   selector: 'app-capital-list',
@@ -15,19 +15,19 @@ export class CapitalListComponent implements OnInit, OnDestroy {
   capitals: Capital[];
   editMode: boolean;
 
-  private unsubcribe = new Subject<void>;
+  private unsubscribe = new Subject<void>;
 
   constructor(
     private readonly dialog: MatDialog,
     private readonly capitalService: CapitalService,
-    private readonly snackBarService: SnackbarService) { }
+    private readonly popupMessageService: PopupMessageService) { }
 
   ngOnInit(): void {
     this.refresh();
   }
 
   ngOnDestroy(): void {
-    this.unsubcribe.complete();
+    this.unsubscribe.complete();
   }
 
   toggleEditMode(): void {
@@ -39,11 +39,11 @@ export class CapitalListComponent implements OnInit, OnDestroy {
 
     dialogRef
       .afterClosed()
-      .pipe(takeUntil(this.unsubcribe))
+      .pipe(takeUntil(this.unsubscribe))
       .subscribe((response) => {
         if (response) {
           this.refresh();
-          this.snackBarService.display("The capital was successful added.")
+          this.popupMessageService.success("The capital was successful added.")
         }
       });
   }
@@ -54,15 +54,21 @@ export class CapitalListComponent implements OnInit, OnDestroy {
       .remove(id)
       .subscribe(() => {
         this.refresh();
-        this.snackBarService.display("The capital was successful removed.");
+        this.popupMessageService.success("The capital was successful removed.");
       });
   }
 
   private refresh(): void {
     this.capitalService
       .getAll()
-      .pipe(takeUntil(this.unsubcribe))
+      .pipe(takeUntil(this.unsubscribe))
       .subscribe((response) => {
+        response.forEach(c => {
+          if (c.currency == 'UAH') {
+            c.currency = '₴';
+          }
+        });
+
         this.capitals = response;
       });
   }

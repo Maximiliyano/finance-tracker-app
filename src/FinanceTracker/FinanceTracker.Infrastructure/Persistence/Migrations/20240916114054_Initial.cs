@@ -19,6 +19,7 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Balance = table.Column<float>(type: "real", nullable: false),
+                    Currency = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TotalIncome = table.Column<float>(type: "real", nullable: false),
                     TotalExpense = table.Column<float>(type: "real", nullable: false),
                     TotalTransferIn = table.Column<float>(type: "real", nullable: false),

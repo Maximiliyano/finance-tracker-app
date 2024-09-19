@@ -16,6 +16,9 @@ internal sealed class ExpenseRepository(
     public new void Create(Expense expense)
         => base.Create(expense);
 
+    public new void Update(Expense expense)
+        => base.Update(expense);
+
     public new void Delete(Expense expense)
         => base.Delete(expense);
 }

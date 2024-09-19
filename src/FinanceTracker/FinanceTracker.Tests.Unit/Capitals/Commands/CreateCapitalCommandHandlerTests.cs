@@ -1,5 +1,6 @@
 using FinanceTracker.Application.Capitals.Commands.Create;
 using FinanceTracker.Domain.Entities;
+using FinanceTracker.Domain.Enums;
 using FinanceTracker.Domain.Repositories;
 using FluentAssertions;
 using NSubstitute;
@@ -22,7 +23,7 @@ public sealed class CreateCapitalCommandHandlerTests
     public async Task Handle_CreateValidCapital_ReturnsId()
     {
         // Arrange
-        var command = new CreateCapitalCommand("FancyName", 1000);
+        var command = new CreateCapitalCommand("FancyName", 1000, CurrencyType.USD);
         var capital = new Capital
         {
             Name = command.Name,

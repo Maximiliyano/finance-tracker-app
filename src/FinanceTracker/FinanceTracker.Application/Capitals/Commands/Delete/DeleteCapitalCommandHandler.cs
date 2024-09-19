@@ -1,6 +1,5 @@
 using FinanceTracker.Application.Abstractions;
 using FinanceTracker.Application.Capitals.Specifications;
-using FinanceTracker.Domain.Constants;
 using FinanceTracker.Domain.Errors;
 using FinanceTracker.Domain.Repositories;
 using FinanceTracker.Domain.Results;
@@ -18,7 +17,7 @@ internal sealed class DeleteCapitalCommandHandler(
 
         if (capital is null)
         {
-            return Result.Failure(DomainErrors.Capital.NotFound);
+            return Result.Failure(DomainErrors.General.NotFound);
         }
 
         repository.Delete(capital);

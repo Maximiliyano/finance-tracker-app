@@ -1,6 +1,5 @@
 using FinanceTracker.Application.Abstractions;
 using FinanceTracker.Application.Capitals.Responses;
-using FinanceTracker.Domain.Entities;
 using FinanceTracker.Domain.Repositories;
 using FinanceTracker.Domain.Results;
 
@@ -14,15 +13,7 @@ public sealed class GetAllCapitalsQueryHandler(
     {
         var capitals = await repository.GetAllAsync();
 
-        var capitalResponses = capitals
-            .Select(c => new CapitalResponse(
-                c.Id,
-                c.Name,
-                c.Balance,
-                c.TotalIncome,
-                c.TotalExpense,
-                c.TotalTransferIn,
-                c.TotalTransferOut));
+        var capitalResponses = capitals.ToResponses();
 
         return Result.Success(capitalResponses);
     }

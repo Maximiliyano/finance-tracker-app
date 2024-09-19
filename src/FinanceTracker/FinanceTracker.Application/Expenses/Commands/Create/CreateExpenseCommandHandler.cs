@@ -1,26 +1,34 @@
 ﻿using FinanceTracker.Application.Abstractions;
+using FinanceTracker.Application.Capitals.Specifications;
 using FinanceTracker.Domain.Entities;
+using FinanceTracker.Domain.Errors;
 using FinanceTracker.Domain.Repositories;
 using FinanceTracker.Domain.Results;
 
 namespace FinanceTracker.Application.Expenses.Commands.Create;
 
 internal sealed class CreateExpenseCommandHandler(
-    IExpenseRepository repository,
+    ICapitalRepository capitalRepository,
+    IExpenseRepository expenseRepository,
     IUnitOfWork unitOfWork)
     : ICommandHandler<CreateExpenseCommand, int>
 {
-    public async Task<Result<int>> Handle(CreateExpenseCommand request, CancellationToken cancellationToken)
+    public async Task<Result<int>> Handle(CreateExpenseCommand command, CancellationToken cancellationToken)
     {
-        var expense = new Expense
-        {
-            Amount = request.Amount,
-            Purpose = request.Purpose,
-            Type = request.Type,
-            CapitalId = request.CapitalId
-        };
+        var capital = await capitalRepository.GetAsync(new CapitalByIdSpecification(command.CapitalId));
 
-        repository.Create(expense);
+        if (capital is null)
+        {
+            return Result.Failure<int>(DomainErrors.General.NotFound);
+        }
+
+        var expense = command.ToEntity();
+
+        capital.Balance -= expense.Amount;
+
+        capitalRepository.Update(capital);
+        
+        expenseRepository.Create(expense);
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
