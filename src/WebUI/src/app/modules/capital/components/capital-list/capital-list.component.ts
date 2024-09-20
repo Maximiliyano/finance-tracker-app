@@ -14,6 +14,7 @@ import { PopupMessageService } from '../../../../shared/services/popup-message.s
 export class CapitalListComponent implements OnInit, OnDestroy {
   capitals: Capital[];
   editMode: boolean;
+  mainCurrency: string = "₴";
 
   private unsubscribe = new Subject<void>;
 
@@ -48,7 +49,14 @@ export class CapitalListComponent implements OnInit, OnDestroy {
       });
   }
 
-  removeCapital(id: number): void {
+  totalCapitalAmount(): number {
+    return this.capitals?.reduce((accumulator, capital) => accumulator + capital.balance, 0);
+  }
+
+  removeCapital(id: number, event: MouseEvent): void {
+    event.stopPropagation();
+    event.preventDefault();
+
     this.editMode = false;
     this.capitalService
       .remove(id)

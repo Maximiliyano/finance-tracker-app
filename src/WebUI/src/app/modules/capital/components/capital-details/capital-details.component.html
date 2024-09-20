@@ -1,41 +1,46 @@
 <a routerLink="../" class="back-link">Back</a>
 
 <div class="capital">
-    <div class="capital-details">
-        <h2>{{ capital?.name }}</h2>
-        <p>Balance: {{ capital?.balance | currency: capital?.currency }}</p>
-    </div>
 
-    <div class="section incomes">
-        <h3>Incomes</h3>
-        
-        <div *ngFor="let income of incomes" class="income-content">
-            <p><strong>Income #{{ income.id }}</strong></p>
-            <p>Amount: {{ income.amount | currency }}</p>
-            <p>Purpose: {{ income.purpose }}</p>
-            <p>Type: {{ income.type }}</p>
-            <p>Created At: {{ income.createdAt | date }}</p>
-        </div>
+    <mat-tab-group>
+        <mat-tab label="General">
+            <div class="capital-details">
+                <h2>{{ capital?.name }}</h2>
+                <p>Balance: {{ capital?.balance | currency }}</p>
+            </div>
+        </mat-tab>
 
-        <div class="actions income-actions">
-            <button (click)="openAddIncomeDialog()">Add</button>
-            <button>Edit</button>
-            <button>Remove</button>
-        </div>
-    </div>
+        <mat-tab label="Incomes">
+            <div class="incomes">
+                <ng-container *ngFor="let income of incomes">
+                    <p>{{ income.id }}</p>
+                    <p>{{ income.type }} - {{ income.amount }} - {{ income.createdAt | date }}</p>
+                    <p>{{ income.purpose }}</p>
+                    ---------------------------
+                </ng-container>
 
-    <div class="section expenses">
-        <h3>Expenses</h3>
+                <div class="actions income-actions">
+                    <button (click)="openAddIncomeDialog()">Add</button>
+                    <button>Edit</button>
+                    <button>Remove</button>
+                </div>
+            </div>
+        </mat-tab>
 
-        <div *ngFor="let expense of expenses" class="expense-content">
-            <p><strong>Amount: {{ expense.amount | currency }}</strong></p>
-            <p>Purpose: {{ expense.purpose }}</p>
-        </div>
+        <mat-tab label="Expenses">
+            <div class="expenses">
+                <div class="expense-content" *ngFor="let expense of expenses">
+                    <mat-icon>money_off</mat-icon>
+                    <p><strong>Amount: {{ expense.amount | currency }}</strong></p>
+                    <p>Purpose: {{ expense.purpose }}</p>
+                </div>
 
-        <div class="actions expense-actions">
-            <button (click)="openAddExpenseDialog()">Add</button>
-            <button>Edit</button>
-            <button>Remove</button>
-        </div>
-    </div>
+                <div class="actions expense-actions">
+                    <button (click)="openAddExpenseDialog()">Add</button>
+                    <button>Edit</button>
+                    <button>Remove</button>
+                </div>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
 </div>

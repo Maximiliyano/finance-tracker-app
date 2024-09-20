@@ -1,46 +1,81 @@
+.cp-lh {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+
+    .total-amount {
+        border-radius: 5px;
+        border: 1px #ccc solid;
+        padding: 5px;
+        font-weight: 500;
+        font-size: 18px;
+    }
+}
+
 .cp-list {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
     padding: 10px;
-    
+
     .cp {
         display: flex;
-        align-items: center;
-        justify-content: center;
+        justify-content: space-between;
+        background-color: #e6e6e6;
         border-radius: 5px;
         border: 1px solid #ccc;
-        padding: 10px;
-        text-align: center;
         transition: background-color 0.3s ease-out;
-        gap: 5px;
+        margin-top: 5px;
+        padding: 10px;
+        width: 100%;
         cursor: pointer;
+
+        .cp-hd {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            .cp-name {
+                font-size: 16px;
+                font-weight: 400;
+            }
+
+            .cp-menu {
+                &:hover {
+                    color: red;
+                }
+            }
+        }
+
+        .cp-balance {
+            font-size: 16px;
+            font-weight: 400;
+        }
     
         &:hover {
-            background-color: bisque;
+            background-color: #c0c0c0;
         }
     }
 }
 
 .cp-actions {
     display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
+    flex-direction: row;
     align-items: center;
     justify-content: center;
     gap: 5px;
 
     .cp-act-item {
-        width: 100%;
+        background-color: #e6e6e6;
+        border: 1px #747474 solid;
+        color: #282828;
         border-radius: 5px;
-        border: 1px solid #ccc;
-        padding: 10px;
-        transition: background-color 0.3s ease-out;
+        padding: 5px;
         gap: 5px;
         cursor: pointer;
+        transition: color 0.3s ease-out;
 
         &:hover {
-            background-color: bisque;
+            color: #000000;
         }
     }
 }

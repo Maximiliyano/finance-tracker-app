@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using FinanceTracker.Application.Abstractions;
 using FinanceTracker.Application.Exchanges.Responses;
 using FinanceTracker.Application.Exchanges.Service;
@@ -26,10 +27,7 @@ public sealed class GetLatestExchangeQueryHandler(
                 return Result.Failure<IEnumerable<ExchangeResponse>>(result.Errors);
             }
 
-            var actualExchanges = result.Value
-                .OrderBy(x => x.CreatedAt)
-                .Take(2)
-                .ToResponses();
+            var actualExchanges = result.Value.ToResponses();
 
             return Result.Success(actualExchanges);
         }

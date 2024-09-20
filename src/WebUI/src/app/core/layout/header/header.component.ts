@@ -4,6 +4,7 @@ import { ExchangeService } from '../../../shared/services/exchange.service';
 import { Subject, takeUntil } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { ExchangeDialogComponent } from '../../../modules/home/components/exchange-dialog/exchange-dialog.component';
+import { OverlayRef } from '@angular/cdk/overlay';
 
 @Component({
   selector: 'app-header',
@@ -14,6 +15,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   exchanges: Exchange[] | null;
   authorizated: boolean;
   isSidebarExpanded: boolean;
+  overlayRef: OverlayRef;
 
   private unsubscribe = new Subject<void>();
 
@@ -34,6 +36,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.unsubscribe.complete();
+    this.overlayRef.dispose();
   }
 
   openExchangeDialog(): void {

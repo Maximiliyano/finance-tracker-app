@@ -2,17 +2,15 @@
     margin-top: 20px;
     
     .capitals-inner {
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
         gap: 15px;
 
         .capitals-header {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
             border-bottom: 1px solid #ccc;
             padding: 10px 15px 10px 15px;
-            width: 20%;
 
             .ch-text {
                 font-size: 24px;
@@ -21,6 +19,7 @@
         }
 
         .capitals-content {
+            padding-top: 5px;
         }
     }
 }
