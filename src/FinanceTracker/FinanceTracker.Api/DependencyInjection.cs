@@ -1,5 +1,4 @@
-using FinanceTracker.Api.Handlers;
-using FinanceTracker.Application.Exchange;
+using FinanceTracker.Api.Infrastructure;
 using FinanceTracker.Domain.Providers;
 
 namespace FinanceTracker.Api;
@@ -8,21 +7,17 @@ internal static class DependencyInjection
 {
     internal static IServiceCollection AddApi(this IServiceCollection services)
     {
+        services.AddEndpointsApiExplorer();
+        services.AddSwaggerGen();
+        
         services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
 
         services.AddHealthChecks();
 
         services.AddCors();
 
-        services.AddProblemDetails();
-
         services.AddExceptionHandler<GlobalExceptionHandler>();
-
-        services.AddHttpClient<IExchangeHttpService, ExchangeHttpService>();
-
-        services.AddEndpointsApiExplorer();
-
-        services.AddSwaggerGen();
+        services.AddProblemDetails();
 
         return services;
     }

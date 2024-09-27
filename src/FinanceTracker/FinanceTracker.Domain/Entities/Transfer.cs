@@ -2,6 +2,8 @@ namespace FinanceTracker.Domain.Entities;
 
 public sealed class Transfer : Entity, IAuditableEntity, ISoftDeletableEntity
 {
+    public required float Amount { get; set; }
+
     public DateTimeOffset CreatedAt { get; init; }
 
     public int CreatedBy { get; init; }
@@ -10,9 +12,20 @@ public sealed class Transfer : Entity, IAuditableEntity, ISoftDeletableEntity
 
     public int? UpdatedBy { get; init; }
 
-    public DateTimeOffset DeletedAt { get; init; }
+    public DateTimeOffset? DeletedAt { get; init; }
 
-    public bool IsDeleted { get; init; }
+    public bool? IsDeleted { get; init; }
 
-    public int? AccountId { get; init; }
+    public int? SourceCapitalId { get; init; }
+
+    public Capital? SourceCapital { get; init; }
+
+    public int? DestinationCapitalId { get; init; }
+
+    public Capital? DestinationCapital { get; init; }
+    /*
+     * TODO current: available transfers amount from capital to capital
+     * future: add ability to add transfers from different users
+     * future: add boolean 'Backcash' & BackUserId which define this amount should be returned
+     */
 }

@@ -11,6 +11,6 @@ internal sealed class ExpenseConfiguration : IEntityTypeConfiguration<Expense>
     {
         builder.HasKey(e => e.Id);
 
-        builder.ToTable(TableConfigurationConstrants.Expenses);
+        builder.ToTable(TableConfigurationConstants.Expenses);
     }
 }

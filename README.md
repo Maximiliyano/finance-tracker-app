@@ -12,3 +12,7 @@
 - Backend > fly.io
 - Frontend > netlify
 - Database > FreeAspNetHosting
+
+# Web UI
+
+- for local development use <code>ng serve --configuration=development</code>

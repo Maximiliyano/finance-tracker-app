@@ -1,18 +1,20 @@
 using FinanceTracker.Application.Abstractions;
-using FinanceTracker.Domain.Entities;
+using FinanceTracker.Application.Capitals.Responses;
 using FinanceTracker.Domain.Repositories;
 using FinanceTracker.Domain.Results;
 
 namespace FinanceTracker.Application.Capitals.Queries.GetAll;
 
-internal sealed class GetAllCapitalsQueryHandler(
+public sealed class GetAllCapitalsQueryHandler(
     ICapitalRepository repository)
-    : IQueryHandler<GetAllCapitalsQuery, IEnumerable<Capital>>
+    : IQueryHandler<GetAllCapitalsQuery, IEnumerable<CapitalResponse>>
 {
-    public async Task<Result<IEnumerable<Capital>>> Handle(GetAllCapitalsQuery request, CancellationToken cancellationToken)
+    public async Task<Result<IEnumerable<CapitalResponse>>> Handle(GetAllCapitalsQuery request, CancellationToken cancellationToken)
     {
         var capitals = await repository.GetAllAsync();
 
-        return Result.Success(capitals);
+        var capitalResponses = capitals.ToResponses();
+
+        return Result.Success(capitalResponses);
     }
 }

@@ -1,6 +1,6 @@
 using FinanceTracker.Application.Abstractions;
-using FinanceTracker.Domain.Entities;
+using FinanceTracker.Application.Capitals.Responses;
 
 namespace FinanceTracker.Application.Capitals.Queries.GetAll;
 
-public sealed record GetAllCapitalsQuery : IQuery<IEnumerable<Capital>>;
+public sealed record GetAllCapitalsQuery : IQuery<IEnumerable<CapitalResponse>>;

@@ -9,12 +9,15 @@ import { AngularMaterialModule } from './shared/angular-material.module';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { errorInterceptor } from './core/interceptors/error.interceptor';
 import { loadingInterceptor } from './core/interceptors/loading.interceptor';
+import { provideAnimations } from '@angular/platform-browser/animations';
+import { LoadingComponent } from './shared/components/loading/loading.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    LoadingComponent
   ],
   imports: [
     AppRoutingModule,
@@ -25,7 +28,8 @@ import { loadingInterceptor } from './core/interceptors/loading.interceptor';
   providers: [
     provideHttpClient(
       withInterceptors([errorInterceptor, loadingInterceptor])
-    )
+    ),
+    provideAnimations()
   ]
 })
 export class AppModule { }

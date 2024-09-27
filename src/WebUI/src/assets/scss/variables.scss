@@ -1,4 +1,6 @@
 $primary-color: #3498db;
+$primary-background-color: #282828;
+
 $secondary-color: #2ecc71;
 $font-stack: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 $breakpoints: (
@@ -10,8 +12,11 @@ $breakpoints: (
 );
 $header-background: #ffffff;
 $header-border-color: #efefef;
-$text-color: black;
+
+$text-color-wh: #ffffff;
+$text-color: #000000;
 $text-shadow: 1px 1px 2px #ccc;
+
 $exchange-border-color: #7a7979;
 $navigation-item-hover-color: #efefef;
 $button-active-color: #f4ca93;

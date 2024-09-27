@@ -3,7 +3,8 @@ version: "3.4"
 services:
   financetracker.api:
     build:
-      context: "C:\\Projects\\finance-tracker-app\\src\\FinanceTracker"
+      context: "C:\\Users\\mvasylyshyn\\Source\\Repos\\finance-tracker-app\\src\\\
+        FinanceTracker"
       dockerfile: "FinanceTracker.Api/Dockerfile"
       target: "base"
     command: []
@@ -16,6 +17,7 @@ services:
     ports: []
     volumes:
     - "C:\\Users\\mvasylyshyn\\.nuget\\packages:/home/app/.nuget/packages"
-    - "C:\\Projects\\finance-tracker-app\\src\\FinanceTracker\\FinanceTracker.Api:/app:rw"
-    - "C:\\Projects\\finance-tracker-app\\src\\FinanceTracker:/src:rw"
+    - "C:\\Users\\mvasylyshyn\\Source\\Repos\\finance-tracker-app\\src\\FinanceTracker\\\
+      FinanceTracker.Api:/app:rw"
+    - "C:\\Users\\mvasylyshyn\\Source\\Repos\\finance-tracker-app\\src\\FinanceTracker:/src:rw"
     working_dir: "/app"

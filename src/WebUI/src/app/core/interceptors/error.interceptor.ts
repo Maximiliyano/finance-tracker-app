@@ -1,19 +1,26 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { catchError, throwError } from 'rxjs';
+import { Result } from '../models/result';
+import { PopupMessageService } from '../../shared/services/popup-message.service';
 
 export const errorInterceptor: HttpInterceptorFn = (req, next) => {
-  const snackBarService = inject(MatSnackBar);
-
+  const popupMessageService = inject(PopupMessageService);
 
   return next(req).pipe(
     catchError((response) => {
-      const error = response.error;
+      const result: Result = response.error;
 
-      snackBarService.open(error);
+      if(result.title === undefined) {
+        popupMessageService.error('Unexpected error happend. Connection refused.', 99999);
+      }
+      else {
+        for(let i = 0; i < result.errors.length; i++) {
+          popupMessageService.error(result.errors[i].message);
+        }
+      }
 
-      return throwError(error);
+      return throwError(result.errors);
     })
   );
 };

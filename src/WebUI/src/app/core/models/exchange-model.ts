@@ -1,6 +1,6 @@
 export interface Exchange {
-    ccy: string,
-    base_ccy: string,
+    targetCurrency: string,
+    nationalCurrency: string,
     buy: number,
     sale: number
 }

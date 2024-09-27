@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 namespace FinanceTracker.Infrastructure.Persistence.Repositories;
 
 internal abstract class GeneralRepository<TEntity>(FinanceTrackerDbContext context)
-    where TEntity : Entity
+    where TEntity : Entity, ISoftDeletableEntity
 {
     protected FinanceTrackerDbContext DbContext { get; } = context;
 
@@ -15,10 +15,20 @@ internal abstract class GeneralRepository<TEntity>(FinanceTrackerDbContext conte
             .AsNoTracking()
             .ToListAsync();
 
-    protected void Add(TEntity entity) =>
+    protected async Task<TEntity?> GetAsync(ISpecification<TEntity> specification) =>
+        await ApplySpecification(specification)
+            .FirstOrDefaultAsync();
+
+    protected void Create(TEntity entity) =>
         DbContext.Set<TEntity>().Add(entity);
 
-    protected void Remove(TEntity entity) =>
+    protected void CreateRange(IEnumerable<TEntity> entities) =>
+        DbContext.Set<TEntity>().AddRange(entities);
+
+    protected void Update(TEntity entity) =>
+        DbContext.Set<TEntity>().Update(entity);
+
+    protected void Delete(TEntity entity) =>
         DbContext.Set<TEntity>().Remove(entity);
 
     protected async Task<bool> AnyAsync(ISpecification<TEntity> specification) =>

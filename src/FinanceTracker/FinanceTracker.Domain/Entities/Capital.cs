@@ -1,6 +1,7 @@
 namespace FinanceTracker.Domain.Entities;
 
-public sealed class Capital : Entity, IAuditableEntity, ISoftDeletableEntity
+public sealed class Capital
+    : Entity, IAuditableEntity, ISoftDeletableEntity
 {
     public Capital(int id)
         : base(id)
@@ -11,17 +12,19 @@ public sealed class Capital : Entity, IAuditableEntity, ISoftDeletableEntity
     {
     }
 
-    public required string Name { get; init; }
+    public string Name { get; set; } = null!;
 
-    public required float Balance { get; init; }
+    public float Balance { get; set; }
+    
+    public string Currency { get; set; }
 
-    public required float TotalIncome { get; init; }
+    public float TotalIncome { get; set; }
 
-    public required float TotalExpense { get; init; }
+    public float TotalExpense { get; set; }
 
-    public required float TotalTransferIn { get; init; }
+    public float TotalTransferIn { get; set; }
 
-    public required float TotalTransferOut { get; init; }
+    public float TotalTransferOut { get; set; }
 
     public DateTimeOffset CreatedAt { get; init; }
 
@@ -31,13 +34,15 @@ public sealed class Capital : Entity, IAuditableEntity, ISoftDeletableEntity
 
     public int? UpdatedBy { get; init; }
 
-    public DateTimeOffset DeletedAt { get; init; }
+    public DateTimeOffset? DeletedAt { get; init; }
 
-    public bool IsDeleted { get; init; }
+    public bool? IsDeleted { get; init; }
 
     public IEnumerable<Income>? Incomes { get; init; }
 
     public IEnumerable<Expense>? Expenses { get; init; }
 
-    public IEnumerable<Transfer>? Transfers { get; init; }
+    public IEnumerable<Transfer>? TransfersIn { get; init; }
+
+    public IEnumerable<Transfer>? TransfersOut { get; init; }
 }

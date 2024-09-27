@@ -29,7 +29,7 @@ internal sealed class UpdateAuditableEntitiesInterceptor(IDateTimeProvider dateT
             .Entries<IAuditableEntity>()
             .ToList();
 
-        foreach (var entry in entries)
+        foreach (EntityEntry<IAuditableEntity> entry in entries)
         {
             if (entry.State == EntityState.Added)
             {
@@ -41,13 +41,11 @@ internal sealed class UpdateAuditableEntitiesInterceptor(IDateTimeProvider dateT
                 SetCurrentPropertyValue(entry, nameof(IAuditableEntity.UpdatedAt), dateTimeProvider.UtcNow);
             }
         }
-
-        return;
-
-        static void SetCurrentPropertyValue(
-            EntityEntry entry,
-            string propertyName,
-            DateTimeOffset utcNow)
-                => entry.Property(propertyName).CurrentValue = utcNow;
     }
+    
+    private static void SetCurrentPropertyValue(
+        EntityEntry entry,
+        string propertyName,
+        DateTimeOffset utcNow)
+            => entry.Property(propertyName).CurrentValue = utcNow;
 }

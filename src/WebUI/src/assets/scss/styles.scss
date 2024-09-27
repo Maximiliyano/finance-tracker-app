@@ -15,3 +15,54 @@ body {
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+
+.popup-message {
+    position: fixed;
+    top: 90px;
+    right: 20px;
+    padding: 10px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    z-index: 1000;
+    background-color: #f1f1f1;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.3s ease-out, fadeOut 0.3s ease-in 3s forwards;
+    font-size: 14px;
+    color: #333;
+  }
+  
+  .popup-message.success {
+    border-left: 5px solid green;
+  }
+  
+  .popup-message.warning {
+    border-left: 5px solid orange;
+  }
+  
+  .popup-message.error {
+    border-left: 5px solid red;
+  }
+  
+  .popup-icon {
+    margin-right: 10px;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes fadeOut {
+    to {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+  }
+  

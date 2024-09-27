@@ -1,5 +1,7 @@
 using FinanceTracker.Application.Abstractions;
-using FinanceTracker.Application.Exchange;
+using FinanceTracker.Application.Behaviours;
+using FinanceTracker.Application.Exchanges;
+using FinanceTracker.Application.Exchanges.Service;
 using FluentValidation;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,6 +18,8 @@ public static class DependencyInjection
 
         services.AddSettings();
 
+        services.AddHttpClient<IExchangeHttpService, ExchangeHttpService>();
+
         return services;
     }
 
@@ -24,6 +28,8 @@ public static class DependencyInjection
         services.AddMediatR(config =>
         {
             config.RegisterServicesFromAssembly(AssemblyReference.Assembly);
+
+            config.AddOpenBehavior(typeof(ValidationPipelineBehavior<,>));
         });
 
         return services;
@@ -35,7 +41,9 @@ public static class DependencyInjection
 
         services.Configure<PBApiSettings>(configuration.GetRequiredSection(nameof(PBApiSettings)));
 
-        services.Configure<WebUISettings>(configuration.GetRequiredSection(nameof(WebUISettings)));
+        services.Configure<WebUrlSettings>(configuration.GetRequiredSection(nameof(WebUrlSettings)));
+
+        services.Configure<BackgroundJobsSettings>(configuration.GetRequiredSection(nameof(BackgroundJobsSettings)));
 
         return services;
     }

@@ -16,10 +16,19 @@ public sealed record Error
     public string Message { get; }
 
     public ErrorType Type { get; }
-
+    
     public static Error Failure(string code, string message)
         => new(code, message, ErrorType.Failure);
 
+    public static Error Validation(string code, string message)
+        => new(code, message, ErrorType.Validation);
+
     public static Error BadRequest(string code, string message)
         => new(code, message, ErrorType.BadRequest);
+
+    public static Error NotFound(string code, string message)
+        => new(code, message, ErrorType.NotFound);
+    
+    public static Error Conflict(string code, string message)
+        => new(code, message, ErrorType.Conflict);
 }

@@ -1,0 +1,47 @@
+<div class="cp-details" *ngIf="capital">
+
+  <div class="cp-header">
+    <button class="cp-return" routerLink="../">
+      <mat-icon>exit_to_app</mat-icon>
+    </button>
+  </div>
+
+  <div class="cp-details-col">
+    <span class="cp-text">Balance</span>
+    <div class="balance-input">
+      <input
+        type="number"
+        [(ngModel)]="capital.balance"
+        (ngModelChange)="onInputChange()"
+        placeholder="Balance"
+      /> <!-- TODO validation -->
+
+      <select class="currency" [(ngModel)]="capital.currency" (change)="onInputChange()">
+        <option [value]="capital.currency">
+          {{ capital.currency }}
+        </option>
+        <option *ngFor="let currency of getCurrencyValues()" [value]="currency">{{ currency }}</option>
+      </select>
+
+    </div>
+  </div>
+
+  <div class="cp-details-col">
+    <span class="cp-text">Name</span>
+    <input
+      type="text"
+      [(ngModel)]="capital.name"
+      (ngModelChange)="onInputChange()"
+      placeholder="Name"
+    />
+  </div> <!-- TODO validation -->
+
+  <div class="cp-actions" *ngIf="isModified">
+    <button class="cp-act-item save" (click)="saveChanges()">Save</button>
+    <button class="cp-act-item cancel" (click)="cancelChanges()">Cancel</button>
+  </div>
+
+  <div class="cp-actions" *ngIf="!isModified">
+    <button class="cp-act-item delete" (click)="delete(capital.id)">Delete</button>
+  </div>
+</div>

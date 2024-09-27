@@ -2,6 +2,9 @@ namespace FinanceTracker.Domain.Results;
 
 public enum ErrorType
 {
-    Failure = 0,
-    BadRequest = 1,
+    Failure,
+    Validation,
+    BadRequest,
+    NotFound,
+    Conflict,
 }

@@ -20,21 +20,21 @@
       <div class="exchanges">
         <div class="exchange" *ngFor="let exchange of exchanges">
           <div class="prices">
-            <span>{{ exchange?.buy }}</span>
-            <span>{{ exchange?.sale }}</span>
+            <span>{{ exchange?.buy ?? '0' | number: '1.2-2' }}</span>
+            <span>{{ exchange?.sale ?? '0' | number: '1.2-2' }}</span>
           </div>
           <div class="currencies">
-            <span>{{ exchange?.ccy }}</span>
-            <span>{{ exchange?.base_ccy }}</span>
+            <span>{{ exchange?.targetCurrency ?? 'None' }}</span>
+            <span>{{ exchange?.nationalCurrency ?? 'None' }}</span>
           </div>
         </div>
       </div>
 
       <nav class="navigation">
         <ul class="list">
-          <li class="item" routerLink="/menu/capitals">
+          <li class="item" routerLink="/capitals">
             <mat-icon>account_balance_wallet</mat-icon>
-            Capital
+            Capitals
           </li>
           <li class="item" routerLink="/menu/incomes">
             <mat-icon>monetization_on</mat-icon>
@@ -60,7 +60,7 @@
           0 грн / 0 $
         </div>
 
-        <button class="account-button" (click)="openAuthDialog()">
+        <button class="account-button">
           <mat-icon>account_circle</mat-icon>
           Profile
         </button>
@@ -79,9 +79,9 @@
     <div class="sidebar-content">
       <nav class="sidebar-nav">
         <ul class="sidebar-nav-list">
-          <li class="sidebar-nav-item" routerLink="/menu/capitals" (click)="isSidebarExpanded=!isSidebarExpanded">
+          <li class="sidebar-nav-item" routerLink="/capitals" (click)="isSidebarExpanded=!isSidebarExpanded">
             <mat-icon>account_balance_wallet</mat-icon>
-            Capital
+            Capitals
           </li>
           <li class="sidebar-nav-item" routerLink="/menu/incomes" (click)="isSidebarExpanded=!isSidebarExpanded">
             <mat-icon>monetization_on</mat-icon>

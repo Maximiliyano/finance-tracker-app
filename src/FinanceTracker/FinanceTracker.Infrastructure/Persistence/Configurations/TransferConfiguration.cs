@@ -11,6 +11,6 @@ internal sealed class TransferConfiguration : IEntityTypeConfiguration<Transfer>
     {
         builder.HasKey(t => t.Id);
 
-        builder.ToTable(TableConfigurationConstrants.Transfers);
+        builder.ToTable(TableConfigurationConstants.Transfers);
     }
 }
