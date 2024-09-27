@@ -3,19 +3,14 @@
     <span class="total-amount">{{ totalCapitalAmount() | currency: mainCurrency }}</span>
 </div>
 
-<div class="cp-list">
+<div class="cp-list" *ngIf="capitals?.length">
     <div *ngFor="let capital of capitals">
         <a [routerLink]="[capital.id]" class="cp">
-            <div class="cp-hd">
-                <button class="cp-menu" (click)="removeCapital(capital.id, $event)">
-                    <mat-icon>delete_outline</mat-icon> <!--more_vert-->
-                </button>
-
-                <span class="cp-name">
-                    {{ capital.name }}
-                </span>
-            </div>
-            <span class="cp-balance">{{ capital.balance | currency: capital.currency }}</span>
+          <span class="cp-name">{{ capital.name }}</span>
+          <span class="cp-balance">{{ capital.balance | currency: capital.currency }}</span>
+          <button class="cp-menu" (click)="removeCapital(capital.id, $event)">
+              <mat-icon>delete_outline</mat-icon>
+          </button>
         </a>
     </div>
 </div>

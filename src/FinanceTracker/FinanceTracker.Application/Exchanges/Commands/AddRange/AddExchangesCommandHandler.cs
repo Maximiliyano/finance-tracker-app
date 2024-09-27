@@ -1,5 +1,4 @@
 using FinanceTracker.Application.Abstractions;
-using FinanceTracker.Domain.Entities;
 using FinanceTracker.Domain.Repositories;
 using FinanceTracker.Domain.Results;
 

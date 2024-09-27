@@ -9,9 +9,9 @@ internal sealed class Update : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapPut("api/capitals", async (UpdateCapitalRequest request, ISender sender) =>
+        app.MapPut("api/capitals/{id:int}", async (int id, UpdateCapitalRequest request, ISender sender) =>
             (await sender
-                .Send(new UpdateCapitalCommand(request.Id, request.Name, request.Balance)))
+                .Send(new UpdateCapitalCommand(id, request.Name, request.Balance, request.Currency)))
                 .Process())
             .WithTags(nameof(Capitals));
     }

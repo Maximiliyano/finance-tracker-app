@@ -1,5 +1,3 @@
-using FinanceTracker.Application.Exchanges;
-using FinanceTracker.Application.Exchanges.Responses;
 using FinanceTracker.Application.Expenses.Commands.Create;
 using FinanceTracker.Application.Expenses.Responses;
 using FinanceTracker.Domain.Entities;

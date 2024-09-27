@@ -1,8 +1,8 @@
-<h1 mat-dialog-title>Confirm action</h1>
+<h1 mat-dialog-title>Confirm {{ data.title }}</h1>
 <div mat-dialog-content>
-    Are you confirm this action?
+    <p>Are you sure you want to {{ data.action }} this item?</p>
 </div>
 <div mat-dialog-actions>
-    <button>Yes</button>
-    <button>No</button>
+    <button mat-button (click)="onConfirm()">Confirm</button>
+    <button mat-button (click)="onCancel()">Cancel</button>
 </div>

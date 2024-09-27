@@ -4,6 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 import { CapitalService } from '../../../menu/services/capital.service';
 import { CurrencyType } from '../../../../core/models/currency-type';
+import { AddCapitalRequest } from '../../models/add-capital-request';
 
 @Component({
   selector: 'app-capital-dialog',
@@ -33,13 +34,13 @@ export class CapitalDialogComponent implements OnInit, OnDestroy {
   }
 
   addNewCapital(): void {
-    const capital = {
+    const request: AddCapitalRequest = {
       name: this.getFormValue('Name'),
       balance: this.getFormValue('Balance'),
       currency: this.getFormValue('Currency')
     };
     
-    this.capitalService.add(capital)
+    this.capitalService.add(request)
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(
         () => {

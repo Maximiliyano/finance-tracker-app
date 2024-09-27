@@ -17,9 +17,14 @@ internal sealed class UpdateCapitalCommandHandler(ICapitalRepository repository,
         {
             return Result.Failure(DomainErrors.General.NotFound);
         }
-
-        capital.Name = request.Name ?? capital.Name;
-        capital.Balance = request.Balance ?? capital.Balance;
+        
+        capital.Name = request.Name != null && request.Name != capital.Name ? request.Name : capital.Name;
+        if (request.Balance.HasValue && 
+            Math.Abs(request.Balance.Value - capital.Balance) > 0.000)
+        {
+            capital.Balance = request.Balance.Value;
+        }
+        capital.Currency = request.Currency != null && request.Currency != capital.Currency ? request.Currency : capital.Currency;
 
         repository.Update(capital);
 

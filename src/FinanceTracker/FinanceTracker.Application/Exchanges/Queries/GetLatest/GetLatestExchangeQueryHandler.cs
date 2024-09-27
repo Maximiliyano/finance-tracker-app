@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using FinanceTracker.Application.Abstractions;
 using FinanceTracker.Application.Exchanges.Responses;
 using FinanceTracker.Application.Exchanges.Service;

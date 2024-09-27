@@ -9,6 +9,9 @@ public static class ValidationErrors
         public static Error AlreadyExists
             => Error.Conflict(nameof(AlreadyExists), "The capital was already exists.");
         
+        public static Error NameAlreadyExists
+            => Error.Conflict(nameof(NameAlreadyExists), "The capital name was already exists.");
+        
         public static Error NotFound
             => Error.NotFound(nameof(NotFound), "The capital was not found.");
     }

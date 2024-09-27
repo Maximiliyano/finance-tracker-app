@@ -1,5 +1,4 @@
 using FinanceTracker.Application.Abstractions;
-using FinanceTracker.Application.Capitals.Specifications;
 using FinanceTracker.Application.Expenses.Specifications;
 using FinanceTracker.Domain.Errors;
 using FinanceTracker.Domain.Repositories;

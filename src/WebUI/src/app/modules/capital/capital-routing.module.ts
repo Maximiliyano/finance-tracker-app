@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { CapitalDetailsComponent } from './components/capital-details/capital-details.component';
 import { CapitalsComponent } from './capitals.component';
 import { CapitalListComponent } from './components/capital-list/capital-list.component';
+import { capitalIdResolver } from '../../core/resolvers/capital-id.resolver';
 
 const routes: Routes = [
   {
@@ -15,7 +16,8 @@ const routes: Routes = [
       },
       {
         path: ':capital.id',
-        component: CapitalDetailsComponent
+        component: CapitalDetailsComponent,
+        resolve: { capital: capitalIdResolver }
       }
     ]
   }

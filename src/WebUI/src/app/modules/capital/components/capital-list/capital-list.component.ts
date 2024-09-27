@@ -50,7 +50,7 @@ export class CapitalListComponent implements OnInit, OnDestroy {
   }
 
   totalCapitalAmount(): number {
-    return this.capitals?.reduce((accumulator, capital) => accumulator + capital.balance, 0);
+    return this.capitals?.reduce((accumulator, capital) => accumulator + capital.balance, 0) ?? 0;
   }
 
   removeCapital(id: number, event: MouseEvent): void {
