@@ -12,9 +12,12 @@
       <input
         type="number"
         [(ngModel)]="capital.balance"
-        (ngModelChange)="onInputChange()"
         placeholder="Balance"
-      /> <!-- TODO validation -->
+        #cpBalance="ngModel"
+        (ngModelChange)="onInputChange()"
+        required
+        min="0"
+      />
 
       <select class="currency" [(ngModel)]="capital.currency" (change)="onInputChange()">
         <option [value]="capital.currency">
@@ -24,6 +27,11 @@
       </select>
 
     </div>
+
+    <div *ngIf="modelInvalidAndTouched(cpBalance)" class="error-message">
+      <span *ngIf="modelError(cpBalance, 'required')">Balance is required.</span>
+      <span *ngIf="modelError(cpBalance, 'min')">Balance must be greater than 0.</span>
+    </div>
   </div>
 
   <div class="cp-details-col">
@@ -31,13 +39,21 @@
     <input
       type="text"
       [(ngModel)]="capital.name"
+      #cpName="ngModel"
       (ngModelChange)="onInputChange()"
       placeholder="Name"
+      required
+      maxlength="32"
     />
-  </div> <!-- TODO validation -->
+  </div>
+
+  <div *ngIf="modelInvalidAndTouched(cpName)" class="error-message">
+    <span *ngIf="modelError(cpName, 'required')">Name is required.</span>
+    <span *ngIf="modelError(cpName, 'maxlength')">Name must be less than 32.</span>
+  </div>
 
   <div class="cp-actions" *ngIf="isModified">
-    <button class="cp-act-item save" (click)="saveChanges()">Save</button>
+    <button class="cp-act-item save" (click)="saveChanges()" [disabled]="cpName.invalid || cpBalance.invalid">Save</button>
     <button class="cp-act-item cancel" (click)="cancelChanges()">Cancel</button>
   </div>
 

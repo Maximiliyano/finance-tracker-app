@@ -59,6 +59,12 @@
     }
   }
 
+  .error-message {
+    color: #e53935;
+    font-size: 12px;
+    font-weight: bold;
+  }
+
   .cp-actions {
     display: flex;
     flex-direction: row;
@@ -89,10 +95,14 @@
     .save {
       color: #ffffff;
       background-color: #377e21;
-      border-color: #377e21;
 
       &:hover {
         background-color: #47a42b;
+      }
+
+      &:disabled {
+        background-color: #ccc;
+        cursor:no-drop;
       }
     }
 
@@ -133,4 +143,9 @@ select, input {
 
 input {
   width: 100%;
+}
+
+input.ng-invalid.ng-touched {
+  border-color: #e53935;
+  box-shadow: 0 0 5px #e53935;
 }

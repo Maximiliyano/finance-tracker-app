@@ -15,9 +15,10 @@ internal sealed class UpdateCapitalCommandValidator : AbstractValidator<UpdateCa
             .GreaterThanOrEqualTo(ValidationConstants.ZeroValue);
 
         RuleFor(c => c.Name)
-            .NotEmpty()
+            .MustAsync(async (name, _) => !await repository
+                .AnyAsync(new CapitalByNameSpecification(name)))
+                .WithError(ValidationErrors.Capital.NameAlreadyExists)
             .MaximumLength(ValidationConstants.MaxLenghtName)
-            .MustAsync(async (name, _) => !await repository.AnyAsync(new CapitalByNameSpecification(name)))
-            .WithError(ValidationErrors.Capital.NameAlreadyExists);
+            .NotEmpty();
     }
 }

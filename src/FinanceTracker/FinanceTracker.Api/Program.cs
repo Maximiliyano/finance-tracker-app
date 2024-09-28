@@ -6,7 +6,8 @@ using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Serilog;
 using AssemblyReference = FinanceTracker.Api.AssemblyReference;
-
+// TODO try to make auto deployment in githup
+// TODO deploy BE & DB in CleverCloud https://console.clever-cloud.com/
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Host.UseSerilogDependencies();
@@ -19,10 +20,6 @@ builder.Services
 builder.Services.AddEndpoints(AssemblyReference.Assembly);
 
 var app = builder.Build();
-
-/*if (app.Environment.IsDevelopment())
-{
-}*/
 
 app.UseSwaggerDependencies();
 

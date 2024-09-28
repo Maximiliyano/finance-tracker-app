@@ -7,6 +7,7 @@ import { PopupMessageService } from '../../../../shared/services/popup-message.s
 import { UpdateCapitalRequest } from '../../models/update-capital-request';
 import { ConfirmDialogService } from '../../../../shared/services/confirm-dialog.service';
 import { CurrencyType } from '../../../../core/models/currency-type';
+import { NgModel, ValidationErrors } from '@angular/forms';
 
 @Component({
   selector: 'app-capital-details',
@@ -96,5 +97,13 @@ export class CapitalDetailsComponent implements OnInit, OnDestroy {
   getCurrencyValues(): string[] {
     return Object.keys(this.currencyType)
       .filter((key) => isNaN(Number(key)) && key !== "None" && key !== this.capital?.currency);
+  }
+
+  modelInvalidAndTouched(model: NgModel): boolean | null {
+    return model.invalid && model.touched;
+  }
+
+  modelError(model: NgModel, errorName: string): any {
+    return model.errors?.[errorName];
   }
 }
