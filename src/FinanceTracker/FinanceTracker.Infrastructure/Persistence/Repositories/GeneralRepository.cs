@@ -1,3 +1,4 @@
+using FinanceTracker.Application.Abstractions.Data;
 using FinanceTracker.Domain.Entities;
 using FinanceTracker.Domain.Repositories;
 using FinanceTracker.Infrastructure.Persistence.Abstractions;
@@ -5,10 +6,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FinanceTracker.Infrastructure.Persistence.Repositories;
 
-internal abstract class GeneralRepository<TEntity>(FinanceTrackerDbContext context)
+internal abstract class GeneralRepository<TEntity>(IFinanceTrackerDbContext context)
     where TEntity : Entity, ISoftDeletableEntity
 {
-    protected FinanceTrackerDbContext DbContext { get; } = context;
+    protected IFinanceTrackerDbContext DbContext { get; } = context;
 
     protected async Task<IEnumerable<TEntity>> GetAllAsync() =>
         await DbContext.Set<TEntity>()

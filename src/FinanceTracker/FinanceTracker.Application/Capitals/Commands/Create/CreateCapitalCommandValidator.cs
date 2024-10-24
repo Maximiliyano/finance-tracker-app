@@ -1,6 +1,7 @@
 using FinanceTracker.Application.Abstractions;
 using FinanceTracker.Application.Capitals.Specifications;
 using FinanceTracker.Domain.Constants;
+using FinanceTracker.Domain.Enums;
 using FinanceTracker.Domain.Errors;
 using FinanceTracker.Domain.Repositories;
 using FluentValidation;
@@ -17,5 +18,13 @@ internal sealed class CreateCapitalCommandValidator : AbstractValidator<CreateCa
             .WithError(ValidationErrors.Capital.AlreadyExists)
             .NotEmpty()
             .MaximumLength(ValidationConstants.MaxLenghtName);
+
+        RuleFor(c => c.Balance)
+            .GreaterThanOrEqualTo(ValidationConstants.ZeroValue)
+            .WithError(ValidationErrors.General.AmountMustBeGreaterThanZero);
+        
+        RuleFor(c => c.Currency)
+            .Must(currency => currency is not CurrencyType.None)
+            .WithError(ValidationErrors.Capital.InvalidCurrencyType);
     }
 }

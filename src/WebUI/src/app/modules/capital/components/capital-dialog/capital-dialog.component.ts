@@ -2,9 +2,12 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
-import { CapitalService } from '../../../menu/services/capital.service';
+import { CapitalService } from '../../services/capital.service';
 import { CurrencyType } from '../../../../core/models/currency-type';
 import { AddCapitalRequest } from '../../models/add-capital-request';
+import { PopupMessageService } from '../../../../shared/services/popup-message.service';
+import { Currency } from '../../../../shared/components/currency/models/currency';
+import { getCurrencies } from '../../../../shared/components/currency/functions/get-currencies.component';
 
 @Component({
   selector: 'app-capital-dialog',
@@ -13,20 +16,22 @@ import { AddCapitalRequest } from '../../models/add-capital-request';
 })
 export class CapitalDialogComponent implements OnInit, OnDestroy {
   addCapitalForm: FormGroup;
-  CurrencyType = CurrencyType;
-  
+
+  currency = CurrencyType;
+
   private unsubscribe = new Subject<void>;
 
   constructor(
     private readonly capitalService: CapitalService,
+    private readonly popupMessageService: PopupMessageService,
     private readonly dialogRef: MatDialogRef<CapitalDialogComponent>) { }
-  
+
   ngOnInit(): void {
     this.addCapitalForm = new FormGroup({
       Name: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(24)]),
-      Balance: new FormControl('', [Validators.required, Validators.min(0)]),
+      Balance: new FormControl(0, [Validators.required, Validators.min(0)]),
       Currency: new FormControl(CurrencyType.UAH, [Validators.required])
-    })
+    });
   }
 
   ngOnDestroy(): void {
@@ -34,29 +39,30 @@ export class CapitalDialogComponent implements OnInit, OnDestroy {
   }
 
   addNewCapital(): void {
+    if (this.addCapitalForm.invalid) {
+      this.popupMessageService.error('The capital form is invalid.');
+      return;
+    }
+
     const request: AddCapitalRequest = {
-      name: this.getFormValue('Name'),
-      balance: this.getFormValue('Balance'),
-      currency: this.getFormValue('Currency')
+      name: this.addCapitalForm.value.Name,
+      balance: this.addCapitalForm.value.Balance,
+      currency: this.addCapitalForm.value.Currency
     };
-    
+
     this.capitalService.add(request)
       .pipe(takeUntil(this.unsubscribe))
-      .subscribe(
-        () => {
+      .subscribe({
+        next: () => {
           this.close(true);
+          this.popupMessageService.success("The capital was successful added.");
         },
-        () => {
-          this.close(false);
-        });
+        error: () => this.close(false)
+      });
   }
 
   close(response: boolean): void {
     this.dialogRef.close(response);
-  }
-
-  getFormValue(fieldName: string): any {
-    return this.addCapitalForm.get(fieldName)?.value;
   }
 
   hasError(controlName: string, error: string): boolean {

@@ -1,4 +1,4 @@
-using FinanceTracker.Application.Abstractions;
+using FinanceTracker.Application.Abstractions.Settings;
 using Microsoft.Extensions.Options;
 using Quartz;
 
@@ -11,7 +11,7 @@ public sealed class SaveLatestExchangeJobSetup(
     public void Configure(QuartzOptions options)
     {
         var jobKey = JobKey.Create(nameof(SaveLatestExchangeJob));
-        
+
         options
             .AddJob<SaveLatestExchangeJob>(jobBuilder => jobBuilder
                 .WithIdentity(jobKey))

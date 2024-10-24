@@ -2,64 +2,46 @@
   <div class="header-container">
     <div class="header-inner">
       <div class="head">
-        <button class="burger-menu" (click)="isSidebarExpanded=true">
+        <button class="burger-menu" (click)="isSidebarExpanded = true" aria-label="Open menu">
           <mat-icon>menu</mat-icon>
         </button>
 
         <a class="logo" routerLink="/">Finance Tracker</a>
 
-        <button class="home" routerLink="/">
+        <button class="home" routerLink="/" aria-label="Home">
           <mat-icon>home</mat-icon>
         </button>
 
-        <button class="exchange-button" (click)="openExchangeDialog()">
+        <button class="exchange-button" (click)="openExchangeDialog()" aria-label="Open exchange dialog">
           <mat-icon>attach_money</mat-icon>
         </button>
       </div>
 
       <div class="exchanges">
-        <div class="exchange" *ngFor="let exchange of exchanges">
-          <div class="prices">
-            <span>{{ exchange?.buy ?? '0' | number: '1.2-2' }}</span>
-            <span>{{ exchange?.sale ?? '0' | number: '1.2-2' }}</span>
+        <ng-container *ngFor="let exchange of exchanges">
+          <div class="exchange">
+            <div class="prices">
+              <span>{{ exchange?.buy || '0' | number: '1.2-2' }}</span>
+              <span>{{ exchange?.sale || '0' | number: '1.2-2' }}</span>
+            </div>
+            <div class="currencies">
+              <span>{{ exchange?.targetCurrency || 'None' }}</span>
+              <span>{{ exchange?.nationalCurrency || 'None' }}</span>
+            </div>
           </div>
-          <div class="currencies">
-            <span>{{ exchange?.targetCurrency ?? 'None' }}</span>
-            <span>{{ exchange?.nationalCurrency ?? 'None' }}</span>
-          </div>
-        </div>
+        </ng-container>
       </div>
 
       <nav class="navigation">
         <ul class="list">
-          <li class="item" routerLink="/capitals">
-            <mat-icon>account_balance_wallet</mat-icon>
-            Capitals
-          </li>
-          <li class="item" routerLink="/menu/incomes">
-            <mat-icon>monetization_on</mat-icon>
-            Incomes
-          </li>
-          <li class="item" routerLink="/menu/expenses">
-            <mat-icon>money_off</mat-icon>
-            Expenses
-          </li>
-          <li class="item" routerLink="/menu/transfers">
-            <mat-icon>import_export</mat-icon>
-            Transfers
-          </li>
-          <li class="item" routerLink="/menu/goals">
-            <mat-icon>star</mat-icon>
-            Goals
+          <li *ngFor="let item of navItems" class="item" [routerLink]="item.link">
+            <mat-icon>{{ item.icon }}</mat-icon>
+            {{ item.label }}
           </li>
         </ul>
       </nav>
 
       <div class="profile">
-        <div class="balance" *ngIf="authorizated">
-          0 грн / 0 $
-        </div>
-
         <button class="account-button">
           <mat-icon>account_circle</mat-icon>
           Profile
@@ -68,36 +50,20 @@
     </div>
   </div>
 
-  <div class="sidebar" [class.expanded]="isSidebarExpanded">
+  <div class="sidebar" [ngClass]="{'expanded': isSidebarExpanded}">
     <div class="sidebar-header">
-      <span>Menu</span>
-      <button class="sidebar-btn-close" (click)="isSidebarExpanded=!isSidebarExpanded">
+      <button class="sidebar-btn-close" (click)="isSidebarExpanded = false" aria-label="Close menu">
         <mat-icon>close</mat-icon>
       </button>
+      <span>Menu</span>
     </div>
 
     <div class="sidebar-content">
       <nav class="sidebar-nav">
         <ul class="sidebar-nav-list">
-          <li class="sidebar-nav-item" routerLink="/capitals" (click)="isSidebarExpanded=!isSidebarExpanded">
-            <mat-icon>account_balance_wallet</mat-icon>
-            Capitals
-          </li>
-          <li class="sidebar-nav-item" routerLink="/menu/incomes" (click)="isSidebarExpanded=!isSidebarExpanded">
-            <mat-icon>monetization_on</mat-icon>
-            Incomes
-          </li>
-          <li class="sidebar-nav-item" routerLink="/menu/expenses" (click)="isSidebarExpanded=!isSidebarExpanded">
-            <mat-icon>money_off</mat-icon>
-            Expenses
-          </li>
-          <li class="sidebar-nav-item" routerLink="/menu/transfers" (click)="isSidebarExpanded=!isSidebarExpanded">
-            <mat-icon>import_export</mat-icon>
-            Transfers
-          </li>
-          <li class="sidebar-nav-item" routerLink="/menu/goals" (click)="isSidebarExpanded=!isSidebarExpanded">
-            <mat-icon>star</mat-icon>
-            Goals
+          <li *ngFor="let item of navItems" class="sidebar-nav-item" [routerLink]="item.link" (click)="isSidebarExpanded = false">
+            <mat-icon>{{ item.icon }}</mat-icon>
+            {{ item.label }}
           </li>
         </ul>
       </nav>

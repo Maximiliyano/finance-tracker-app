@@ -1,9 +1,8 @@
-﻿using FinanceTracker.Domain.Enums;
-
-namespace FinanceTracker.Application.Expenses.Requests;
+﻿namespace FinanceTracker.Application.Expenses.Requests;
 
 public sealed record CreateExpenseRequest(
     int CapitalId,
+    int CategoryId,
     float Amount,
-    string Purpose,
-    ExpenseType Type);
+    DateTimeOffset PaymentDate,
+    string? Purpose);

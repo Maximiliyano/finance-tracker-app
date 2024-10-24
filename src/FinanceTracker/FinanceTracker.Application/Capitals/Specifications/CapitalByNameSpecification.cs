@@ -1,7 +1,9 @@
 using FinanceTracker.Application.Abstractions;
 using FinanceTracker.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace FinanceTracker.Application.Capitals.Specifications;
 
 internal sealed class CapitalByNameSpecification(string name)
-    : BaseSpecification<Capital>(c => c.Name == name);
+    : BaseSpecification<Capital>(
+        c => StringComparer.CurrentCultureIgnoreCase.Compare(c.Name, name) == 0);

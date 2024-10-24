@@ -1,10 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Exchange } from '../../models/exchange-model';
 import { ExchangeService } from '../../../shared/services/exchange.service';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, takeUntil, tap } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
-import { ExchangeDialogComponent } from '../../../modules/home/components/exchange-dialog/exchange-dialog.component';
 import { OverlayRef } from '@angular/cdk/overlay';
+import { ExchangeDialogComponent } from '../../../shared/components/exchange-dialog/exchange-dialog.component';
 
 @Component({
   selector: 'app-header',
@@ -13,9 +13,15 @@ import { OverlayRef } from '@angular/cdk/overlay';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   exchanges: Exchange[] | null;
-  authorizated: boolean;
   isSidebarExpanded: boolean;
   overlayRef: OverlayRef;
+  navItems = [
+    { label: 'Capitals', icon: 'account_balance_wallet', link: '/capitals' },
+    { label: 'Expenses', icon: 'money_off', link: '/expenses' },
+    { label: 'Incomes', icon: 'monetization_on', link: '/incomes' },
+    { label: 'Transfers', icon: 'import_export', link: '/menu/transfers' },
+    { label: 'Goals', icon: 'star', link: '/menu/goals' }
+  ];
 
   private unsubscribe = new Subject<void>();
 
@@ -26,7 +32,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.exchangeService
       .getAll()
-      .pipe(takeUntil(this.unsubscribe))
+      .pipe(
+        takeUntil(this.unsubscribe))
       .subscribe(
         (exchanges) => {
           this.exchanges = exchanges;

@@ -9,5 +9,6 @@ internal sealed class ExpenseByIdSpecification : BaseSpecification<Expense>
         : base(x => x.Id == id)
     {
         AddInclude(e => e.Capital);
+        AddInclude(e => e.Category);
     }
 }

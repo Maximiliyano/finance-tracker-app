@@ -1,19 +1,17 @@
+using FinanceTracker.Application.Abstractions.Data;
 using FinanceTracker.Domain.Constants;
 using FinanceTracker.Domain.Entities;
 using FinanceTracker.Domain.Repositories;
-using Microsoft.EntityFrameworkCore;
 
 namespace FinanceTracker.Infrastructure.Persistence.Repositories;
 
 internal sealed class CapitalRepository(
-    FinanceTrackerDbContext context)
+    IFinanceTrackerDbContext context)
     : GeneralRepository<Capital>(context), ICapitalRepository
 {
     public new async Task<IEnumerable<Capital>> GetAllAsync()
     {
-        var capitals = await DbContext.Capitals.AsNoTracking().ToListAsync();
-
-        return capitals;
+        return await base.GetAllAsync();
     }
 
     public new async Task<Capital?> GetAsync(ISpecification<Capital> specification)

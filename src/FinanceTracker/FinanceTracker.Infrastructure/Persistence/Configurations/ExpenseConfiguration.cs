@@ -11,6 +11,11 @@ internal sealed class ExpenseConfiguration : IEntityTypeConfiguration<Expense>
     {
         builder.HasKey(e => e.Id);
 
+        builder
+            .HasOne(e => e.Category)
+            .WithMany(c => c.Expenses)
+            .HasForeignKey(e => e.CategoryId);
+
         builder.ToTable(TableConfigurationConstants.Expenses);
     }
 }

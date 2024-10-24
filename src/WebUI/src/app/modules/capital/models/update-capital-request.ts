@@ -1,5 +1,5 @@
 export interface UpdateCapitalRequest {
-  name: string;
-  balance: number;
-  currency: string;
+  name: string | null;
+  balance: number | null;
+  currency: string | null;
 }

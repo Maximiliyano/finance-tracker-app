@@ -8,10 +8,14 @@ internal static class ExpenseExtensions
 {
     internal static ExpenseResponse ToResponse(this Expense expense)
         => new(
+            expense.Id,
             expense.CapitalId,
+            expense.CategoryId,
             expense.Amount,
-            expense.Purpose,
-            expense.Type);
+            expense.PaymentDate,
+            expense.Category,
+            expense.Capital,
+            expense.Purpose);
 
     internal static IEnumerable<ExpenseResponse> ToResponses(this IEnumerable<Expense> expenses)
         => expenses.Select(e => e.ToResponse());
@@ -21,7 +25,8 @@ internal static class ExpenseExtensions
         {
             Amount = command.Amount,
             Purpose = command.Purpose,
-            Type = command.Type,
-            CapitalId = command.CapitalId
+            CategoryId = command.CategoryId,
+            CapitalId = command.CapitalId,
+            PaymentDate = command.PaymentDate
         };
 }

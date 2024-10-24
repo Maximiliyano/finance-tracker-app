@@ -12,7 +12,7 @@ public static class MigrationExtensions
         var dbContext = serviceScope.ServiceProvider.GetRequiredService<FinanceTrackerDbContext>();
 
         dbContext.Database.Migrate();
-
+        
         return app;
     }
 }

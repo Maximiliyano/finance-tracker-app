@@ -4,7 +4,7 @@
         <mat-form-field>
             <mat-label>Name</mat-label>
             <input matInput placeholder="Name" type="text" formControlName="Name" name="Name">
-        
+
             <mat-error *ngIf="hasError('Name', 'required')">
                 The field is required
             </mat-error>
@@ -32,16 +32,18 @@
         </mat-form-field>
 
         <mat-form-field>
-            <mat-label>Currency</mat-label>
-            <mat-select formControlName="Currency">
-                <mat-option [value]="CurrencyType.UAH">UAH</mat-option>
-                <mat-option [value]="CurrencyType.USD">USD</mat-option>
-                <mat-option [value]="CurrencyType.EUR">EUR</mat-option>
-            </mat-select>
+          <mat-label>Currency</mat-label>
 
-            <mat-error *ngIf="hasError('Currency', 'required')">
-                The field is required
-            </mat-error>
+          <mat-select formControlName="Currency">
+            <mat-option [value]="currency.UAH">UAH</mat-option>
+            <mat-option [value]="currency.USD">USD</mat-option>
+            <mat-option [value]="currency.EUR">EUR</mat-option>
+            <mat-option [value]="currency.PLN">PLN</mat-option>
+          </mat-select>
+
+          <mat-error *ngIf="hasError('Currency', 'required')">
+            The field is required
+          </mat-error>
         </mat-form-field>
     </div>
     <div mat-dialog-actions>

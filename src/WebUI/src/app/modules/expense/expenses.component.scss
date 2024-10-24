@@ -1,0 +1,47 @@
+.expenses-container {
+  margin-top: 20px;
+
+  .expenses-header {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+    padding: 10px 15px 10px 15px;
+
+    font-size: 24px;
+    font-weight: 500;
+  }
+
+  .expenses-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+
+    .expense, .categories {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-color:  #e6e6e6;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      transition: background-color 0.3s ease-out;
+      padding: 15px;
+      position: relative;
+      gap: 5px;
+      cursor: pointer;
+    }
+  }
+
+  .expenses-actions {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 15px;
+
+    .exp-item {
+      cursor: pointer;
+    }
+  }
+}

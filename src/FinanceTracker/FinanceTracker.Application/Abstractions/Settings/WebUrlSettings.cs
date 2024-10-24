@@ -1,4 +1,4 @@
-namespace FinanceTracker.Application.Abstractions;
+namespace FinanceTracker.Application.Abstractions.Settings;
 
 public sealed class WebUrlSettings
 {

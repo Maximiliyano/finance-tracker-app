@@ -13,5 +13,4 @@ public interface IExpenseRepository
     void Update(Expense expense);
 
     void Delete(Expense expense);
-    
 }

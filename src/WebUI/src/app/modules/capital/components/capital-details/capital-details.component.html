@@ -1,5 +1,4 @@
-<div class="cp-details" *ngIf="capital">
-
+<form [formGroup]="capitalForm" class="cp-details" *ngIf="capital" (ngSubmit)="saveChanges()">
   <div class="cp-header">
     <button class="cp-return" routerLink="../">
       <mat-icon>exit_to_app</mat-icon>
@@ -7,57 +6,59 @@
   </div>
 
   <div class="cp-details-col">
-    <span class="cp-text">Balance</span>
+    <label class="cp-text" for="balance">Balance</label>
     <div class="balance-input">
       <input
+        id="balance"
         type="number"
-        [(ngModel)]="capital.balance"
+        formControlName="balance"
         placeholder="Balance"
-        #cpBalance="ngModel"
-        (ngModelChange)="onInputChange()"
-        required
-        min="0"
       />
 
-      <select class="currency" [(ngModel)]="capital.currency" (change)="onInputChange()">
+      <select class="currency" formControlName="currency">
         <option [value]="capital.currency">
           {{ capital.currency }}
         </option>
-        <option *ngFor="let currency of getCurrencyValues()" [value]="currency">{{ currency }}</option>
+        <option *ngFor="let currency of currencies" [value]="currency.value">{{ currency.value }}</option>
       </select>
 
     </div>
 
-    <div *ngIf="modelInvalidAndTouched(cpBalance)" class="error-message">
-      <span *ngIf="modelError(cpBalance, 'required')">Balance is required.</span>
-      <span *ngIf="modelError(cpBalance, 'min')">Balance must be greater than 0.</span>
+    <div *ngIf="modelInvalidAndTouched('balance')" class="error-message">
+      <span *ngIf="modelError('balance', 'required')">Balance is required.</span>
+      <span *ngIf="modelError('balance', 'min')">Balance not be less than 0.</span>
     </div>
   </div>
 
   <div class="cp-details-col">
-    <span class="cp-text">Name</span>
+    <label class="cp-text">Name</label>
     <input
+      id="name"
       type="text"
-      [(ngModel)]="capital.name"
-      #cpName="ngModel"
-      (ngModelChange)="onInputChange()"
+      formControlName="name"
       placeholder="Name"
-      required
-      maxlength="32"
     />
   </div>
 
-  <div *ngIf="modelInvalidAndTouched(cpName)" class="error-message">
-    <span *ngIf="modelError(cpName, 'required')">Name is required.</span>
-    <span *ngIf="modelError(cpName, 'maxlength')">Name must be less than 32.</span>
+  <div *ngIf="modelInvalidAndTouched('name')" class="error-message">
+    <span *ngIf="modelError('name', 'required')">Name is required.</span>
+    <span *ngIf="modelError('name', 'maxlength')">Name must be less than 32.</span>
+    <!-- <span *ngIf="modelError('name', 'exists')">Name already exists.</span> -->
   </div>
 
-  <div class="cp-actions" *ngIf="isModified">
-    <button class="cp-act-item save" (click)="saveChanges()" [disabled]="cpName.invalid || cpBalance.invalid">Save</button>
-    <button class="cp-act-item cancel" (click)="cancelChanges()">Cancel</button>
-  </div>
+  <div class="cp-actions">
+    <ng-container *ngIf="formModified; else nonModifiedActions">
+      <button
+        class="cp-act-item save"
+        type="submit"
+        [disabled]="capitalForm.invalid">
+          Save
+        </button>
+      <button class="cp-act-item cancel" (click)="cancelChanges()">Cancel</button>
+    </ng-container>
 
-  <div class="cp-actions" *ngIf="!isModified">
-    <button class="cp-act-item delete" (click)="delete(capital.id)">Delete</button>
+    <ng-template #nonModifiedActions>
+      <button class="cp-act-item delete" (click)="delete(capital.id)">Delete</button>
+    </ng-template>
   </div>
-</div>
+</form>

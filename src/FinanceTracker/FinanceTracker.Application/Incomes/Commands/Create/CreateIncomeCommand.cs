@@ -1,11 +1,11 @@
 using FinanceTracker.Application.Abstractions;
-using FinanceTracker.Domain.Enums;
 
 namespace FinanceTracker.Application.Incomes.Commands.Create;
 
 public sealed record CreateIncomeCommand(
     int CapitalId,
+    int CategoryId,
     float Amount,
-    string Purpose,
-    IncomeType Type)
+    DateTimeOffset Date,
+    string? Purpose)
     : ICommand<int>;

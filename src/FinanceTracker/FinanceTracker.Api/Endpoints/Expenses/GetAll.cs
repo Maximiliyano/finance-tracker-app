@@ -8,9 +8,9 @@ internal sealed class GetAll : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapGet("api/expenses", async (int? id, ISender sender) =>
+        app.MapGet("api/expenses", async (ISender sender) =>
             (await sender
-                .Send(new GetAllExpensesQuery(id)))
+                .Send(new GetAllExpensesQuery()))
                 .Process())
             .WithTags(nameof(Expenses));
     }

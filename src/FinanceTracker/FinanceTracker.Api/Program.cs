@@ -8,6 +8,8 @@ using Serilog;
 using AssemblyReference = FinanceTracker.Api.AssemblyReference;
 // TODO try to make auto deployment in githup
 // TODO deploy BE & DB in CleverCloud https://console.clever-cloud.com/
+// TODO categories - incomes/expenses as separate table; instead Income/Expense Type
+// TODO find alternative for mat-dialog, for create capital/expense
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Host.UseSerilogDependencies();
@@ -21,9 +23,11 @@ builder.Services.AddEndpoints(AssemblyReference.Assembly);
 
 var app = builder.Build();
 
-app.UseSwaggerDependencies();
-
-app.ApplyMigrations();
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwaggerDependencies();
+    app.ApplyMigrations();
+}
 
 app.MapHealthChecks("health", new HealthCheckOptions
 {

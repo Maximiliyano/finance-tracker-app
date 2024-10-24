@@ -1,13 +1,16 @@
 using FinanceTracker.Application.Abstractions;
 using FinanceTracker.Application.Expenses.Specifications;
 using FinanceTracker.Domain.Errors;
+using FinanceTracker.Domain.Providers;
 using FinanceTracker.Domain.Repositories;
 using FinanceTracker.Domain.Results;
 
 namespace FinanceTracker.Application.Expenses.Commands.Update;
 
 public sealed class UpdateExpenseCommandHandler(
+    IDateTimeProvider dateTimeProvider,
     ICapitalRepository capitalRepository,
+    ICategoryRepository categoryRepository,
     IExpenseRepository expenseRepository,
     IUnitOfWork unitOfWork)
     : ICommandHandler<UpdateExpenseCommand>
@@ -31,8 +34,11 @@ public sealed class UpdateExpenseCommandHandler(
         }
         
         expense.Purpose = request.Purpose ?? expense.Purpose;
+        expense.PaymentDate = request.Date ?? dateTimeProvider.UtcNow;
+        expense.CategoryId = request.CategoryId ?? expense.CategoryId;
         
-        capitalRepository.Update(expense.Capital!);
+        capitalRepository.Update(expense.Capital);
+        categoryRepository.Update(expense.Category);
         expenseRepository.Update(expense);
 
         await unitOfWork.SaveChangesAsync(cancellationToken);

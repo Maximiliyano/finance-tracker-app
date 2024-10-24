@@ -6,7 +6,6 @@ namespace FinanceTracker.Domain.Entities;
 public sealed class Exchange
     : Entity, IAuditableEntity, ISoftDeletableEntity
 {
-    
     [JsonPropertyName("base_ccy")]
     public string NationalCurrencyCode { get; init; }
 

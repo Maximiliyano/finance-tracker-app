@@ -1,1 +1,9 @@
 <p>income works!</p>
+<button (click)="openIncomeDialog()">Add income</button>
+
+<div *ngFor="let income of incomes">
+  {{ income.id }}
+  {{ income.amount }}
+  {{ income.capitalId }}
+  {{ income.purpose }}
+</div>

@@ -21,17 +21,20 @@ public sealed class UpdateIncomeCommandHandler(
             return Result.Failure(DomainErrors.General.NotFound);
         }
 
-        var difference = request.Amount - income.Amount;
-        
-        income.Capital!.Balance += difference;
+        if (request.Amount is not null)
+        {
+            var difference = (float)(request.Amount - income.Amount);
+            
+            income.Capital!.Balance += difference;
+        }
 
-        income.Amount = request.Amount;
-        income.Purpose = request.Purpose;
-        income.Type = request.Type;
+        income.Amount = request.Amount ?? income.Amount;
+        income.Purpose = request.Purpose ?? income.Purpose;
+        income.CategoryId = request.CategoryId ?? income.CategoryId;
 
         incomeRepository.Update(income);
         
-        capitalRepository.Update(income.Capital);
+        capitalRepository.Update(income.Capital!);
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
 

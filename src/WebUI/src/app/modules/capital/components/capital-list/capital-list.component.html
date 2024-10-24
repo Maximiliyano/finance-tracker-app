@@ -1,13 +1,20 @@
 <div class="cp-lh">
     <span>Total:</span>
-    <span class="total-amount">{{ totalCapitalAmount() | currency: mainCurrency }}</span>
+    <span class="total-amount">{{ totalCapitalAmount() | currency: symbol(mainCurrency) }}</span>
+
+    <span>Default currency:</span>
+    <app-currency [currency]="mainCurrency" (currencyChange)="onCurrencyChange($event)"></app-currency>
 </div>
 
 <div class="cp-list" *ngIf="capitals?.length">
     <div *ngFor="let capital of capitals">
-        <a [routerLink]="[capital.id]" class="cp">
+        <a class="cp" [routerLink]="[capital.id]">
           <span class="cp-name">{{ capital.name }}</span>
-          <span class="cp-balance">{{ capital.balance | currency: capital.currency }}</span>
+          <span class="cp-balance">{{ capital.balance | currency: symbol(capital.currency) }}</span>
+          <span class="cp-incomes">+{{ capital.totalIncome }}</span>
+          <span class="cp-expenses">-{{ capital.totalExpense }}</span>
+          <span>Transfer In {{ capital.totalTransferIn }}</span>
+          <span>Transfer Out {{ capital.totalTransferOut }}</span>
           <button class="cp-menu" (click)="removeCapital(capital.id, $event)">
               <mat-icon>delete_outline</mat-icon>
           </button>

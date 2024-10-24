@@ -79,6 +79,180 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
                     b.ToTable("Capitals", (string)null);
                 });
 
+            modelBuilder.Entity("FinanceTracker.Domain.Entities.Category", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<int>("CreatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTimeOffset?>("DeletedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<bool?>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("Period")
+                        .HasColumnType("int");
+
+                    b.Property<float?>("PlannedPeriodAmount")
+                        .HasColumnType("real");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<int?>("UpdatedBy")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Categories", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedAt = new DateTimeOffset(new DateTime(2024, 10, 12, 19, 6, 56, 119, DateTimeKind.Unspecified).AddTicks(960), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedBy = 0,
+                            Name = "Groceries",
+                            Type = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedAt = new DateTimeOffset(new DateTime(2024, 10, 12, 19, 6, 56, 119, DateTimeKind.Unspecified).AddTicks(960), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedBy = 0,
+                            Name = "Utilities",
+                            Type = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreatedAt = new DateTimeOffset(new DateTime(2024, 10, 12, 19, 6, 56, 119, DateTimeKind.Unspecified).AddTicks(960), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedBy = 0,
+                            Name = "Rent",
+                            Type = 1
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CreatedAt = new DateTimeOffset(new DateTime(2024, 10, 12, 19, 6, 56, 119, DateTimeKind.Unspecified).AddTicks(960), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedBy = 0,
+                            Name = "Transportation",
+                            Type = 1
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CreatedAt = new DateTimeOffset(new DateTime(2024, 10, 12, 19, 6, 56, 119, DateTimeKind.Unspecified).AddTicks(960), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedBy = 0,
+                            Name = "Healthcare",
+                            Type = 1
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CreatedAt = new DateTimeOffset(new DateTime(2024, 10, 12, 19, 6, 56, 119, DateTimeKind.Unspecified).AddTicks(960), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedBy = 0,
+                            Name = "Entertainment",
+                            Type = 1
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CreatedAt = new DateTimeOffset(new DateTime(2024, 10, 12, 19, 6, 56, 119, DateTimeKind.Unspecified).AddTicks(960), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedBy = 0,
+                            Name = "Education",
+                            Type = 1
+                        },
+                        new
+                        {
+                            Id = 8,
+                            CreatedAt = new DateTimeOffset(new DateTime(2024, 10, 12, 19, 6, 56, 119, DateTimeKind.Unspecified).AddTicks(960), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedBy = 0,
+                            Name = "Clothing",
+                            Type = 1
+                        },
+                        new
+                        {
+                            Id = 9,
+                            CreatedAt = new DateTimeOffset(new DateTime(2024, 10, 12, 19, 6, 56, 119, DateTimeKind.Unspecified).AddTicks(960), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedBy = 0,
+                            Name = "Subscriptions",
+                            Type = 1
+                        },
+                        new
+                        {
+                            Id = 10,
+                            CreatedAt = new DateTimeOffset(new DateTime(2024, 10, 12, 19, 6, 56, 119, DateTimeKind.Unspecified).AddTicks(960), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedBy = 0,
+                            Name = "Travel",
+                            Type = 1
+                        },
+                        new
+                        {
+                            Id = 11,
+                            CreatedAt = new DateTimeOffset(new DateTime(2024, 10, 12, 19, 6, 56, 119, DateTimeKind.Unspecified).AddTicks(960), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedBy = 0,
+                            Name = "Gifts",
+                            Type = 1
+                        },
+                        new
+                        {
+                            Id = 12,
+                            CreatedAt = new DateTimeOffset(new DateTime(2024, 10, 12, 19, 6, 56, 119, DateTimeKind.Unspecified).AddTicks(960), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedBy = 0,
+                            Name = "Donations",
+                            Type = 1
+                        },
+                        new
+                        {
+                            Id = 13,
+                            CreatedAt = new DateTimeOffset(new DateTime(2024, 10, 12, 19, 6, 56, 119, DateTimeKind.Unspecified).AddTicks(960), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedBy = 0,
+                            Name = "Salary",
+                            Type = 2
+                        },
+                        new
+                        {
+                            Id = 14,
+                            CreatedAt = new DateTimeOffset(new DateTime(2024, 10, 12, 19, 6, 56, 119, DateTimeKind.Unspecified).AddTicks(960), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedBy = 0,
+                            Name = "Gifts",
+                            Type = 2
+                        },
+                        new
+                        {
+                            Id = 15,
+                            CreatedAt = new DateTimeOffset(new DateTime(2024, 10, 12, 19, 6, 56, 119, DateTimeKind.Unspecified).AddTicks(960), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedBy = 0,
+                            Name = "Grants",
+                            Type = 2
+                        },
+                        new
+                        {
+                            Id = 16,
+                            CreatedAt = new DateTimeOffset(new DateTime(2024, 10, 12, 19, 6, 56, 119, DateTimeKind.Unspecified).AddTicks(960), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedBy = 0,
+                            Name = "Sales",
+                            Type = 2
+                        });
+                });
+
             modelBuilder.Entity("FinanceTracker.Domain.Entities.Exchange", b =>
                 {
                     b.Property<int>("Id")
@@ -140,6 +314,9 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
                     b.Property<int>("CapitalId")
                         .HasColumnType("int");
 
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
                     b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetimeoffset");
 
@@ -152,11 +329,11 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
                     b.Property<bool?>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<DateTimeOffset>("PaymentDate")
+                        .HasColumnType("datetimeoffset");
+
                     b.Property<string>("Purpose")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("int");
 
                     b.Property<DateTimeOffset?>("UpdatedAt")
                         .HasColumnType("datetimeoffset");
@@ -167,6 +344,8 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CapitalId");
+
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("Expenses", (string)null);
                 });
@@ -185,6 +364,9 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
                     b.Property<int?>("CapitalId")
                         .HasColumnType("int");
 
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
                     b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetimeoffset");
 
@@ -197,12 +379,11 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
                     b.Property<bool?>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Purpose")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTimeOffset>("PaymentDate")
+                        .HasColumnType("datetimeoffset");
 
-                    b.Property<int>("Type")
-                        .HasColumnType("int");
+                    b.Property<string>("Purpose")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTimeOffset?>("UpdatedAt")
                         .HasColumnType("datetimeoffset");
@@ -213,6 +394,8 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CapitalId");
+
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("Incomes", (string)null);
                 });
@@ -269,7 +452,15 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("FinanceTracker.Domain.Entities.Category", "Category")
+                        .WithMany("Expenses")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Capital");
+
+                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("FinanceTracker.Domain.Entities.Income", b =>
@@ -278,7 +469,15 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
                         .WithMany("Incomes")
                         .HasForeignKey("CapitalId");
 
+                    b.HasOne("FinanceTracker.Domain.Entities.Category", "Category")
+                        .WithMany("Incomes")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Capital");
+
+                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("FinanceTracker.Domain.Entities.Transfer", b =>
@@ -307,6 +506,13 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
                     b.Navigation("TransfersIn");
 
                     b.Navigation("TransfersOut");
+                });
+
+            modelBuilder.Entity("FinanceTracker.Domain.Entities.Category", b =>
+                {
+                    b.Navigation("Expenses");
+
+                    b.Navigation("Incomes");
                 });
 #pragma warning restore 612, 618
         }

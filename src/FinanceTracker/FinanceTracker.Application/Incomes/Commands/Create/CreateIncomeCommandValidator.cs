@@ -11,7 +11,7 @@ internal sealed class CreateIncomeCommandValidator : AbstractValidator<CreateInc
     {
         RuleFor(i => i.Amount)
             .GreaterThanOrEqualTo(ValidationConstants.ZeroValue)
-            .WithError(ValidationErrors.Amount.AmountMustBeGreaterThanZero);
+            .WithError(ValidationErrors.General.AmountMustBeGreaterThanZero);
 
         RuleFor(i => i.Purpose)
             .NotEmpty();

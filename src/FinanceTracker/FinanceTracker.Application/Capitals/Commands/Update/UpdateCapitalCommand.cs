@@ -1,5 +1,4 @@
 ﻿using FinanceTracker.Application.Abstractions;
-using FinanceTracker.Domain.Enums;
 
 namespace FinanceTracker.Application.Capitals.Commands.Update;
 

@@ -1,10 +1,13 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { Subject, takeUntil } from 'rxjs';
-import { Capital } from '../../../menu/models/capital-model';
-import { CapitalService } from '../../../menu/services/capital.service';
-import { CapitalDialogComponent } from '../capital-dialog/capital-dialog.component';
-import { PopupMessageService } from '../../../../shared/services/popup-message.service';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
+import {Subject, takeUntil} from 'rxjs';
+import {CapitalService} from '../../services/capital.service';
+import {CapitalDialogComponent} from '../capital-dialog/capital-dialog.component';
+import {PopupMessageService} from '../../../../shared/services/popup-message.service';
+import {ExchangeService} from "../../../../shared/services/exchange.service";
+import {Exchange} from "../../../../core/models/exchange-model";
+import { currencyToSymbol } from '../../../../shared/components/currency/functions/currencyToSymbol.component';
+import { CapitalResponse } from '../../models/capital-response';
 
 @Component({
   selector: 'app-capital-list',
@@ -12,27 +15,50 @@ import { PopupMessageService } from '../../../../shared/services/popup-message.s
   styleUrl: './capital-list.component.scss'
 })
 export class CapitalListComponent implements OnInit, OnDestroy {
-  capitals: Capital[];
+  capitals: CapitalResponse[];
+  exchanges: Exchange[];
   editMode: boolean;
-  mainCurrency: string = "₴";
+  mainCurrency: string = 'UAH';
 
-  private unsubscribe = new Subject<void>;
+  private unsubcribe$ = new Subject<void>;
 
   constructor(
     private readonly dialog: MatDialog,
     private readonly capitalService: CapitalService,
-    private readonly popupMessageService: PopupMessageService) { }
+    private readonly popupMessageService: PopupMessageService,
+    private readonly exchangeService: ExchangeService) { }
 
   ngOnInit(): void {
-    this.refresh();
+    // TODO execute user capitals
+    this.executeCapitals();
+
+    this.executeExchanges();
+
+    // TODO execute currency by default from user settings for 'mainCurrency'
   }
 
   ngOnDestroy(): void {
-    this.unsubscribe.complete();
+    this.unsubcribe$.next();
+    this.unsubcribe$.complete();
   }
 
-  toggleEditMode(): void {
-    this.editMode = !this.editMode;
+  executeExchanges(): void {
+    this.exchangeService
+      .getAll()
+      .pipe(takeUntil(this.unsubcribe$))
+      .subscribe({
+        next: (response) => this.exchanges = response
+      });
+  }
+
+  symbol(value: string): string {
+    return currencyToSymbol(value);
+  };
+
+  onCurrencyChange(newCurrency: string): void {
+    // TODO update default currency for user here
+    this.popupMessageService.success(`The default currency updated to <b>${newCurrency}</b>`);
+    this.mainCurrency = newCurrency;
   }
 
   openToCreateCapitalDialog(): void {
@@ -40,44 +66,53 @@ export class CapitalListComponent implements OnInit, OnDestroy {
 
     dialogRef
       .afterClosed()
-      .pipe(takeUntil(this.unsubscribe))
-      .subscribe((response) => {
-        if (response) {
-          this.refresh();
-          this.popupMessageService.success("The capital was successful added.")
-        }
-      });
+      .pipe(takeUntil(this.unsubcribe$))
+      .subscribe({
+        next: (response) => {
+          if (response) {
+            this.executeCapitals();
+          }
+      }});
   }
 
   totalCapitalAmount(): number {
-    return this.capitals?.reduce((accumulator, capital) => accumulator + capital.balance, 0) ?? 0;
+    return this.capitals?.reduce((accumulator, capital) => {
+      if (capital.currency == this.mainCurrency) {
+        return accumulator + capital.balance;
+      }
+
+      let amount = 0;
+      let exchange = this.exchanges?.find(e => e.nationalCurrency === this.mainCurrency && e.targetCurrency === capital.currency);
+
+      if (exchange) {
+        amount = capital.balance * exchange.sale;
+      }
+
+      return amount + accumulator;
+    }, 0) ?? 0;
   }
 
   removeCapital(id: number, event: MouseEvent): void {
     event.stopPropagation();
     event.preventDefault();
 
-    this.editMode = false;
+
     this.capitalService
-      .remove(id)
-      .subscribe(() => {
-        this.refresh();
+    .remove(id)
+    .subscribe({
+      next: () => {
+        this.executeCapitals();
         this.popupMessageService.success("The capital was successful removed.");
-      });
+        this.editMode = false;
+      }});
   }
 
-  private refresh(): void {
+  private executeCapitals(): void {
     this.capitalService
       .getAll()
-      .pipe(takeUntil(this.unsubscribe))
-      .subscribe((response) => {
-        response.forEach(c => {
-          if (c.currency == 'UAH') {
-            c.currency = '₴';
-          }
-        });
-
-        this.capitals = response;
+      .pipe(takeUntil(this.unsubcribe$))
+      .subscribe({
+        next: (response) => this.capitals = response
       });
   }
 }

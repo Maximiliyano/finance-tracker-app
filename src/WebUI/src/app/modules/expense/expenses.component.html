@@ -1,0 +1,29 @@
+<div class="expenses-container">
+  <div class="expenses-header">
+    Expenses
+  </div>
+
+  <div class="expenses-content">
+    Expenses:
+    <div class="expense" *ngFor="let expense of expenses">
+      Amount: {{ expense.amount }}
+      PaymentDate: {{ expense.paymentDate | date }}
+      Purpose: {{ expense.purpose }}
+    </div>
+    <!-- Categories:
+    <div class="categories" *ngFor="let category of categories">
+      <div *ngIf="expensesByCategory != 0">
+        Name: {{ category.name }}
+        Sum: {{ expensesByCategory }}
+      </div>
+    </div> -->
+  </div>
+
+  <div class="expenses-actions">
+    <div class="exp-item">
+      <button (click)="add()">
+        Add Expense
+      </button>
+    </div>
+  </div>
+</div>

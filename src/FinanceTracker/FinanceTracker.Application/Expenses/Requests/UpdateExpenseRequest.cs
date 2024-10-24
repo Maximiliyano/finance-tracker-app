@@ -1,9 +1,8 @@
-using FinanceTracker.Domain.Enums;
-
 namespace FinanceTracker.Application.Expenses.Requests;
 
 public sealed record UpdateExpenseRequest(
     int Id,
+    int? CategoryId,
     float? Amount,
     string? Purpose,
-    ExpenseType? Type);
+    DateTimeOffset? Date);

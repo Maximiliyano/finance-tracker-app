@@ -1,10 +1,12 @@
+using FinanceTracker.Application.Abstractions.Data;
 using FinanceTracker.Domain.Entities;
 using FinanceTracker.Domain.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace FinanceTracker.Infrastructure.Persistence.Repositories;
 
 internal sealed class ExpenseRepository(
-    FinanceTrackerDbContext context)
+    IFinanceTrackerDbContext context)
     : GeneralRepository<Expense>(context), IExpenseRepository
 {
     public new async Task<Expense?> GetAsync(ISpecification<Expense> specification)

@@ -1,5 +1,5 @@
-using FinanceTracker.Application.Abstractions;
-using FinanceTracker.Application.Behaviours;
+using FinanceTracker.Application.Abstractions.Behaviours;
+using FinanceTracker.Application.Abstractions.Settings;
 using FinanceTracker.Application.Exchanges;
 using FinanceTracker.Application.Exchanges.Service;
 using FluentValidation;
@@ -30,6 +30,8 @@ public static class DependencyInjection
             config.RegisterServicesFromAssembly(AssemblyReference.Assembly);
 
             config.AddOpenBehavior(typeof(ValidationPipelineBehavior<,>));
+
+            config.AddOpenBehavior(typeof(RequestLoggingPipelineBehavior<,>));
         });
 
         return services;

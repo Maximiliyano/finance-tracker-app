@@ -11,6 +11,11 @@ internal sealed class IncomeConfiguration : IEntityTypeConfiguration<Income>
     {
         builder.HasKey(i => i.Id);
 
+        builder
+            .HasOne(i => i.Category)
+            .WithMany(c => c.Incomes)
+            .HasForeignKey(i => i.CategoryId);
+
         builder.ToTable(TableConfigurationConstants.Incomes);
     }
 }

@@ -30,20 +30,33 @@
         background-color: #e6e6e6;
         border-radius: 5px;
         border: 1px solid #ccc;
-        transition: background-color 0.3s ease-out;
         padding: 15px;
         position: relative;
         gap: 5px;
         cursor: pointer;
+        transition: background-color 0.3s ease-out, transform 0.3s ease-out;
 
-        .cp-name {
+        .cp-name, .cp-incomes, .cp-expenses {
             font-size: 16px;
             font-weight: 400;
             color: #282828;
         }
 
         .cp-balance {
-          font-size: 16px;
+          font-size: 18px;
+          font-weight: 600;
+        }
+
+        .cp-incomes {
+          color: green;
+        }
+
+        .cp-expenses {
+          color: red;
+        }
+
+        .cp-incomes, .cp-expenses {
+          font-size: 14px;
           font-weight: 400;
         }
 
@@ -60,6 +73,7 @@
 
         &:hover {
           background-color: #c0c0c0;
+          transform: scale(101%);
         }
     }
 }
@@ -68,9 +82,10 @@
     display: flex;
     justify-content: center;
     gap: 15px;
-    margin-top: 20px;
+    margin-top: 15px;
 
     .cp-act-item {
+        width: 25%;
         background-color: #e6e6e6;
         border: 1px #747474 solid;
         color: #282828;
@@ -78,10 +93,11 @@
         padding: 5px;
         gap: 5px;
         cursor: pointer;
-        transition: color 0.3s ease-out;
+        transition: color 0.3s ease-in, background-color 0.3s ease-in;
 
         &:hover {
-            color: rgba(0, 0, 0, 0.512)
+            color: #fff;
+            background-color: #c0c0c0;
         }
     }
 }

@@ -1,3 +1,4 @@
+using FinanceTracker.Application.Abstractions.Data;
 using FinanceTracker.Domain.Entities;
 using FinanceTracker.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -5,15 +6,16 @@ using Microsoft.EntityFrameworkCore;
 namespace FinanceTracker.Infrastructure.Persistence.Repositories;
 
 internal sealed class ExchangeRepository(
-    FinanceTrackerDbContext context)
+    IFinanceTrackerDbContext context)
     : GeneralRepository<Exchange>(context), IExchangeRepository
 {
     public void AddRange(IEnumerable<Exchange> exchanges)
         => CreateRange(exchanges);
 
     public IEnumerable<Exchange> GetLatest()
-        => DbContext.Exchanges
+        => DbContext.Set<Exchange>()
             .AsNoTracking()
             .OrderBy(x => x.CreatedAt)
-            .Take(2);
+            .Take(2)
+            .ToList();
 }

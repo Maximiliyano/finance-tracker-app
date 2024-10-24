@@ -1,3 +1,4 @@
+using FinanceTracker.Application.Abstractions.Data;
 using FinanceTracker.Domain.Repositories;
 using FinanceTracker.Infrastructure.BackgroundJobs;
 using FinanceTracker.Infrastructure.Persistence;
@@ -46,6 +47,8 @@ public static class DependencyInjection
 
         services.AddTransient<IIncomeRepository, IncomeRepository>();
 
+        services.AddTransient<ICategoryRepository, CategoryRepository>();
+
         return services;
     }
 
@@ -67,6 +70,7 @@ public static class DependencyInjection
         });
 
         services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<FinanceTrackerDbContext>());
+        services.AddScoped<IFinanceTrackerDbContext>(sp => sp.GetRequiredService<FinanceTrackerDbContext>());
 
         return services;
     }

@@ -1,11 +1,11 @@
 ﻿using FinanceTracker.Application.Abstractions;
-using FinanceTracker.Domain.Enums;
 
 namespace FinanceTracker.Application.Expenses.Commands.Create;
 
 public sealed record CreateExpenseCommand(
     int CapitalId,
+    int CategoryId,
     float Amount,
-    string Purpose,
-    ExpenseType Type)
+    DateTimeOffset PaymentDate,
+    string? Purpose)
     : ICommand<int>;
