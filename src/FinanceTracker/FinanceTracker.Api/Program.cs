@@ -6,10 +6,7 @@ using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Serilog;
 using AssemblyReference = FinanceTracker.Api.AssemblyReference;
-// TODO try to make auto deployment in github
-// TODO deploy BE & DB in CleverCloud https://console.clever-cloud.com/
-// TODO categories - incomes/expenses as separate table; instead Income/Expense Type
-// TODO find alternative for mat-dialog, for create capital/expense
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Host.UseSerilogDependencies();
