@@ -1,6 +1,5 @@
 using FinanceTracker.Application.Abstractions;
 using FinanceTracker.Domain.Entities;
-using Microsoft.EntityFrameworkCore;
 
 namespace FinanceTracker.Application.Capitals.Specifications;
 

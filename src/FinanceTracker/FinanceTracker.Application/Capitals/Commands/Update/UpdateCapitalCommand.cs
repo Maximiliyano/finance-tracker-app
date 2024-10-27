@@ -4,7 +4,7 @@ namespace FinanceTracker.Application.Capitals.Commands.Update;
 
 public sealed record UpdateCapitalCommand(
     int Id,
-    string? Name,
-    float? Balance,
-    string? Currency)
+    string? Name = null,
+    float? Balance = null,
+    string? Currency = null)
     : ICommand;

@@ -18,9 +18,9 @@ public sealed class Category
     
     public required CategoryType Type { get; set; }
     
-    public float? PlannedPeriodAmount { get; set; }
+    public float PlannedPeriodAmount { get; set; }
     
-    public PerPeriodType? Period { get; set; }
+    public PerPeriodType Period { get; set; }
     
     public DateTimeOffset CreatedAt { get; init; }
     

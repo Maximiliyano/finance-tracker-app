@@ -1,3 +1,4 @@
+using System.Linq;
 using FinanceTracker.Application.Capitals.Queries.GetAll;
 using FinanceTracker.Application.Capitals.Responses;
 using FinanceTracker.Domain.Entities;
@@ -11,6 +12,7 @@ namespace FinanceTracker.UnitTests.Capitals.Queries;
 public sealed class GetAllCapitalQueryHandlerTests
 {
     private readonly ICapitalRepository _repositoryMock = Substitute.For<ICapitalRepository>();
+
     private readonly GetAllCapitalsQueryHandler _handler;
 
     public GetAllCapitalQueryHandlerTests()
@@ -31,7 +33,7 @@ public sealed class GetAllCapitalQueryHandlerTests
                 x.Id,
                 x.Name,
                 x.Balance,
-                x.Currency,
+                nameof(x.Currency),
                 x.TotalIncome,
                 x.TotalExpense,
                 x.TotalTransferIn,
@@ -48,7 +50,7 @@ public sealed class GetAllCapitalQueryHandlerTests
             result.IsSuccess.Should().BeTrue();
             result.Value.Should().BeEquivalentTo(capitalResponses);
 
-            await _repositoryMock.Received().GetAllAsync();
+            await _repositoryMock.Received(1).GetAllAsync();
         }
     }
 
@@ -71,7 +73,7 @@ public sealed class GetAllCapitalQueryHandlerTests
             result.IsSuccess.Should().BeTrue();
             result.Value.Should().BeEquivalentTo(capitalResponses);
 
-            await _repositoryMock.Received().GetAllAsync();
+            await _repositoryMock.Received(1).GetAllAsync();
         }
     }
 }

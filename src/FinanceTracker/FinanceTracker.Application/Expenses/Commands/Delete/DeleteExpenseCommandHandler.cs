@@ -6,19 +6,19 @@ using FinanceTracker.Domain.Results;
 
 namespace FinanceTracker.Application.Expenses.Commands.Delete;
 
-public sealed class DeleteExpenseCommandHandler(
+internal sealed class DeleteExpenseCommandHandler(
     ICapitalRepository capitalRepository,
     IExpenseRepository expenseRepository,
     IUnitOfWork unitOfWork)
     : ICommandHandler<DeleteExpenseCommand>
 {
-    public async Task<Result> Handle(DeleteExpenseCommand request, CancellationToken cancellationToken)
+    public async Task<Result> Handle(DeleteExpenseCommand command, CancellationToken cancellationToken)
     {
-        var expense = await expenseRepository.GetAsync(new ExpenseByIdSpecification(request.Id));
+        var expense = await expenseRepository.GetAsync(new ExpenseByIdSpecification(command.Id));
 
         if (expense is null)
         {
-            return Result.Failure(DomainErrors.General.NotFound);
+            return Result.Failure(DomainErrors.General.NotFound(nameof(expense)));
         }
 
         expense.Capital!.Balance += expense.Amount;

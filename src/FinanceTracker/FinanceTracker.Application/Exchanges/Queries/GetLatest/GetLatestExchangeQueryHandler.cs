@@ -8,16 +8,15 @@ namespace FinanceTracker.Application.Exchanges.Queries.GetLatest;
 
 public sealed class GetLatestExchangeQueryHandler(
     IExchangeHttpService service,
-    IExchangeRepository repository)
+    IExchangeRepository repository,
+    IUnitOfWork unitOfWork)
     : IQueryHandler<GetLatestExchangeQuery, IEnumerable<ExchangeResponse>>
 {
-    public async Task<Result<IEnumerable<ExchangeResponse>>> Handle(GetLatestExchangeQuery request, CancellationToken cancellationToken)
+    public async Task<Result<IEnumerable<ExchangeResponse>>> Handle(GetLatestExchangeQuery query, CancellationToken cancellationToken)
     {
-        var latestExchanges = repository
-            .GetLatest()
-            .ToResponses();
+        var exchanges = await repository.GetLatestAsync();
 
-        if (latestExchanges.Count() < 2)
+        if (!exchanges.Any())
         {
             var result = await service.GetCurrencyAsync();
 
@@ -26,11 +25,15 @@ public sealed class GetLatestExchangeQueryHandler(
                 return Result.Failure<IEnumerable<ExchangeResponse>>(result.Errors);
             }
 
-            var actualExchanges = result.Value.ToResponses();
+            var actualExchanges = result.Value.ToList();
+            
+            repository.AddRange(actualExchanges);
 
-            return Result.Success(actualExchanges);
+            await unitOfWork.SaveChangesAsync(cancellationToken);
+
+            return Result.Success(actualExchanges.ToResponses());
         }
 
-        return Result.Success(latestExchanges);
+        return Result.Success(exchanges.ToResponses());
     }
 }

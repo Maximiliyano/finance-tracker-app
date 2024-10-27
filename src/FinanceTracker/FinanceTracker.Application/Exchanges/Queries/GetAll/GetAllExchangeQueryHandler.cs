@@ -8,7 +8,7 @@ namespace FinanceTracker.Application.Exchanges.Queries.GetAll;
 internal sealed class GetAllExchangeQueryHandler(IExchangeHttpService service)
     : IQueryHandler<GetAllExchangeQuery, IEnumerable<ExchangeResponse>>
 {
-    public async Task<Result<IEnumerable<ExchangeResponse>>> Handle(GetAllExchangeQuery request, CancellationToken cancellationToken)
+    public async Task<Result<IEnumerable<ExchangeResponse>>> Handle(GetAllExchangeQuery query, CancellationToken cancellationToken)
     {
         var result = await service.GetCurrencyAsync();
 

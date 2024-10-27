@@ -7,17 +7,17 @@ using FinanceTracker.Domain.Results;
 
 namespace FinanceTracker.Application.Incomes.Queries.GetById;
 
-public sealed class GetIncomeByIdQueryHandler(
+internal sealed class GetIncomeByIdQueryHandler(
     IIncomeRepository repository)
     : IQueryHandler<GetIncomeByIdQuery, IncomeResponse>
 {
-    public async Task<Result<IncomeResponse>> Handle(GetIncomeByIdQuery request, CancellationToken cancellationToken)
+    public async Task<Result<IncomeResponse>> Handle(GetIncomeByIdQuery query, CancellationToken cancellationToken)
     {
-        var income = await repository.GetAsync(new IncomeByIdSpecification(request.Id));
+        var income = await repository.GetAsync(new IncomeByIdSpecification(query.Id));
 
         if (income is null)
         {
-            return Result.Failure<IncomeResponse>(DomainErrors.General.NotFound);
+            return Result.Failure<IncomeResponse>(DomainErrors.General.NotFound(nameof(income)));
         }
 
         var incomeResponse = income.ToResponse();

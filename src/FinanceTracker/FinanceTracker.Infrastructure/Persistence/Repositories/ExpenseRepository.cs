@@ -1,7 +1,6 @@
 using FinanceTracker.Application.Abstractions.Data;
 using FinanceTracker.Domain.Entities;
 using FinanceTracker.Domain.Repositories;
-using Microsoft.EntityFrameworkCore;
 
 namespace FinanceTracker.Infrastructure.Persistence.Repositories;
 
@@ -14,7 +13,7 @@ internal sealed class ExpenseRepository(
 
     public new async Task<IEnumerable<Expense>> GetAllAsync()
         => await base.GetAllAsync();
-
+    
     public new void Create(Expense expense)
         => base.Create(expense);
 
@@ -23,4 +22,7 @@ internal sealed class ExpenseRepository(
 
     public new void Delete(Expense expense)
         => base.Delete(expense);
+
+    public new async Task<bool> AnyAsync(ISpecification<Expense> specification)
+        => await base.AnyAsync(specification);
 }

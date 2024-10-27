@@ -15,10 +15,7 @@ public sealed class SaveLatestExchangeJob(
 {
     public async Task Execute(IJobExecutionContext context)
     {
-        // TODO add USD <-> EUR exchange
-        // TODO add USD <-> PLN exchange
-        // TODO add EUR <-> PLN exchange
-        // TODO add PLN <-> UAH exchange
+        // TODO add USD <-> EUR, USD <-> PLN, EUR <-> PLN, PLN <-> UAH exchange
         logger.LogInformation("Save latest exchange background job has been started.");
 
         logger.LogInformation("Executing exchange from API...");

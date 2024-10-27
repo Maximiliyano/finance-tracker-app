@@ -5,11 +5,11 @@ using FinanceTracker.Domain.Results;
 
 namespace FinanceTracker.Application.Capitals.Queries.GetAll;
 
-public sealed class GetAllCapitalsQueryHandler(
+internal sealed class GetAllCapitalsQueryHandler(
     ICapitalRepository repository)
     : IQueryHandler<GetAllCapitalsQuery, IEnumerable<CapitalResponse>>
 {
-    public async Task<Result<IEnumerable<CapitalResponse>>> Handle(GetAllCapitalsQuery request, CancellationToken cancellationToken)
+    public async Task<Result<IEnumerable<CapitalResponse>>> Handle(GetAllCapitalsQuery query, CancellationToken cancellationToken)
     {
         var capitals = await repository.GetAllAsync();
 

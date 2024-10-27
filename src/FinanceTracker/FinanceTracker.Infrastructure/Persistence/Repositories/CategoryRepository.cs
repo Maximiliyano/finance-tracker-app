@@ -13,7 +13,6 @@ internal sealed class CategoryRepository(
     public async Task<IEnumerable<Category>> GetAllAsync(CategoryType? type)
         => await DbContext.Categories
             .Where(c => !type.HasValue || c.Type == type.Value)
-            //.Include(c => c.Expenses)
             .AsNoTracking()
             .ToListAsync();
 

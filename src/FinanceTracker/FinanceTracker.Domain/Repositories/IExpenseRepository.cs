@@ -13,4 +13,6 @@ public interface IExpenseRepository
     void Update(Expense expense);
 
     void Delete(Expense expense);
+
+    Task<bool> AnyAsync(ISpecification<Expense> specification);
 }

@@ -14,8 +14,11 @@ internal sealed class CreateExpenseCommandValidator : AbstractValidator<CreateEx
             .WithError(ValidationErrors.General.AmountMustBeGreaterThanZero);
         
         RuleFor(i => i.PaymentDate)
-            .Must(i => i != DateTime.MinValue);
-        
-        RuleFor(i => i.Purpose);
+            .Must(paymentDate => paymentDate != DateTime.MinValue)
+            .WithError(ValidationErrors.Expense.InvalidPaymentDate);
+
+        RuleFor(i => i.Purpose)
+            .Must(purpose => purpose?.Length is not 0 && !string.IsNullOrWhiteSpace(purpose))
+            .When(e => e.Purpose is not null);
     }
 }

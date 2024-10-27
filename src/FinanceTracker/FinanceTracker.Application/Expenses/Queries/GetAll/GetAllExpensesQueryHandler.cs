@@ -5,11 +5,11 @@ using FinanceTracker.Domain.Results;
 
 namespace FinanceTracker.Application.Expenses.Queries.GetAll;
 
-public sealed class GetAllExpensesQueryHandler(
+internal sealed class GetAllExpensesQueryHandler(
     IExpenseRepository repository)
     : IQueryHandler<GetAllExpensesQuery, IEnumerable<ExpenseResponse>>
 {
-    public async Task<Result<IEnumerable<ExpenseResponse>>> Handle(GetAllExpensesQuery request, CancellationToken cancellationToken)
+    public async Task<Result<IEnumerable<ExpenseResponse>>> Handle(GetAllExpensesQuery query, CancellationToken cancellationToken)
     {
         var expenses = await repository.GetAllAsync();
 

@@ -1,6 +1,4 @@
 using FinanceTracker.Application.Abstractions;
-using FinanceTracker.Domain.Entities;
-using FinanceTracker.Domain.Enums;
 using FinanceTracker.Domain.Repositories;
 using FinanceTracker.Domain.Results;
 
@@ -11,15 +9,9 @@ internal sealed class CreateCategoryCommandHandler(
     IUnitOfWork unitOfWork)
     : ICommandHandler<CreateCategoryCommand, int>
 {
-    public async Task<Result<int>> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
+    public async Task<Result<int>> Handle(CreateCategoryCommand command, CancellationToken cancellationToken)
     {
-        var category = new Category
-        {
-            Name = request.Name,
-            Type = request.Type,
-            Period = request.Period,
-            PlannedPeriodAmount = request.PlannedPeriodAmount
-        };
+        var category = command.ToEntity();
         
         repository.Create(category);
 

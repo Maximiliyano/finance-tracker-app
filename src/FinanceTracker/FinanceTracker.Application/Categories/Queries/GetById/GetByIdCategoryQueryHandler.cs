@@ -11,13 +11,13 @@ internal sealed class GetByIdCategoryQueryHandler(
     ICategoryRepository repository)
     : IQueryHandler<GetByIdCategoryQuery, CategoryResponse>
 {
-    public async Task<Result<CategoryResponse>> Handle(GetByIdCategoryQuery request, CancellationToken cancellationToken)
+    public async Task<Result<CategoryResponse>> Handle(GetByIdCategoryQuery query, CancellationToken cancellationToken)
     {
-        var category = await repository.GetAsync(new CategoryByIdSpecification(request.Id));
+        var category = await repository.GetAsync(new CategoryByIdSpecification(query.Id));
 
         if (category is null)
         {
-            return Result.Failure<CategoryResponse>(DomainErrors.General.NotFound);
+            return Result.Failure<CategoryResponse>(DomainErrors.General.NotFound(nameof(category)));
         }
 
         return Result.Success(category.ToResponse());

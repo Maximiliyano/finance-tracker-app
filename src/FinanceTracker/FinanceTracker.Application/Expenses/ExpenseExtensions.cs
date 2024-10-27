@@ -1,3 +1,5 @@
+using FinanceTracker.Application.Capitals;
+using FinanceTracker.Application.Categories;
 using FinanceTracker.Application.Expenses.Commands.Create;
 using FinanceTracker.Application.Expenses.Responses;
 using FinanceTracker.Domain.Entities;
@@ -10,11 +12,11 @@ internal static class ExpenseExtensions
         => new(
             expense.Id,
             expense.CapitalId,
+            expense.Capital.ToResponse(),
             expense.CategoryId,
+            expense.Category.ToResponse(),
             expense.Amount,
             expense.PaymentDate,
-            expense.Category,
-            expense.Capital,
             expense.Purpose);
 
     internal static IEnumerable<ExpenseResponse> ToResponses(this IEnumerable<Expense> expenses)

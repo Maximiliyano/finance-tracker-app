@@ -1,5 +1,4 @@
 using FinanceTracker.Application.Abstractions.Data;
-using FinanceTracker.Domain.Constants;
 using FinanceTracker.Domain.Entities;
 using FinanceTracker.Domain.Repositories;
 
@@ -10,26 +9,10 @@ internal sealed class CapitalRepository(
     : GeneralRepository<Capital>(context), ICapitalRepository
 {
     public new async Task<IEnumerable<Capital>> GetAllAsync()
-    {
-        return await base.GetAllAsync();
-    }
+        => await base.GetAllAsync();
 
     public new async Task<Capital?> GetAsync(ISpecification<Capital> specification)
-    {
-        var capital = await base.GetAsync(specification);
-
-        if (capital is null)
-        {
-            return capital;
-        }
-
-        capital.TotalExpense = capital.Expenses?.Sum(e => e.Amount) ?? ValidationConstants.ZeroValue;
-        capital.TotalIncome = capital.Incomes?.Sum(i => i.Amount) ?? ValidationConstants.ZeroValue;
-        capital.TotalTransferIn = capital.TransfersIn?.Sum(t => t.Amount) ?? ValidationConstants.ZeroValue;
-        capital.TotalTransferOut = capital.TransfersOut?.Sum(t => t.Amount) ?? ValidationConstants.ZeroValue;
-
-        return capital;
-    }
+        => await base.GetAsync(specification);
 
     public new void Create(Capital capital)
         => base.Create(capital);

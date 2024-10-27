@@ -8,7 +8,6 @@
         <RootNamespace>FinanceTracker.Api</RootNamespace>
         <UserSecretsId>a3c76756-9bf7-4e4d-8cd2-3b64bdcdbea6</UserSecretsId>
         <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
-        <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
     </PropertyGroup>
 
     <ItemGroup>

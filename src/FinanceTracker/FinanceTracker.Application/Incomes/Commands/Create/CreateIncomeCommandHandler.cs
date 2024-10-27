@@ -6,7 +6,7 @@ using FinanceTracker.Domain.Results;
 
 namespace FinanceTracker.Application.Incomes.Commands.Create;
 
-public sealed class CreateIncomeCommandHandler(
+internal sealed class CreateIncomeCommandHandler(
     ICapitalRepository capitalRepository,
     IIncomeRepository incomeRepository,
     IUnitOfWork unitOfWork)
@@ -18,7 +18,7 @@ public sealed class CreateIncomeCommandHandler(
 
         if (capital is null)
         {
-            return Result.Failure<int>(DomainErrors.General.NotFound);
+            return Result.Failure<int>(DomainErrors.General.NotFound(nameof(capital)));
         }
 
         var income = command.ToEntity();

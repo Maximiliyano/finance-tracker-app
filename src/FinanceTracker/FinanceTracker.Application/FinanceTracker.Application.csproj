@@ -5,7 +5,8 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <RootNamespace>FinanceTracker.Application</RootNamespace>
-        <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+		
+		<GeneratedAssemblyInfoFile>Properties/AssemblyInfo.cs</GeneratedAssemblyInfoFile>
     </PropertyGroup>
 
     <ItemGroup>

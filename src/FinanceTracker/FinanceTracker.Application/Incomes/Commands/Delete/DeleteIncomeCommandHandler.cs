@@ -6,19 +6,19 @@ using FinanceTracker.Domain.Results;
 
 namespace FinanceTracker.Application.Incomes.Commands.Delete;
 
-public sealed class DeleteIncomeCommandHandler(
+internal sealed class DeleteIncomeCommandHandler(
     IIncomeRepository incomeRepository,
     ICapitalRepository capitalRepository,
     IUnitOfWork unitOfWork)
     : ICommandHandler<DeleteIncomeCommand>
 {
-    public async Task<Result> Handle(DeleteIncomeCommand request, CancellationToken cancellationToken)
+    public async Task<Result> Handle(DeleteIncomeCommand command, CancellationToken cancellationToken)
     {
-        var income = await incomeRepository.GetAsync(new IncomeByIdSpecification(request.Id));
+        var income = await incomeRepository.GetAsync(new IncomeByIdSpecification(command.Id));
 
         if (income is null)
         {
-            return Result.Failure(DomainErrors.General.NotFound);
+            return Result.Failure(DomainErrors.General.NotFound(nameof(income)));
         }
 
         income.Capital!.Balance -= income.Amount;

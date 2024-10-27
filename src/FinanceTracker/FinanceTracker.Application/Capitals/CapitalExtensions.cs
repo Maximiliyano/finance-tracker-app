@@ -11,7 +11,7 @@ internal static class CapitalExtensions
             capital.Id,
             capital.Name,
             capital.Balance,
-            capital.Currency,
+            nameof(capital.Currency),
             capital.TotalIncome,
             capital.TotalExpense,
             capital.TotalTransferIn,
@@ -20,11 +20,11 @@ internal static class CapitalExtensions
     internal static IEnumerable<CapitalResponse> ToResponses(this IEnumerable<Capital> capitals)
         => capitals.Select(e => e.ToResponse());
 
-    internal static Capital ToEntity(this CreateCapitalCommand command)
-        => new()
+    internal static Capital ToEntity(this CreateCapitalCommand command, int? id = null)
+        => new(id)
         {
-            Name = command.Name,
+            Name = command.Name.Trim(),
             Balance = command.Balance,
-            Currency = command.Currency.ToString()
+            Currency = command.Currency
         };
 }

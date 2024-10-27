@@ -11,13 +11,13 @@ internal sealed class DeleteCapitalCommandHandler(
     IUnitOfWork unitOfWork)
     : ICommandHandler<DeleteCapitalCommand>
 {
-    public async Task<Result> Handle(DeleteCapitalCommand request, CancellationToken cancellationToken)
+    public async Task<Result> Handle(DeleteCapitalCommand command, CancellationToken cancellationToken)
     {
-        var capital = await repository.GetAsync(new CapitalByIdSpecification(request.Id));
+        var capital = await repository.GetAsync(new CapitalByIdSpecification(command.Id));
 
         if (capital is null)
         {
-            return Result.Failure(DomainErrors.General.NotFound);
+            return Result.Failure(DomainErrors.General.NotFound(nameof(capital)));
         }
 
         repository.Delete(capital);

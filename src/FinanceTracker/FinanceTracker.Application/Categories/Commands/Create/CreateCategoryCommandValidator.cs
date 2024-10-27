@@ -1,5 +1,6 @@
 using FinanceTracker.Application.Abstractions;
 using FinanceTracker.Application.Categories.Specifications;
+using FinanceTracker.Domain.Constants;
 using FinanceTracker.Domain.Enums;
 using FinanceTracker.Domain.Errors;
 using FinanceTracker.Domain.Repositories;
@@ -20,8 +21,7 @@ internal sealed class CreateCategoryCommandValidator : AbstractValidator<CreateC
             .Must(type => type is not CategoryType.None)
             .WithError(ValidationErrors.Category.InvalidType);
         
-        RuleFor(c => c.PlannedPeriodAmount);
-        
-        RuleFor(c => c.Period);
+        RuleFor(c => c.PlannedPeriodAmount)
+            .GreaterThanOrEqualTo(ValidationConstants.ZeroValue);
     }
 };

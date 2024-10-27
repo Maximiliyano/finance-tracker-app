@@ -6,6 +6,6 @@ namespace FinanceTracker.Application.Categories.Commands.Create;
 public sealed record CreateCategoryCommand(
     string Name,
     CategoryType Type,
-    float? PlannedPeriodAmount,
-    PerPeriodType? Period)
+    float PlannedPeriodAmount,
+    PerPeriodType Period)
     : ICommand<int>;

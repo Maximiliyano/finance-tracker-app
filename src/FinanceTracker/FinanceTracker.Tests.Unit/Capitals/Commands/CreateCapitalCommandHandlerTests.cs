@@ -20,16 +20,17 @@ public sealed class CreateCapitalCommandHandlerTests
     }
 
     [Fact]
-    public async Task Handle_CreateValidCapital_ReturnsId()
+    public async Task Handle_CreateValidCapital_ReturnsSuccess()
     {
         // Arrange
         var command = new CreateCapitalCommand("FancyName", 1000, CurrencyType.USD);
         var capital = new Capital
         {
             Name = command.Name,
-            Balance = command.Balance
+            Balance = command.Balance,
+            Currency = command.Currency
         };
-        
+
         // Act
         var result = await _handler.Handle(command, default);
 
@@ -37,8 +38,8 @@ public sealed class CreateCapitalCommandHandlerTests
         result.IsSuccess.Should().BeTrue();
         result.Value.Should().Be(capital.Id);
 
-        _repositoryMock.Received().Create(Arg.Is<Capital>(c => c.Id == capital.Id));
+        _repositoryMock.Received(1).Create(Arg.Any<Capital>());
         
-        await _unitOfWorkMock.Received().SaveChangesAsync();
+        await _unitOfWorkMock.Received(1).SaveChangesAsync(Arg.Any<CancellationToken>());
     }
 }

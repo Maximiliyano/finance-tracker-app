@@ -6,31 +6,31 @@ using FinanceTracker.Domain.Results;
 
 namespace FinanceTracker.Application.Incomes.Commands.Update;
 
-public sealed class UpdateIncomeCommandHandler(
+internal sealed class UpdateIncomeCommandHandler(
     IIncomeRepository incomeRepository,
     ICapitalRepository capitalRepository,
     IUnitOfWork unitOfWork)
     : ICommandHandler<UpdateIncomeCommand>
 {
-    public async Task<Result> Handle(UpdateIncomeCommand request, CancellationToken cancellationToken)
+    public async Task<Result> Handle(UpdateIncomeCommand command, CancellationToken cancellationToken)
     {
-        var income = await incomeRepository.GetAsync(new IncomeByIdSpecification(request.Id));
+        var income = await incomeRepository.GetAsync(new IncomeByIdSpecification(command.Id));
 
         if (income is null)
         {
-            return Result.Failure(DomainErrors.General.NotFound);
+            return Result.Failure(DomainErrors.General.NotFound(nameof(income)));
         }
 
-        if (request.Amount is not null)
+        if (command.Amount is not null)
         {
-            var difference = (float)(request.Amount - income.Amount);
+            var difference = (float)(command.Amount - income.Amount);
             
             income.Capital!.Balance += difference;
         }
 
-        income.Amount = request.Amount ?? income.Amount;
-        income.Purpose = request.Purpose ?? income.Purpose;
-        income.CategoryId = request.CategoryId ?? income.CategoryId;
+        income.Amount = command.Amount ?? income.Amount;
+        income.Purpose = command.Purpose ?? income.Purpose;
+        income.CategoryId = command.CategoryId ?? income.CategoryId;
 
         incomeRepository.Update(income);
         

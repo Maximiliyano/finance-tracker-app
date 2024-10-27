@@ -1,4 +1,3 @@
-using System.Data;
 using FinanceTracker.Application.Abstractions;
 using FinanceTracker.Application.Capitals.Specifications;
 using FinanceTracker.Domain.Constants;

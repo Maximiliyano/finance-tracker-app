@@ -1,8 +1,15 @@
+using FinanceTracker.Domain.Enums;
+
 namespace FinanceTracker.Domain.Entities;
 
 public sealed class Capital
     : Entity, IAuditableEntity, ISoftDeletableEntity
 {
+    public Capital(int? id)
+        : base(id ?? 0)
+    {
+    }
+
     public Capital(int id)
         : base(id)
     {
@@ -16,15 +23,15 @@ public sealed class Capital
 
     public float Balance { get; set; }
     
-    public string Currency { get; set; }
+    public CurrencyType Currency { get; set; }
 
-    public float TotalIncome { get; set; }
+    public float TotalIncome => Incomes?.Sum(i => i.Amount) ?? 0;
 
-    public float TotalExpense { get; set; }
+    public float TotalExpense => Expenses?.Sum(e => e.Amount) ?? 0;
 
-    public float TotalTransferIn { get; set; }
+    public float TotalTransferIn => TransfersIn?.Sum(t => t.Amount) ?? 0;
 
-    public float TotalTransferOut { get; set; }
+    public float TotalTransferOut => TransfersOut?.Sum(t => t.Amount) ?? 0;
 
     public DateTimeOffset CreatedAt { get; init; }
 

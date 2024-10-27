@@ -13,6 +13,10 @@
 - Frontend > netlify
 - Database > FreeAspNetHosting
 
+# FinanceTrackerTests
+
+<h2>Unit test</h2>
+
 # Web UI
 
-- for local development use <code>ng serve --configuration=development</code>
+- For local development use <code>ng serve --configuration=development</code>

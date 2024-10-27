@@ -1,7 +1,6 @@
 using FinanceTracker.Application.Abstractions.Data;
 using FinanceTracker.Domain.Entities;
 using FinanceTracker.Domain.Repositories;
-using FinanceTracker.Infrastructure.Persistence.Abstractions;
 using Microsoft.EntityFrameworkCore;
 
 namespace FinanceTracker.Infrastructure.Persistence;
@@ -26,7 +25,7 @@ public sealed class FinanceTrackerDbContext(DbContextOptions<FinanceTrackerDbCon
     public new DbSet<TEntity> Set<TEntity>()
         where TEntity : Entity
             => base.Set<TEntity>();
-
+    
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);

@@ -4,14 +4,14 @@ using FinanceTracker.Domain.Results;
 
 namespace FinanceTracker.Application.Exchanges.Commands.AddRange;
 
-public sealed class AddExchangesCommandHandler(
+internal sealed class AddExchangesCommandHandler(
     IExchangeRepository repository,
     IUnitOfWork unitOfWork)
     : ICommandHandler<AddExchangesCommand>
 {
-    public async Task<Result> Handle(AddExchangesCommand request, CancellationToken cancellationToken)
+    public async Task<Result> Handle(AddExchangesCommand command, CancellationToken cancellationToken)
     {
-        var exchanges = request.Exchanges.ToEntities();
+        var exchanges = command.Exchanges.ToEntities();
         
         repository.AddRange(exchanges);
 

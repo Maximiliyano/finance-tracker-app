@@ -18,7 +18,7 @@ internal sealed class CreateExpenseCommandHandler(
 
         if (capital is null)
         {
-            return Result.Failure<int>(DomainErrors.General.NotFound);
+            return Result.Failure<int>(DomainErrors.General.NotFound(nameof(capital)));
         }
 
         var expense = command.ToEntity();

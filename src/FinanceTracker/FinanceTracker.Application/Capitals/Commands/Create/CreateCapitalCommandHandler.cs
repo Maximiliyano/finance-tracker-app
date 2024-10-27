@@ -4,7 +4,7 @@ using FinanceTracker.Domain.Results;
 
 namespace FinanceTracker.Application.Capitals.Commands.Create;
 
-public sealed class CreateCapitalCommandHandler(
+internal sealed class CreateCapitalCommandHandler(
     ICapitalRepository repository,
     IUnitOfWork unitOfWork)
     : ICommandHandler<CreateCapitalCommand, int>

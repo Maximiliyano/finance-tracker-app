@@ -5,15 +5,16 @@ using FinanceTracker.Domain.Results;
 
 namespace FinanceTracker.Application.Incomes.Queries.GetAll;
 
-public sealed class GetIncomesQueryHandler(
+internal sealed class GetIncomesQueryHandler(
     IIncomeRepository repository)
     : IQueryHandler<GetIncomesQuery, IEnumerable<IncomeResponse>>
 {
-    public async Task<Result<IEnumerable<IncomeResponse>>> Handle(GetIncomesQuery request, CancellationToken cancellationToken)
+    public async Task<Result<IEnumerable<IncomeResponse>>> Handle(GetIncomesQuery query, CancellationToken cancellationToken)
     {
         var incomes = await repository.GetAllAsync();
-        var incomesResponse = incomes.ToResponses();
 
-        return Result.Success(incomesResponse);
+        var incomeResponses = incomes.ToResponses();
+
+        return Result.Success(incomeResponses);
     }
 }
