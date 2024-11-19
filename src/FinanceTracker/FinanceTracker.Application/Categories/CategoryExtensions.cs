@@ -8,22 +8,29 @@ namespace FinanceTracker.Application.Categories;
 internal static class CategoryExtensions
 {
     internal static CategoryResponse ToResponse(this Category category)
-        => new(
-                category.Id,
-                category.Name,
-                category.Type,
-                category.Expenses?.ToResponses(),
-                category.Period, category.PlannedPeriodAmount);
+    {
+        return new CategoryResponse(
+                    category.Id,
+                    category.Name,
+                    category.Type,
+                    category.Period,
+                    category.PlannedPeriodAmount,
+                    category.Expenses?.ToResponses());
+    }
 
     internal static IEnumerable<CategoryResponse> ToResponses(this IEnumerable<Category> categories)
-        => categories.Select(e => e.ToResponse());
+    {
+        return categories.Select(e => e.ToResponse());
+    }
 
     internal static Category ToEntity(this CreateCategoryCommand command)
-        => new()
+    {
+        return new Category
         {
             Name = command.Name,
             Type = command.Type,
             Period = command.Period,
             PlannedPeriodAmount = command.PlannedPeriodAmount
         };
+    }
 }

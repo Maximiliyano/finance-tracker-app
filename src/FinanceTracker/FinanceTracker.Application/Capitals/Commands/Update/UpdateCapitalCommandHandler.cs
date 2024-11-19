@@ -21,12 +21,12 @@ internal sealed class UpdateCapitalCommandHandler(ICapitalRepository repository,
 
         capital.Name = command.Name?.Trim() ?? capital.Name;
         capital.Balance = command.Balance ?? capital.Balance;
-        
+
         if (command.Currency is not null)
         {
             capital.Currency = Enum.Parse<CurrencyType>(command.Currency);
         }
-        
+
         repository.Update(capital);
 
         await unitOfWork.SaveChangesAsync(cancellationToken);

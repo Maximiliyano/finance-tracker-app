@@ -5,11 +5,11 @@ public sealed class Income : Entity, IAuditableEntity, ISoftDeletableEntity
     public required float Amount { get; set; }
 
     public string? Purpose { get; set; }
-    
+
     public DateTimeOffset PaymentDate { get; set; }
 
     public int CategoryId { get; set; }
-    
+
     public Category Category { get; set; }
 
     public DateTimeOffset CreatedAt { get; init; }
@@ -26,6 +26,5 @@ public sealed class Income : Entity, IAuditableEntity, ISoftDeletableEntity
 
     public int? CapitalId { get; init; }
 
-    
     public Capital? Capital { get; init; }
 }

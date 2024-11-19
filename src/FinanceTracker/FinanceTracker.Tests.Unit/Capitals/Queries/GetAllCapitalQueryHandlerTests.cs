@@ -1,4 +1,3 @@
-using System.Linq;
 using FinanceTracker.Application.Capitals.Queries.GetAll;
 using FinanceTracker.Application.Capitals.Responses;
 using FinanceTracker.Domain.Entities;
@@ -33,7 +32,7 @@ public sealed class GetAllCapitalQueryHandlerTests
                 x.Id,
                 x.Name,
                 x.Balance,
-                nameof(x.Currency),
+                x.Currency.ToString(),
                 x.TotalIncome,
                 x.TotalExpense,
                 x.TotalTransferIn,

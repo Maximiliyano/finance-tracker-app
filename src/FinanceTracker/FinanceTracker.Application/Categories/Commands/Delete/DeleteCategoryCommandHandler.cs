@@ -21,9 +21,9 @@ internal sealed class DeleteCategoryCommandHandler(
         }
 
         repository.Delete(category);
-        
+
         await unitOfWork.SaveChangesAsync(cancellationToken);
-        
+
         return Result.Success();
     }
 }

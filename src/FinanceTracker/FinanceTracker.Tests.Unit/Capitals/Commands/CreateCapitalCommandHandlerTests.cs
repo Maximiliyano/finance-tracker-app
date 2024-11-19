@@ -11,9 +11,9 @@ public sealed class CreateCapitalCommandHandlerTests
 {
     private readonly ICapitalRepository _repositoryMock = Substitute.For<ICapitalRepository>();
     private readonly IUnitOfWork _unitOfWorkMock = Substitute.For<IUnitOfWork>();
-    
+
     private readonly CreateCapitalCommandHandler _handler;
-    
+
     public CreateCapitalCommandHandlerTests()
     {
         _handler = new CreateCapitalCommandHandler(_repositoryMock, _unitOfWorkMock);
@@ -39,7 +39,7 @@ public sealed class CreateCapitalCommandHandlerTests
         result.Value.Should().Be(capital.Id);
 
         _repositoryMock.Received(1).Create(Arg.Any<Capital>());
-        
+
         await _unitOfWorkMock.Received(1).SaveChangesAsync(Arg.Any<CancellationToken>());
     }
 }

@@ -26,7 +26,7 @@ public sealed class GetLatestExchangeQueryHandler(
             }
 
             var actualExchanges = result.Value.ToList();
-            
+
             repository.AddRange(actualExchanges);
 
             await unitOfWork.SaveChangesAsync(cancellationToken);

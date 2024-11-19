@@ -10,7 +10,7 @@ internal sealed class ExchangeConfiguration : IEntityTypeConfiguration<Exchange>
     public void Configure(EntityTypeBuilder<Exchange> builder)
     {
         builder.HasKey(ex => ex.Id);
-        
+
         builder.ToTable(TableConfigurationConstants.Exchanges);
     }
 }

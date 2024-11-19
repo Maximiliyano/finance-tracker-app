@@ -12,7 +12,7 @@ internal sealed class CreateCategoryCommandHandler(
     public async Task<Result<int>> Handle(CreateCategoryCommand command, CancellationToken cancellationToken)
     {
         var category = command.ToEntity();
-        
+
         repository.Create(category);
 
         await unitOfWork.SaveChangesAsync(cancellationToken);

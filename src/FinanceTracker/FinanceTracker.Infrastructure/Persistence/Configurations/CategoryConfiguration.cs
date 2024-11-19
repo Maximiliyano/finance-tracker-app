@@ -13,14 +13,14 @@ internal sealed class CategoryConfiguration : IEntityTypeConfiguration<Category>
         builder.HasKey(c => c.Id);
 
         builder.HasData(DefaultCategories());
-        
+
         builder.ToTable(TableConfigurationConstants.Categories);
     }
-        
+
     private static IEnumerable<Category> DefaultCategories()
     {
         var utcNow = DateTimeOffset.UtcNow;
-        
+
         return [
             new Category(1)
             {

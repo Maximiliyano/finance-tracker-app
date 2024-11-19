@@ -24,16 +24,17 @@ internal sealed class UpdateIncomeCommandHandler(
         if (command.Amount is not null)
         {
             var difference = (float)(command.Amount - income.Amount);
-            
+
             income.Capital!.Balance += difference;
         }
 
         income.Amount = command.Amount ?? income.Amount;
         income.Purpose = command.Purpose ?? income.Purpose;
+        income.PaymentDate = command.PaymentDate ?? income.PaymentDate;
         income.CategoryId = command.CategoryId ?? income.CategoryId;
 
         incomeRepository.Update(income);
-        
+
         capitalRepository.Update(income.Capital!);
 
         await unitOfWork.SaveChangesAsync(cancellationToken);

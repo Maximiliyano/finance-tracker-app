@@ -5,4 +5,5 @@ public sealed record UpdateIncomeRequest(
     int? CategoryId,
     float? Amount,
     string? Purpose,
+    DateTimeOffset? PaymentDate,
     DateTimeOffset? Date);

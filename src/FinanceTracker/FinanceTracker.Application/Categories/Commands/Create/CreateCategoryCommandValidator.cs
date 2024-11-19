@@ -20,7 +20,7 @@ internal sealed class CreateCategoryCommandValidator : AbstractValidator<CreateC
         RuleFor(c => c.Type)
             .Must(type => type is not CategoryType.None)
             .WithError(ValidationErrors.Category.InvalidType);
-        
+
         RuleFor(c => c.PlannedPeriodAmount)
             .GreaterThanOrEqualTo(ValidationConstants.ZeroValue);
     }

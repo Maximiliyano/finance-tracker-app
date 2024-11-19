@@ -32,17 +32,17 @@ internal sealed class UpdateExpenseCommandHandler(
 
             expense.Amount = command.Amount.Value;
         }
-        
+
         expense.Purpose = command.Purpose ?? expense.Purpose;
         expense.PaymentDate = command.Date ?? dateTimeProvider.UtcNow;
         expense.CategoryId = command.CategoryId ?? expense.CategoryId;
-        
+
         capitalRepository.Update(expense.Capital);
         categoryRepository.Update(expense.Category);
         expenseRepository.Update(expense);
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
-        
+
         return Result.Success();
     }
 }

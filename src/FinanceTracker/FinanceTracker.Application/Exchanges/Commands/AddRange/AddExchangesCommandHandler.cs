@@ -12,7 +12,7 @@ internal sealed class AddExchangesCommandHandler(
     public async Task<Result> Handle(AddExchangesCommand command, CancellationToken cancellationToken)
     {
         var exchanges = command.Exchanges.ToEntities();
-        
+
         repository.AddRange(exchanges);
 
         await unitOfWork.SaveChangesAsync(cancellationToken);

@@ -13,7 +13,7 @@ internal sealed class ExpenseRepository(
 
     public new async Task<IEnumerable<Expense>> GetAllAsync()
         => await base.GetAllAsync();
-    
+
     public new void Create(Expense expense)
         => base.Create(expense);
 

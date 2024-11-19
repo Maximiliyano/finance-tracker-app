@@ -22,7 +22,7 @@ public sealed class Capital
     public string Name { get; set; } = null!;
 
     public float Balance { get; set; }
-    
+
     public CurrencyType Currency { get; set; }
 
     public float TotalIncome => Incomes?.Sum(i => i.Amount) ?? 0;

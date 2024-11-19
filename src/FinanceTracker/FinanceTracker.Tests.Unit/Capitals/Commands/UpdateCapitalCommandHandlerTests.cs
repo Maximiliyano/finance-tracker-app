@@ -42,6 +42,29 @@ public sealed class UpdateCapitalCommandHandlerTests
         await _unitOfWorkMock.DidNotReceive().SaveChangesAsync(Arg.Any<CancellationToken>());
     }
 
+    [Fact]
+    public async Task Handle_ShouldReturnSuccess_WhenCapitalHaveNothingToUpdate()
+    {
+        // Arrange
+        const int id = 1;
+
+        var capital = new Capital(id) { Name = "Test", Balance = 100, Currency = CurrencyType.UAH };
+        var command = new UpdateCapitalCommand(id);
+
+        _repositoryMock.GetAsync(Arg.Any<CapitalByIdSpecification>()).Returns(capital);
+
+        // Act
+        var result = await _handler.Handle(command, default);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+
+        _repositoryMock.Received(1).Update(capital);
+
+        await _repositoryMock.Received(1).GetAsync(Arg.Any<CapitalByIdSpecification>());
+        await _unitOfWorkMock.Received(1).SaveChangesAsync(Arg.Any<CancellationToken>());
+    }
+
     [Theory]
     [InlineData("New Name", 200f, "EUR")]
     [InlineData("Modified Name", 150f, null)]
@@ -52,8 +75,9 @@ public sealed class UpdateCapitalCommandHandlerTests
     public async Task Handle_ShouldUpdateCapitalSuccessfully(string? name, float? balance, string? currency)
     {
         // Arrange
-        var oldName = "Old Name";
-        var oldBalance = 100f;
+        const string oldName = "Old Name";
+        const float oldBalance = 100f;
+
         var capital = new Capital(1) { Name = oldName, Balance = oldBalance, Currency = CurrencyType.USD };
         var command = new UpdateCapitalCommand(
             1,

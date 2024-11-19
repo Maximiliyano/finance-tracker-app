@@ -5,5 +5,5 @@ using FinanceTracker.Domain.Enums;
 namespace FinanceTracker.Application.Categories.Queries.GetAll;
 
 public sealed record GetAllCategoryQuery(
-    CategoryType? Type)
+    CategoryType? Type = null)
     : IQuery<IEnumerable<CategoryResponse>>;

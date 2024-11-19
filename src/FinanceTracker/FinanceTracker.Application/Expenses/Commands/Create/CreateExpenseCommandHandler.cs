@@ -26,7 +26,7 @@ internal sealed class CreateExpenseCommandHandler(
         capital.Balance -= expense.Amount;
 
         capitalRepository.Update(capital);
-        
+
         expenseRepository.Create(expense);
 
         await unitOfWork.SaveChangesAsync(cancellationToken);

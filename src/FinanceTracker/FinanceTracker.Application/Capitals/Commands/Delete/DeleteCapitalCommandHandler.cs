@@ -23,7 +23,7 @@ internal sealed class DeleteCapitalCommandHandler(
         repository.Delete(capital);
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
-        
+
         return Result.Success();
     }
 }

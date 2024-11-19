@@ -50,7 +50,7 @@ internal sealed class ValidationPipelineBehavior<TRequest, TResponse>(
             .GetGenericTypeDefinition()
             .MakeGenericType(typeof(TResult).GenericTypeArguments[0])
             .GetMethod(nameof(Result.Failure))!
-            .Invoke(null, new object[] { errors });
+            .Invoke(null, [errors]);
 
         return (TResult)result!;
     }

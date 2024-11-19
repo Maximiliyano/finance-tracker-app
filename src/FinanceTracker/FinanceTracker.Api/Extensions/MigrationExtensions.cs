@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FinanceTracker.Api.Extensions;
 
-public static class MigrationExtensions
+internal static class MigrationExtensions
 {
     public static IApplicationBuilder ApplyMigrations(this IApplicationBuilder app)
     {
@@ -12,7 +12,7 @@ public static class MigrationExtensions
         var dbContext = serviceScope.ServiceProvider.GetRequiredService<FinanceTrackerDbContext>();
 
         dbContext.Database.Migrate();
-        
+
         return app;
     }
 }

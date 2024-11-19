@@ -12,7 +12,7 @@ internal sealed class GetAllCategoryQueryHandler(ICategoryRepository repository)
     {
         var categories = await repository.GetAllAsync(query.Type);
         var categoryResponses = categories.ToResponses();
-        
+
         return Result.Success(categoryResponses);
     }
 }

@@ -4,8 +4,8 @@ public class Result
 {
     protected Result(bool isSuccess, IList<Error> errors)
     {
-        if ((isSuccess && errors.Any(x => x != Error.None)) ||
-            (!isSuccess && errors.Any(x => x == Error.None)))
+        if (isSuccess && errors.Any(x => x != Error.None) ||
+            !isSuccess && errors.Any(x => x == Error.None))
         {
             throw new ArgumentException(ResultConstants.InvalidError, nameof(errors));
         }
@@ -18,15 +18,15 @@ public class Result
 
     public IList<Error> Errors { get; protected init; }
 
-    public static Result Success() => new(true, new List<Error>() { Error.None });
+    public static Result Success() => new(true, [Error.None]);
 
-    public static Result<TValue> Success<TValue>(TValue value) => new(value, true, new List<Error>() { Error.None });
+    public static Result<TValue> Success<TValue>(TValue value) => new(value, true, [Error.None]);
 
     public static Result Failure(Error error) => Failure([error]);
 
     public static Result Failure(IList<Error> errors) => new(false, errors);
 
-    public static Result<TValue> Failure<TValue>(Error error) => new(default!, false, new List<Error>() { error });
+    public static Result<TValue> Failure<TValue>(Error error) => new(default!, false, [error]);
 
     public static Result<TValue> Failure<TValue>(IList<Error> errors) => new(default!, false, errors);
 }
@@ -41,7 +41,7 @@ public class Result<TValue> : Result
 
     public static implicit operator Result<TValue>(TValue value) => Success(value);
 
-    public new static Result<TValue> Failure(IList<Error> errors) => new(default!, false, errors);
+    public static new Result<TValue> Failure(IList<Error> errors) => new(default!, false, errors);
 
     public TValue Value => IsSuccess
         ? _value

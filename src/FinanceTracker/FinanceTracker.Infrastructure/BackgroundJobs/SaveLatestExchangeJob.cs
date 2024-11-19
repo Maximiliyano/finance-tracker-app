@@ -18,7 +18,7 @@ public sealed class SaveLatestExchangeJob(
         logger.LogInformation("Save latest exchange background job has been started.");
 
         logger.LogInformation("Executing exchange from API...");
-        
+
         var currentExchangesResult = await service.GetCurrencyAsync();
 
         if (!currentExchangesResult.IsSuccess)
@@ -26,14 +26,14 @@ public sealed class SaveLatestExchangeJob(
             logger.LogError("Error occured during executing exchange from API.");
             return;
         }
-        
+
         logger.LogInformation("Executed exchange from API successfully.");
         logger.LogInformation("Adding current exchange...");
 
         repository.AddRange(currentExchangesResult.Value);
 
         await unitOfWork.SaveChangesAsync(context.CancellationToken);
-            
+
         logger.LogInformation("Current exchange has added.");
         logger.LogInformation("Save latest exchange background job has been finished successfully.");
     }

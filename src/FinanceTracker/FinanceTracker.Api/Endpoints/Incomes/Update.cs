@@ -16,6 +16,7 @@ internal sealed class Update : IEndpoint
                     request.CategoryId,
                     request.Amount,
                     request.Purpose,
+                    request.PaymentDate,
                     request.Date)))
                 .Process())
             .WithTags(nameof(Incomes));

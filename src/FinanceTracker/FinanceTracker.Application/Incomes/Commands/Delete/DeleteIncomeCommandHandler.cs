@@ -22,9 +22,9 @@ internal sealed class DeleteIncomeCommandHandler(
         }
 
         income.Capital!.Balance -= income.Amount;
-        
+
         capitalRepository.Update(income.Capital);
-        
+
         incomeRepository.Delete(income);
 
         await unitOfWork.SaveChangesAsync(cancellationToken);

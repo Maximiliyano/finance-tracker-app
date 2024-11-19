@@ -23,7 +23,7 @@ public sealed record CapitalResponse
     public string Name { get; init; } = string.Empty;
 
     public float Balance { get; init; }
-    
+
     public string Currency { get; init; }
 
     public float TotalIncome { get; init; }

@@ -33,7 +33,7 @@ public static class DependencyInjection
             => options.WaitForJobsToComplete = true);
 
         services.ConfigureOptions<SaveLatestExchangeJobSetup>();
-        
+
         return services;
     }
 

@@ -7,6 +7,6 @@ public sealed record CategoryResponse(
     int Id,
     string Name,
     CategoryType Type,
-    IEnumerable<ExpenseResponse>? Expenses,
-    PerPeriodType? PeriodType,
-    float? PeriodAmount);
+    PerPeriodType PeriodType,
+    float PeriodAmount,
+    IEnumerable<ExpenseResponse>? Expenses);

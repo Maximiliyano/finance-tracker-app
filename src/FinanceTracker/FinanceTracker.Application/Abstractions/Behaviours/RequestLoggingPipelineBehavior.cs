@@ -17,7 +17,7 @@ internal sealed class RequestLoggingPipelineBehavior<TRequest, TResponse>(
         CancellationToken cancellationToken)
     {
         var requestName = typeof(TRequest).Name;
-        
+
         logger.LogInformation("Processing request {RequestName}", requestName);
 
         var result = await next();

@@ -393,5 +393,7 @@ dotnet_diagnostic.S6781.severity = none
 
 # Don't use var instead of explicit type
 [*.{cs,vb}]
+dotnet_diagnostic.IDE0005.severity = none
 dotnet_diagnostic.IDE0007.severity = none
 dotnet_diagnostic.IDE0008.severity = none
+dotnet_diagnostic.IDE0058.severity = none

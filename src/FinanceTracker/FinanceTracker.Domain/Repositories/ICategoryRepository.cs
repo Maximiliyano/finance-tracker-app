@@ -14,6 +14,6 @@ public interface ICategoryRepository
     void Update(Category category);
 
     void Delete(Category category);
-    
+
     Task<bool> AnyAsync(ISpecification<Category> specification);
 }

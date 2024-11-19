@@ -22,13 +22,13 @@ internal sealed class CreateIncomeCommandHandler(
         }
 
         var income = command.ToEntity();
-        
+
         capital.Balance += command.Amount;
 
         incomeRepository.Create(income);
-        
+
         capitalRepository.Update(capital);
-        
+
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
         return income.Id;

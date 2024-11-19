@@ -1,4 +1,3 @@
-using System.Security.Cryptography;
 using FinanceTracker.Application.Capitals.Commands.Delete;
 using FinanceTracker.Application.Capitals.Specifications;
 using FinanceTracker.Domain.Entities;
@@ -11,20 +10,20 @@ using NSubstitute;
 
 namespace FinanceTracker.UnitTests.Capitals.Commands;
 
-public sealed class DeleteCapitalCommandTests
+public sealed class DeleteCapitalCommandHandlerTests
 {
-    private readonly ICapitalRepository _capitalRepository = Substitute.For<ICapitalRepository>();
-    private readonly IUnitOfWork _unitOfWork = Substitute.For<IUnitOfWork>();
+    private readonly ICapitalRepository _capitalRepositoryMock = Substitute.For<ICapitalRepository>();
+    private readonly IUnitOfWork _unitOfWorkMock = Substitute.For<IUnitOfWork>();
 
     private readonly DeleteCapitalCommandHandler _handler;
 
-    public DeleteCapitalCommandTests()
+    public DeleteCapitalCommandHandlerTests()
     {
-        _handler = new DeleteCapitalCommandHandler(_capitalRepository, _unitOfWork);
+        _handler = new DeleteCapitalCommandHandler(_capitalRepositoryMock, _unitOfWorkMock);
     }
 
     [Fact]
-    public async Task Handle_ShouldDeleteCapital_ReturnSuccess() 
+    public async Task Handle_ShouldDeleteCapital_ReturnSuccess()
     {
         // Arrange
         var capital = new Capital(1)
@@ -35,7 +34,7 @@ public sealed class DeleteCapitalCommandTests
         };
         var command = new DeleteCapitalCommand(1);
 
-        _capitalRepository.GetAsync(Arg.Any<CapitalByIdSpecification>())
+        _capitalRepositoryMock.GetAsync(Arg.Any<CapitalByIdSpecification>())
             .Returns(capital);
 
         // Act
@@ -44,9 +43,9 @@ public sealed class DeleteCapitalCommandTests
         // Assert
         result.IsSuccess.Should().BeTrue();
 
-        _capitalRepository.Received(1).Delete(capital);
-        
-        await _unitOfWork.Received(1).SaveChangesAsync(Arg.Any<CancellationToken>());
+        _capitalRepositoryMock.Received(1).Delete(capital);
+
+        await _unitOfWorkMock.Received(1).SaveChangesAsync(Arg.Any<CancellationToken>());
     }
 
     [Fact]
@@ -55,7 +54,7 @@ public sealed class DeleteCapitalCommandTests
         // Arrange
         var command = new DeleteCapitalCommand(1);
 
-        _capitalRepository.GetAsync(Arg.Any<CapitalByIdSpecification>())
+        _capitalRepositoryMock.GetAsync(Arg.Any<CapitalByIdSpecification>())
             .Returns((Capital)null);
 
         // Act
@@ -65,8 +64,8 @@ public sealed class DeleteCapitalCommandTests
         result.IsSuccess.Should().BeFalse();
         result.Errors.Should().OnlyContain(x => x == DomainErrors.General.NotFound("capital"));
 
-        _capitalRepository.Received(0).Delete(Arg.Any<Capital>());
-        
-        await _unitOfWork.Received(0).SaveChangesAsync(Arg.Any<CancellationToken>());
+        _capitalRepositoryMock.Received(0).Delete(Arg.Any<Capital>());
+
+        await _unitOfWorkMock.Received(0).SaveChangesAsync(Arg.Any<CancellationToken>());
     }
 };

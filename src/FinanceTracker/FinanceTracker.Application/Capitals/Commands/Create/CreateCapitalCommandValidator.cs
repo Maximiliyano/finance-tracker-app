@@ -22,7 +22,7 @@ internal sealed class CreateCapitalCommandValidator : AbstractValidator<CreateCa
         RuleFor(c => c.Balance)
             .GreaterThanOrEqualTo(ValidationConstants.ZeroValue)
             .WithError(ValidationErrors.General.AmountMustBeGreaterThanZero);
-        
+
         RuleFor(c => c.Currency)
             .Must(currency => currency is not CurrencyType.None)
             .WithError(ValidationErrors.Capital.InvalidCurrencyType);

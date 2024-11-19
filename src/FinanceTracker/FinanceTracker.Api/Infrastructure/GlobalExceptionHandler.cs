@@ -15,11 +15,11 @@ internal sealed class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> log
         CancellationToken cancellationToken)
     {
         logger.LogError(exception, "Unhandled exception occurred");
-        
+
         var errors = ParseException(exception);
-        
+
         var statusCode = errors[0].Type.GetStatusCode();
-        
+
         var problemDetails = BuildProblemDetails(statusCode, exception.Message, errors);
 
         httpContext.Response.StatusCode = problemDetails.Status!.Value;
@@ -44,6 +44,6 @@ internal sealed class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> log
     private static Error[] ParseException(Exception exception)
         => exception switch
         {
-            _ =>[DomainErrors.General.Exception(exception.Message)]
+            _ => [DomainErrors.General.Exception(exception.Message)]
         };
 }

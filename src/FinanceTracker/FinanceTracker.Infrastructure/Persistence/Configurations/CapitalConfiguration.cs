@@ -24,7 +24,7 @@ internal sealed class CapitalConfiguration : IEntityTypeConfiguration<Capital>
             .WithOne(i => i.Capital)
             .HasForeignKey(i => i.CapitalId)
             .OnDelete(DeleteBehavior.Cascade);
-        
+
         builder
             .Navigation(c => c.Incomes)
             .AutoInclude();
@@ -34,7 +34,7 @@ internal sealed class CapitalConfiguration : IEntityTypeConfiguration<Capital>
             .WithOne(e => e.Capital)
             .HasForeignKey(e => e.CapitalId)
             .OnDelete(DeleteBehavior.Cascade);
-        
+
         builder
             .Navigation(c => c.Expenses)
             .AutoInclude();
@@ -48,7 +48,7 @@ internal sealed class CapitalConfiguration : IEntityTypeConfiguration<Capital>
         builder
             .Navigation(c => c.TransfersIn)
             .AutoInclude();
-        
+
         builder
             .HasMany(c => c.TransfersOut)
             .WithOne(t => t.SourceCapital)

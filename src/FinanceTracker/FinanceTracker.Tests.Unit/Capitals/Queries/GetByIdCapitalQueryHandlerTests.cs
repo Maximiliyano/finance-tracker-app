@@ -40,13 +40,13 @@ public sealed class GetByIdCapitalQueryHandlerTests
         result.Value.Id.Should().Be(id);
         result.Value.Name.Should().Be(capital.Name);
         result.Value.Balance.Should().Be(capital.Balance);
-        result.Value.Currency.Should().Be(nameof(capital.Currency));
+        result.Value.Currency.Should().Be(capital.Currency.ToString());
 
         await _repositoryMock.Received(1).GetAsync(Arg.Any<CapitalByIdSpecification>());
     }
 
     [Fact]
-    public async Task Handle_ShouldReturnFailure_WhenCapitalNotFound()
+    public async Task Handle_ShouldReturnNotFound_WhenCapitalNotFound()
     {
         // Arrange
         _repositoryMock.GetAsync(Arg.Any<CapitalByIdSpecification>())

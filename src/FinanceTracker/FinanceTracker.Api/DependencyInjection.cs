@@ -9,7 +9,7 @@ internal static class DependencyInjection
     {
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
-        
+
         services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
 
         services.AddHealthChecks();

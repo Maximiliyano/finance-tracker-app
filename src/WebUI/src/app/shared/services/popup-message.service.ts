@@ -24,7 +24,8 @@ export class PopupMessageService {
   private display(message: string, type: 'success' | 'warning' | 'error', duration: number): void {
     this.zone.run(() => {
       this.createPopup(message, type);
-      setTimeout(() => this.removePopup(), duration);
+
+      setTimeout(() => this.removePopup(), 99999999999); // TODO don't word duration
     });
   }
 
@@ -32,13 +33,14 @@ export class PopupMessageService {
     if (this.messageContainer) {
       this.removePopup();
     }
-    
+
     this.messageContainer = document.createElement('div');
     this.messageContainer.className = `popup-message ${type}`;
     this.messageContainer.innerHTML = `
       <div class="popup-icon">${this.getIcon(type)}</div>
       <div class="popup-text">${message}</div>
-    `;
+    `;// TODO fix styles with long text
+    // TODO add ability to see multiples popups
     document.body.appendChild(this.messageContainer);
   }
 
