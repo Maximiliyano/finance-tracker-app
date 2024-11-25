@@ -30,7 +30,8 @@ public sealed class GetByIdCategoryQueryHandlerTests
         var category = new Category(id)
         {
             Name = "Exist category",
-            Type = CategoryType.Expenses
+            Type = CategoryType.Expenses,
+            Expenses = []
         };
         var response = new CategoryResponse(id, category.Name, category.Type, category.Period, category.PlannedPeriodAmount, []);
         var query = new GetByIdCategoryQuery(id);
@@ -43,7 +44,7 @@ public sealed class GetByIdCategoryQueryHandlerTests
 
         // Assert
         result.IsSuccess.Should().BeTrue();
-        result.Value.Should().Be(response);
+        result.Value.Should().BeEquivalentTo(response);
 
         await _categoryRepositoryMock.Received(1).GetAsync(Arg.Any<CategoryByIdSpecification>());
     }
