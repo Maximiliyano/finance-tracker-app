@@ -6,8 +6,6 @@ import { CapitalService } from '../../services/capital.service';
 import { CurrencyType } from '../../../../core/models/currency-type';
 import { AddCapitalRequest } from '../../models/add-capital-request';
 import { PopupMessageService } from '../../../../shared/services/popup-message.service';
-import { Currency } from '../../../../shared/components/currency/models/currency';
-import { getCurrencies } from '../../../../shared/components/currency/functions/get-currencies.component';
 
 @Component({
   selector: 'app-capital-dialog',

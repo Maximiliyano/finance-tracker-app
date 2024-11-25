@@ -67,7 +67,7 @@ export class CapitalListComponent implements OnInit, OnDestroy {
       .afterClosed()
       .pipe(takeUntil(this.unsubcribe$))
       .subscribe({
-        next: (response) => {
+        next: (response: boolean) => {
           if (response) {
             this.executeCapitals();
           }
@@ -111,7 +111,9 @@ export class CapitalListComponent implements OnInit, OnDestroy {
       .getAll()
       .pipe(takeUntil(this.unsubcribe$))
       .subscribe({
-        next: (response) => this.capitals = response
+        next: (response) => {
+          this.capitals = response;
+        }
       });
   }
 }

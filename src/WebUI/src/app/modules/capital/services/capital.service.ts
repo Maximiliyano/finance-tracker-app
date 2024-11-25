@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Capital } from '../models/capital-model';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment.development';
 import { AddCapitalRequest } from '../models/add-capital-request';
@@ -12,18 +12,11 @@ import { CapitalResponse } from '../models/capital-response';
 })
 export class CapitalService {
   private baseApiUrl = environment.apiUrl + '/api/capitals';
-  private capitals$ = new BehaviorSubject<CapitalResponse[]>([]);
 
   constructor(private readonly httpClient: HttpClient) { }
 
   getAll(): Observable<CapitalResponse[]> {
-    if (!this.capitals$.value.length) {
-      this.httpClient.get<CapitalResponse[]>(this.baseApiUrl)
-        .pipe(tap(capitals => this.capitals$.next(capitals)))
-        .subscribe();
-    }
-
-    return this.capitals$.asObservable();
+    return this.httpClient.get<CapitalResponse[]>(this.baseApiUrl);
   }
 
   getById(id: number): Observable<Capital> {

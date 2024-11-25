@@ -17,10 +17,9 @@
   padding: 10px;
   border-radius: 5px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  animation: fadeIn 0.3s ease-out, fadeOut 0.3s ease-in 3s forwards;
+  animation: fadeIn 0.3s ease-out;
   color: #333;
-  width: auto;
-  max-width: 300px;
+  width: 300px;
 
   &.success {
     border-left: 5px solid green;
@@ -34,14 +33,15 @@
     border-left: 5px solid red;
   }
 
+  &.fade-out {
+    animation: fadeOut 0.3s ease-in forwards;
+  }
+
   .popup-icon {
     margin-right: 10px;
   }
-
-  .popup-message {
-    display: flex;
-  }
 }
+
 
 @keyframes fadeIn {
   from {
@@ -55,6 +55,10 @@
 }
 
 @keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
   to {
     opacity: 0;
     transform: translateY(-10px);

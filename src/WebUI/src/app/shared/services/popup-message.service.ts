@@ -50,10 +50,12 @@ export class PopupMessageService {
     this.messageContainer!.prepend(messageElement);
 
     setTimeout(() => {
-      messageElement.remove();
+      messageElement.classList.add('fade-out');
 
-      this.removePopup(messageElement);
-    }, duration);
+      setTimeout(() => {
+        this.removePopup(messageElement);
+      }, 300);
+    }, duration)
   }
 
   private getIcon(type: 'success' | 'warning' | 'error'): string {
