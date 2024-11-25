@@ -12,12 +12,11 @@ import { CapitalResponse } from '../../models/capital-response';
 @Component({
   selector: 'app-capital-list',
   templateUrl: './capital-list.component.html',
-  styleUrl: './capital-list.component.scss'
+  styleUrl: './capital-list.component.scss',
 })
 export class CapitalListComponent implements OnInit, OnDestroy {
   capitals: CapitalResponse[];
   exchanges: Exchange[];
-  editMode: boolean;
   mainCurrency: string = 'UAH';
 
   private unsubcribe$ = new Subject<void>;
@@ -96,15 +95,15 @@ export class CapitalListComponent implements OnInit, OnDestroy {
     event.stopPropagation();
     event.preventDefault();
 
-
     this.capitalService
-    .remove(id)
-    .subscribe({
-      next: () => {
-        this.executeCapitals();
-        this.popupMessageService.success("The capital was successful removed.");
-        this.editMode = false;
-      }});
+      .remove(id)
+      .subscribe({
+        next: () => {
+          let index = this.capitals.findIndex(x => x.id == id);
+
+          this.capitals.splice(index, 1);
+          this.popupMessageService.success("The capital was successful removed.");
+        }});
   }
 
   private executeCapitals(): void {

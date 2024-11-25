@@ -54,11 +54,11 @@
         [disabled]="capitalForm.invalid">
           Save
         </button>
-      <button class="cp-act-item cancel" (click)="cancelChanges()">Cancel</button>
+      <button type="button" class="cp-act-item cancel" (click)="cancelChanges()">Cancel</button>
     </ng-container>
 
     <ng-template #nonModifiedActions>
-      <button class="cp-act-item delete" (click)="delete(capital.id)">Delete</button>
+      <button type="button" class="cp-act-item delete" (click)="remove(capital.id)">Delete</button>
     </ng-template>
   </div>
 </form>

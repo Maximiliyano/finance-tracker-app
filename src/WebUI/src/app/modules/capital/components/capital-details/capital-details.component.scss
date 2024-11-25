@@ -95,6 +95,7 @@
 
       &:disabled {
         background-color: #ccc;
+        border: #ccc;
         cursor:no-drop;
       }
     }
@@ -129,8 +130,8 @@ select, input {
 
   &:focus {
     outline: none;
-    border-color: #111812;
-    box-shadow: 0 0 5px #111812;
+    border-color: #6896e5;
+    box-shadow: 0 0 2px #111812;
   }
 }
 

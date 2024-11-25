@@ -42,22 +42,31 @@
             color: #282828;
         }
 
+        .cp-props {
+          display: flex;
+          flex-direction: row;
+          gap: 15px;
+
+          .cp-props-item {
+            display: flex;
+            align-items: center;
+            font-size: 16px;
+            font-weight: 400;
+            gap: 2px;
+          }
+
+          .cp-incomes {
+            color: green;
+          }
+
+          .cp-expenses {
+            color: red;
+          }
+        }
+
         .cp-balance {
           font-size: 18px;
           font-weight: 600;
-        }
-
-        .cp-incomes {
-          color: green;
-        }
-
-        .cp-expenses {
-          color: red;
-        }
-
-        .cp-incomes, .cp-expenses {
-          font-size: 14px;
-          font-weight: 400;
         }
 
         .cp-menu {

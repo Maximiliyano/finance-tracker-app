@@ -90,7 +90,7 @@ export class CapitalDetailsComponent implements OnInit, OnDestroy {
     this.popupMessageService.warning('The changes was reverted.')
   }
 
-  delete(id: number): void {
+  remove(id: number): void {
     this.confirmDialogService.toggle('delete capital', 'delete')
       .then((confirmed) => {
         if (confirmed) {

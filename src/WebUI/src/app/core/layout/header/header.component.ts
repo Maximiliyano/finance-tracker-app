@@ -17,8 +17,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   overlayRef: OverlayRef;
   navItems = [
     { label: 'Capitals', icon: 'account_balance_wallet', link: '/capitals' },
+    { label: 'Incomes', icon: 'attach_money', link: '/incomes' },
     { label: 'Expenses', icon: 'money_off', link: '/expenses' },
-    { label: 'Incomes', icon: 'monetization_on', link: '/incomes' },
     { label: 'Transfers', icon: 'import_export', link: '/menu/transfers' },
     { label: 'Goals', icon: 'star', link: '/menu/goals' }
   ];

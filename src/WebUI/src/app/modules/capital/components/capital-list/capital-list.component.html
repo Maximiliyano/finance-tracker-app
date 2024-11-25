@@ -9,12 +9,34 @@
 <div class="cp-list" *ngIf="capitals?.length">
     <div *ngFor="let capital of capitals">
         <a class="cp" [routerLink]="[capital.id]">
-          <span class="cp-name">{{ capital.name }}</span>
-          <span class="cp-balance">{{ capital.balance | currency: symbol(capital.currency) }}</span>
-          <span class="cp-incomes">+{{ capital.totalIncome }}</span>
-          <span class="cp-expenses">-{{ capital.totalExpense }}</span>
-          <span>Transfer In {{ capital.totalTransferIn }}</span>
-          <span>Transfer Out {{ capital.totalTransferOut }}</span>
+          <div class="cp-name">{{ capital.name }}</div>
+
+          <div class="cp-balance" title="Balance">
+            {{ capital.balance | currency: symbol(capital.currency) }}
+          </div>
+
+          <div class="cp-props">
+            <div class="cp-props-item cp-incomes" title="Incomes">
+              <mat-icon>attach_money</mat-icon>
+              {{ capital.totalIncome }}
+            </div>
+
+            <div class="cp-props-item cp-expenses" title="Expenses">
+              <mat-icon>money_off</mat-icon>
+              {{ capital.totalExpense }}
+            </div>
+
+            <div class="cp-props-item" title="Transfer Out">
+              <mat-icon>arrow_upward</mat-icon>
+              {{ capital.totalTransferOut }}
+            </div>
+
+            <div class="cp-props-item" title="Transfer In">
+              <mat-icon>arrow_downward</mat-icon>
+              {{ capital.totalTransferIn }}
+            </div>
+          </div>
+
           <button class="cp-menu" (click)="removeCapital(capital.id, $event)">
               <mat-icon>delete_outline</mat-icon>
           </button>
