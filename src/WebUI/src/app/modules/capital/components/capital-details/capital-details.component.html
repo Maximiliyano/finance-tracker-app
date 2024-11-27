@@ -6,6 +6,22 @@
   </div>
 
   <div class="cp-details-col">
+    <label class="cp-text">Name</label>
+    <input
+      id="name"
+      type="text"
+      formControlName="name"
+      placeholder="Name"
+    />
+  </div>
+
+  <div *ngIf="modelInvalidAndTouched('name')" class="error-message">
+    <span *ngIf="modelError('name', 'required')">Name is required.</span>
+    <span *ngIf="modelError('name', 'maxlength')">Name must be less than 32.</span>
+    <!-- <span *ngIf="modelError('name', 'exists')">Name already exists.</span> -->
+  </div>
+
+  <div class="cp-details-col">
     <label class="cp-text" for="balance">Balance</label>
     <div class="balance-input">
       <input
@@ -28,22 +44,6 @@
       <span *ngIf="modelError('balance', 'required')">Balance is required.</span>
       <span *ngIf="modelError('balance', 'min')">Balance not be less than 0.</span>
     </div>
-  </div>
-
-  <div class="cp-details-col">
-    <label class="cp-text">Name</label>
-    <input
-      id="name"
-      type="text"
-      formControlName="name"
-      placeholder="Name"
-    />
-  </div>
-
-  <div *ngIf="modelInvalidAndTouched('name')" class="error-message">
-    <span *ngIf="modelError('name', 'required')">Name is required.</span>
-    <span *ngIf="modelError('name', 'maxlength')">Name must be less than 32.</span>
-    <!-- <span *ngIf="modelError('name', 'exists')">Name already exists.</span> -->
   </div>
 
   <div class="cp-actions">

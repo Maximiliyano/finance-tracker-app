@@ -37,8 +37,8 @@ internal sealed class UpdateExpenseCommandHandler(
         expense.PaymentDate = command.Date ?? dateTimeProvider.UtcNow;
         expense.CategoryId = command.CategoryId ?? expense.CategoryId;
 
-        capitalRepository.Update(expense.Capital);
-        categoryRepository.Update(expense.Category);
+        capitalRepository.Update(expense.Capital!);
+        categoryRepository.Update(expense.Category!);
         expenseRepository.Update(expense);
 
         await unitOfWork.SaveChangesAsync(cancellationToken);

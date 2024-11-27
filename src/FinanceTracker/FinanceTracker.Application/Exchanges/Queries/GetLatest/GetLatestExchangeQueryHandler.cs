@@ -16,24 +16,24 @@ public sealed class GetLatestExchangeQueryHandler(
     {
         var exchanges = await repository.GetLatestAsync();
 
-        if (!exchanges.Any())
+        if (exchanges.Any())
         {
-            var result = await service.GetCurrencyAsync();
-
-            if (!result.IsSuccess)
-            {
-                return Result.Failure<IEnumerable<ExchangeResponse>>(result.Errors);
-            }
-
-            var actualExchanges = result.Value.ToList();
-
-            repository.AddRange(actualExchanges);
-
-            await unitOfWork.SaveChangesAsync(cancellationToken);
-
-            return Result.Success(actualExchanges.ToResponses());
+            return Result.Success(exchanges.ToResponses());
         }
 
-        return Result.Success(exchanges.ToResponses());
+        var result = await service.GetCurrencyAsync();
+
+        if (!result.IsSuccess)
+        {
+            return Result.Failure<IEnumerable<ExchangeResponse>>(result.Errors);
+        }
+
+        var actualExchanges = result.Value.ToList();
+
+        repository.AddRange(actualExchanges);
+
+        await unitOfWork.SaveChangesAsync(cancellationToken);
+
+        return Result.Success(actualExchanges.ToResponses());
     }
 }

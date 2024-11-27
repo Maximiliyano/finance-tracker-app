@@ -19,11 +19,11 @@ public sealed class Capital
     {
     }
 
-    public string Name { get; set; } = null!;
+    public required string Name { get; set; }
 
-    public float Balance { get; set; }
+    public required float Balance { get; set; }
 
-    public CurrencyType Currency { get; set; }
+    public required CurrencyType Currency { get; set; }
 
     public float TotalIncome => Incomes?.Sum(i => i.Amount) ?? 0;
 

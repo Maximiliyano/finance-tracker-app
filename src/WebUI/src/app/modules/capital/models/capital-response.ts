@@ -3,6 +3,7 @@ export interface CapitalResponse {
   name: string;
   balance: number;
   currency: string;
+  includeInTotal: boolean;
   totalIncome: number;
   totalExpense: number;
   totalTransferIn: number;

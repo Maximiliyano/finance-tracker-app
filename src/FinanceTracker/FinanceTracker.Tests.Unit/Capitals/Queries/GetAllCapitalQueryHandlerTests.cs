@@ -1,6 +1,7 @@
 using FinanceTracker.Application.Capitals.Queries.GetAll;
 using FinanceTracker.Application.Capitals.Responses;
 using FinanceTracker.Domain.Entities;
+using FinanceTracker.Domain.Enums;
 using FinanceTracker.Domain.Repositories;
 using FluentAssertions;
 using FluentAssertions.Execution;
@@ -26,7 +27,13 @@ public sealed class GetAllCapitalQueryHandlerTests
         const int capitalId = 1;
 
         var query = new GetAllCapitalsQuery();
-        var capitals = new List<Capital> { new(capitalId) };
+        var capitals = new List<Capital> { new(capitalId)
+            {
+                Name = "TestCapital",
+                Balance = 10,
+                Currency = CurrencyType.USD
+            }
+        };
         var capitalResponses = capitals
             .Select(x => new CapitalResponse(
                 x.Id,

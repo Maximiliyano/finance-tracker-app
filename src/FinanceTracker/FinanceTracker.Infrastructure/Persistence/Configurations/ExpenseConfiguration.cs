@@ -17,12 +17,9 @@ internal sealed class ExpenseConfiguration : IEntityTypeConfiguration<Expense>
             .HasForeignKey(e => e.CategoryId);
 
         builder
-            .Navigation(e => e.Category)
-            .AutoInclude();
-
-        builder
-            .Navigation(e => e.Capital)
-            .AutoInclude();
+            .HasOne(e => e.Capital)
+            .WithMany(c => c.Expenses)
+            .HasForeignKey(e => e.CapitalId);
 
         builder.ToTable(TableConfigurationConstants.Expenses);
     }

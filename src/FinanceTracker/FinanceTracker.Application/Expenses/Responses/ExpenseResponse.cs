@@ -6,9 +6,9 @@ namespace FinanceTracker.Application.Expenses.Responses;
 public sealed record ExpenseResponse(
     int Id,
     int CapitalId,
-    CapitalResponse Capital,
+    CapitalResponse? Capital,
     int CategoryId,
-    CategoryResponse Category,
+    CategoryResponse? Category,
     float Amount,
     DateTimeOffset PaymentDate,
     string? Purpose);
