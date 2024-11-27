@@ -9,11 +9,11 @@ import { Capital } from '../../../capital/models/capital-model';
 import { DialogService } from '../../../../shared/services/dialog.service';
 
 @Component({
-  selector: 'app-expenses-dialog',
-  templateUrl: './expenses-dialog.component.html',
-  styleUrl: './expenses-dialog.component.scss'
+  selector: 'app-expense-dialog',
+  templateUrl: './expense-dialog.component.html',
+  styleUrl: './expense-dialog.component.scss'
 })
-export class ExpensesDialogComponent implements OnInit, OnDestroy {
+export class ExpenseDialogComponent implements OnInit, OnDestroy {
   addExpenseForm: FormGroup;
   errCapitalMsg: string | null;
   errCategoryMsg: string | null;
@@ -24,7 +24,7 @@ export class ExpensesDialogComponent implements OnInit, OnDestroy {
     private readonly dialogService: DialogService,
     private readonly expenseService: ExpenseService,
     private readonly popupService: PopupMessageService,
-    public dialogRef: MatDialogRef<ExpensesDialogComponent>,
+    public dialogRef: MatDialogRef<ExpenseDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { capitals: Capital[]; categories: Category[] }) {}
 
   ngOnInit(): void {

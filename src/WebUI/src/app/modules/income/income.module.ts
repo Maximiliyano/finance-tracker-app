@@ -2,11 +2,11 @@ import { NgModule } from '@angular/core';
 import { IncomeRoutingModule } from './income-routing.module';
 import { SharedModule } from '../../shared/shared.module';
 import { IncomeDialogComponent } from './components/income-dialog/income-dialog/income-dialog.component';
-import { IncomeComponent } from './income.component';
+import { IncomesComponent } from './incomes.component';
 
 @NgModule({
   declarations: [
-    IncomeComponent,
+    IncomesComponent,
     IncomeDialogComponent
   ],
   imports: [IncomeRoutingModule, SharedModule]

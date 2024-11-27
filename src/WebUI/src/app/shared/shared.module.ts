@@ -6,13 +6,15 @@ import { OverlayComponent } from './components/overlay/overlay.component';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import { ExchangeDialogComponent } from './components/exchange-dialog/exchange-dialog.component';
 import { CurrencyComponent } from './components/currency/currency.component';
+import { LayoutComponent } from './components/layout/layout.component';
 
 @NgModule({
   declarations: [
     OverlayComponent,
     ConfirmDialogComponent,
     ExchangeDialogComponent,
-    CurrencyComponent
+    CurrencyComponent,
+    LayoutComponent
   ],
   imports: [
     CommonModule,
@@ -25,7 +27,8 @@ import { CurrencyComponent } from './components/currency/currency.component';
     AngularMaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    CurrencyComponent
+    CurrencyComponent,
+    LayoutComponent
   ]
 })
 export class SharedModule { }
