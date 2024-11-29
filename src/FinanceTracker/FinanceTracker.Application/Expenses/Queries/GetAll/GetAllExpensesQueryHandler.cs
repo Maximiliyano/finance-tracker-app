@@ -13,8 +13,8 @@ internal sealed class GetAllExpensesQueryHandler(
     {
         var expenses = await repository.GetAllAsync();
 
-        var expenseResponses = expenses.ToResponses();
+        var responses = expenses.ToResponses();
 
-        return Result.Success(expenseResponses);
+        return Result.Success(responses);
     }
 }

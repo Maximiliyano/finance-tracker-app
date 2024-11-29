@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FinanceTracker.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(FinanceTrackerDbContext))]
-    [Migration("20241126112802_Initial")]
+    [Migration("20241129185729_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -48,6 +48,9 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
 
                     b.Property<DateTimeOffset?>("DeletedAt")
                         .HasColumnType("datetimeoffset");
+
+                    b.Property<bool>("IncludeInTotal")
+                        .HasColumnType("bit");
 
                     b.Property<bool?>("IsDeleted")
                         .HasColumnType("bit");
@@ -117,7 +120,7 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTimeOffset(new DateTime(2024, 11, 26, 11, 28, 1, 419, DateTimeKind.Unspecified).AddTicks(9685), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2024, 11, 29, 18, 57, 29, 181, DateTimeKind.Unspecified).AddTicks(6397), new TimeSpan(0, 0, 0, 0, 0)),
                             CreatedBy = 0,
                             Name = "Groceries",
                             Period = 0,
@@ -127,7 +130,7 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTimeOffset(new DateTime(2024, 11, 26, 11, 28, 1, 419, DateTimeKind.Unspecified).AddTicks(9685), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2024, 11, 29, 18, 57, 29, 181, DateTimeKind.Unspecified).AddTicks(6397), new TimeSpan(0, 0, 0, 0, 0)),
                             CreatedBy = 0,
                             Name = "Utilities",
                             Period = 0,
@@ -137,7 +140,7 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTimeOffset(new DateTime(2024, 11, 26, 11, 28, 1, 419, DateTimeKind.Unspecified).AddTicks(9685), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2024, 11, 29, 18, 57, 29, 181, DateTimeKind.Unspecified).AddTicks(6397), new TimeSpan(0, 0, 0, 0, 0)),
                             CreatedBy = 0,
                             Name = "Rent",
                             Period = 0,
@@ -147,7 +150,7 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTimeOffset(new DateTime(2024, 11, 26, 11, 28, 1, 419, DateTimeKind.Unspecified).AddTicks(9685), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2024, 11, 29, 18, 57, 29, 181, DateTimeKind.Unspecified).AddTicks(6397), new TimeSpan(0, 0, 0, 0, 0)),
                             CreatedBy = 0,
                             Name = "Transportation",
                             Period = 0,
@@ -157,7 +160,7 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
                         new
                         {
                             Id = 5,
-                            CreatedAt = new DateTimeOffset(new DateTime(2024, 11, 26, 11, 28, 1, 419, DateTimeKind.Unspecified).AddTicks(9685), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2024, 11, 29, 18, 57, 29, 181, DateTimeKind.Unspecified).AddTicks(6397), new TimeSpan(0, 0, 0, 0, 0)),
                             CreatedBy = 0,
                             Name = "Healthcare",
                             Period = 0,
@@ -167,7 +170,7 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
                         new
                         {
                             Id = 6,
-                            CreatedAt = new DateTimeOffset(new DateTime(2024, 11, 26, 11, 28, 1, 419, DateTimeKind.Unspecified).AddTicks(9685), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2024, 11, 29, 18, 57, 29, 181, DateTimeKind.Unspecified).AddTicks(6397), new TimeSpan(0, 0, 0, 0, 0)),
                             CreatedBy = 0,
                             Name = "Entertainment",
                             Period = 0,
@@ -177,7 +180,7 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
                         new
                         {
                             Id = 7,
-                            CreatedAt = new DateTimeOffset(new DateTime(2024, 11, 26, 11, 28, 1, 419, DateTimeKind.Unspecified).AddTicks(9685), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2024, 11, 29, 18, 57, 29, 181, DateTimeKind.Unspecified).AddTicks(6397), new TimeSpan(0, 0, 0, 0, 0)),
                             CreatedBy = 0,
                             Name = "Education",
                             Period = 0,
@@ -187,7 +190,7 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
                         new
                         {
                             Id = 8,
-                            CreatedAt = new DateTimeOffset(new DateTime(2024, 11, 26, 11, 28, 1, 419, DateTimeKind.Unspecified).AddTicks(9685), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2024, 11, 29, 18, 57, 29, 181, DateTimeKind.Unspecified).AddTicks(6397), new TimeSpan(0, 0, 0, 0, 0)),
                             CreatedBy = 0,
                             Name = "Clothing",
                             Period = 0,
@@ -197,7 +200,7 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
                         new
                         {
                             Id = 9,
-                            CreatedAt = new DateTimeOffset(new DateTime(2024, 11, 26, 11, 28, 1, 419, DateTimeKind.Unspecified).AddTicks(9685), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2024, 11, 29, 18, 57, 29, 181, DateTimeKind.Unspecified).AddTicks(6397), new TimeSpan(0, 0, 0, 0, 0)),
                             CreatedBy = 0,
                             Name = "Subscriptions",
                             Period = 0,
@@ -207,7 +210,7 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
                         new
                         {
                             Id = 10,
-                            CreatedAt = new DateTimeOffset(new DateTime(2024, 11, 26, 11, 28, 1, 419, DateTimeKind.Unspecified).AddTicks(9685), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2024, 11, 29, 18, 57, 29, 181, DateTimeKind.Unspecified).AddTicks(6397), new TimeSpan(0, 0, 0, 0, 0)),
                             CreatedBy = 0,
                             Name = "Travel",
                             Period = 0,
@@ -217,7 +220,7 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
                         new
                         {
                             Id = 11,
-                            CreatedAt = new DateTimeOffset(new DateTime(2024, 11, 26, 11, 28, 1, 419, DateTimeKind.Unspecified).AddTicks(9685), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2024, 11, 29, 18, 57, 29, 181, DateTimeKind.Unspecified).AddTicks(6397), new TimeSpan(0, 0, 0, 0, 0)),
                             CreatedBy = 0,
                             Name = "Gifts",
                             Period = 0,
@@ -227,7 +230,7 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
                         new
                         {
                             Id = 12,
-                            CreatedAt = new DateTimeOffset(new DateTime(2024, 11, 26, 11, 28, 1, 419, DateTimeKind.Unspecified).AddTicks(9685), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2024, 11, 29, 18, 57, 29, 181, DateTimeKind.Unspecified).AddTicks(6397), new TimeSpan(0, 0, 0, 0, 0)),
                             CreatedBy = 0,
                             Name = "Donations",
                             Period = 0,
@@ -237,7 +240,7 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
                         new
                         {
                             Id = 13,
-                            CreatedAt = new DateTimeOffset(new DateTime(2024, 11, 26, 11, 28, 1, 419, DateTimeKind.Unspecified).AddTicks(9685), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2024, 11, 29, 18, 57, 29, 181, DateTimeKind.Unspecified).AddTicks(6397), new TimeSpan(0, 0, 0, 0, 0)),
                             CreatedBy = 0,
                             Name = "Salary",
                             Period = 0,
@@ -247,7 +250,7 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
                         new
                         {
                             Id = 14,
-                            CreatedAt = new DateTimeOffset(new DateTime(2024, 11, 26, 11, 28, 1, 419, DateTimeKind.Unspecified).AddTicks(9685), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2024, 11, 29, 18, 57, 29, 181, DateTimeKind.Unspecified).AddTicks(6397), new TimeSpan(0, 0, 0, 0, 0)),
                             CreatedBy = 0,
                             Name = "Gifts",
                             Period = 0,
@@ -257,7 +260,7 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
                         new
                         {
                             Id = 15,
-                            CreatedAt = new DateTimeOffset(new DateTime(2024, 11, 26, 11, 28, 1, 419, DateTimeKind.Unspecified).AddTicks(9685), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2024, 11, 29, 18, 57, 29, 181, DateTimeKind.Unspecified).AddTicks(6397), new TimeSpan(0, 0, 0, 0, 0)),
                             CreatedBy = 0,
                             Name = "Grants",
                             Period = 0,
@@ -267,7 +270,7 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
                         new
                         {
                             Id = 16,
-                            CreatedAt = new DateTimeOffset(new DateTime(2024, 11, 26, 11, 28, 1, 419, DateTimeKind.Unspecified).AddTicks(9685), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2024, 11, 29, 18, 57, 29, 181, DateTimeKind.Unspecified).AddTicks(6397), new TimeSpan(0, 0, 0, 0, 0)),
                             CreatedBy = 0,
                             Name = "Sales",
                             Period = 0,

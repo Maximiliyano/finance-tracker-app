@@ -12,6 +12,7 @@ internal static class CapitalExtensions
             capital.Name,
             capital.Balance,
             capital.Currency.ToString(),
+            capital.IncludeInTotal,
             capital.TotalIncome,
             capital.TotalExpense,
             capital.TotalTransferIn,

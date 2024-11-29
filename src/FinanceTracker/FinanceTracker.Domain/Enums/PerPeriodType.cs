@@ -5,5 +5,6 @@ public enum PerPeriodType
     None,
     Daily,
     Weekly,
-    Monthly
+    Monthly,
+    Yearly
 }

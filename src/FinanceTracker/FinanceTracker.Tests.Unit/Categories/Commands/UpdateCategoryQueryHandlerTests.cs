@@ -70,10 +70,13 @@ public sealed class UpdateCategoryQueryHandlerTests
     [InlineData(null, CategoryType.Incomes, 1.0f, PerPeriodType.Weekly)]
     [InlineData("New Category", null, 1.0f, PerPeriodType.Daily)]
     [InlineData("New Category", CategoryType.Expenses, null, PerPeriodType.Monthly)]
+    [InlineData("New Category", CategoryType.Expenses, null, PerPeriodType.Yearly)]
     [InlineData("New Category", CategoryType.Incomes, 1.0f, null)]
     [InlineData(null, null, null, null)]
     [InlineData("", CategoryType.Incomes, 0f, PerPeriodType.Weekly)]
     [InlineData("New Category", CategoryType.Expenses, -10.0f, PerPeriodType.Monthly)]
+    [InlineData("New Category", CategoryType.Expenses, -10.0f, PerPeriodType.Yearly)]
+
     public async Task Handle_ShouldUpdateCategorySuccessfully(
         string? name,
         CategoryType? type,

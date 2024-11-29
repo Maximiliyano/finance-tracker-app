@@ -40,6 +40,7 @@ public sealed class GetAllCapitalQueryHandlerTests
                 x.Name,
                 x.Balance,
                 x.Currency.ToString(),
+                x.IncludeInTotal,
                 x.TotalIncome,
                 x.TotalExpense,
                 x.TotalTransferIn,
@@ -66,7 +67,16 @@ public sealed class GetAllCapitalQueryHandlerTests
         // Arrange
         var query = new GetAllCapitalsQuery();
         var capitals = new List<Capital>();
-        var capitalResponses = capitals.Select(_ => new CapitalResponse());
+        var capitalResponses = capitals.Select(_ => new CapitalResponse(
+            0,
+            string.Empty,
+            0f,
+            string.Empty,
+            false,
+            0f,
+            0f,
+            0f,
+            0f));
 
         _repositoryMock.GetAllAsync().Returns(capitals);
 

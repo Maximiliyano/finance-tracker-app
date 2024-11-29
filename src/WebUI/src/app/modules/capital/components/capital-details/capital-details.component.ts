@@ -95,7 +95,7 @@ export class CapitalDetailsComponent implements OnInit, OnDestroy {
       .then((confirmed) => {
         if (confirmed) {
           this.capitalService
-            .remove(id)
+            .delete(id)
             .pipe(takeUntil(this.unsubscribe))
             .subscribe(() => {
               this.popupMessageService.success('The capital was successfully deleted.');

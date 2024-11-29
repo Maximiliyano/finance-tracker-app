@@ -19,8 +19,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     { label: 'Capitals', icon: 'account_balance_wallet', link: '/capitals' },
     { label: 'Incomes', icon: 'attach_money', link: '/incomes' },
     { label: 'Expenses', icon: 'money_off', link: '/expenses' },
-    { label: 'Transfers', icon: 'import_export', link: '/menu/transfers' },
-    { label: 'Goals', icon: 'star', link: '/menu/goals' }
+    { label: 'Transfers', icon: 'import_export', link: '' },
+    { label: 'Goals', icon: 'star', link: '' }
   ];
 
   private unsubscribe = new Subject<void>();

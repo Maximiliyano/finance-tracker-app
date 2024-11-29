@@ -1,5 +1,3 @@
-version: '3.4'
-
 services:
   financetracker.api:
     environment:

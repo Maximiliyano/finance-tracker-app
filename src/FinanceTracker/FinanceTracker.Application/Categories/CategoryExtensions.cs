@@ -1,6 +1,7 @@
 using FinanceTracker.Application.Categories.Commands.Create;
 using FinanceTracker.Application.Categories.Response;
 using FinanceTracker.Application.Expenses;
+using FinanceTracker.Application.Incomes;
 using FinanceTracker.Domain.Entities;
 
 namespace FinanceTracker.Application.Categories;
@@ -15,7 +16,8 @@ internal static class CategoryExtensions
                     category.Type,
                     category.Period,
                     category.PlannedPeriodAmount,
-                    category.Expenses?.ToResponses());
+                    category.Expenses?.ToResponses() ?? [],
+                    category.Incomes?.ToResponses() ?? []);
     }
 
     internal static IEnumerable<CategoryResponse> ToResponses(this IEnumerable<Category> categories)

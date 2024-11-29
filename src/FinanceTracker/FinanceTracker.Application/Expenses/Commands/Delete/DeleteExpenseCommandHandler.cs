@@ -21,7 +21,7 @@ internal sealed class DeleteExpenseCommandHandler(
             return Result.Failure(DomainErrors.General.NotFound(nameof(expense)));
         }
 
-        expense.Capital!.Balance += expense.Amount;
+        expense.Capital!.Balance += expense.Amount; // TODO !
 
         capitalRepository.Update(expense.Capital);
 

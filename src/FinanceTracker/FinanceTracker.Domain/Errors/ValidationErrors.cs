@@ -23,6 +23,9 @@ public static class ValidationErrors
     {
         public static Error InvalidType
             => Error.BadRequest(nameof(InvalidType), "The category type is invalid.");
+
+        public static Error AlreadyExists
+            => Error.Conflict(nameof(AlreadyExists), "The category was already exists.");
     }
 
     public static class General

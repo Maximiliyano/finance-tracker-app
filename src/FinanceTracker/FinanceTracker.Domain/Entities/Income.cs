@@ -10,7 +10,11 @@ public sealed class Income : Entity, IAuditableEntity, ISoftDeletableEntity
 
     public int CategoryId { get; set; }
 
-    public Category Category { get; set; }
+    public Category? Category { get; set; }
+
+    public int? CapitalId { get; init; }
+
+    public Capital? Capital { get; init; }
 
     public DateTimeOffset CreatedAt { get; init; }
 
@@ -23,8 +27,4 @@ public sealed class Income : Entity, IAuditableEntity, ISoftDeletableEntity
     public DateTimeOffset? DeletedAt { get; init; }
 
     public bool? IsDeleted { get; init; }
-
-    public int? CapitalId { get; init; }
-
-    public Capital? Capital { get; init; }
 }

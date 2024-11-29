@@ -28,17 +28,23 @@ internal sealed class UpdateExpenseCommandHandler(
         {
             var difference = expense.Amount - command.Amount.Value;
 
-            expense.Capital!.Balance += difference;
+            expense.Capital!.Balance += difference; // TODO !
 
             expense.Amount = command.Amount.Value;
+
+            capitalRepository.Update(expense.Capital);
         }
 
         expense.Purpose = command.Purpose ?? expense.Purpose;
         expense.PaymentDate = command.Date ?? dateTimeProvider.UtcNow;
-        expense.CategoryId = command.CategoryId ?? expense.CategoryId;
 
-        capitalRepository.Update(expense.Capital!);
-        categoryRepository.Update(expense.Category!);
+        if (command.CategoryId.HasValue)
+        {
+            expense.CategoryId = command.CategoryId.Value;
+
+            categoryRepository.Update(expense.Category!); // TODO !
+        }
+
         expenseRepository.Update(expense);
 
         await unitOfWork.SaveChangesAsync(cancellationToken);

@@ -70,20 +70,21 @@
         </button>
 
         <button
-          *ngIf="capital.includeInTotal"
+          *ngIf="capital.includeInTotal; else notIncludedInTotal"
           class="cp-d-act cp-visible"
           (click)="capital.includeInTotal = false"
           title="Included in Total balance">
             <mat-icon>visibility</mat-icon>
         </button>
 
-        <button
-          *ngIf="!capital.includeInTotal"
-          class="cp-d-act cp-visible"
-          (click)="capital.includeInTotal = true"
-          title="Not Included in Total balance">
-            <mat-icon>visibility_off</mat-icon>
-        </button>
+        <ng-template #notIncludedInTotal>
+          <button
+            class="cp-d-act cp-visible"
+            (click)="capital.includeInTotal = true"
+            title="Not Included in Total balance">
+              <mat-icon>visibility_off</mat-icon>
+          </button>
+        </ng-template>
       </div>
     </a>
   </div>

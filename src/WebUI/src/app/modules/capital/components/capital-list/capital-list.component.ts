@@ -101,7 +101,8 @@ export class CapitalListComponent implements OnInit, OnDestroy {
     event.preventDefault();
 
     this.capitalService
-      .remove(id)
+      .delete(id)
+      .pipe(takeUntil(this.unsubcribe$))
       .subscribe({
         next: () => {
           let index = this.capitals.findIndex(x => x.id == id);

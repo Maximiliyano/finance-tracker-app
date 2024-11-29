@@ -48,7 +48,7 @@ export class CapitalDialogComponent implements OnInit, OnDestroy {
       currency: this.addCapitalForm.value.Currency
     };
 
-    this.capitalService.add(request)
+    this.capitalService.create(request)
       .pipe(takeUntil(this.unsubscribe))
       .subscribe({
         next: () => {

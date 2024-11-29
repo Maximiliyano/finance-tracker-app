@@ -1,24 +1,25 @@
 namespace FinanceTracker.Domain.Entities;
 
-public sealed class Expense : Entity, IAuditableEntity, ISoftDeletableEntity
+public sealed class Expense
+    : Entity, IAuditableEntity, ISoftDeletableEntity
 {
     public required float Amount { get; set; }
 
     public required DateTimeOffset PaymentDate { get; set; }
 
+    public Category? Category { get; init; }
+
     public required int CategoryId { get; set; }
+
+    public Capital? Capital { get; init; }
 
     public required int CapitalId { get; init; }
 
-    public Category? Category { get; init; }
-
-    public Capital? Capital { get; init; }
+    public string? Purpose { get; set; }
 
     public DateTimeOffset CreatedAt { get; init; }
 
     public int CreatedBy { get; init; }
-
-    public string? Purpose { get; set; }
 
     public DateTimeOffset? UpdatedAt { get; init; }
 

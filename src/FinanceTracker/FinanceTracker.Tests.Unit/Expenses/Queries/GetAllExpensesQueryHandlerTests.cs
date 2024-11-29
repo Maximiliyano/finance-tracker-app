@@ -28,13 +28,13 @@ public sealed class GetAllExpensesQueryHandlerTests
             Amount = 1,
             PaymentDate = DateTimeOffset.UtcNow,
             CategoryId = 1,
-            Category = new Category
+            Category = new Category(1)
             {
                 Name = "TestCategory",
                 Type = CategoryType.Expenses
             },
             CapitalId = 1,
-            Capital = new Capital
+            Capital = new Capital(1)
             {
                 Name = "TestCapital",
                 Balance = 0,

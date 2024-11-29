@@ -19,11 +19,11 @@ export class CapitalService {
     return this.httpClient.get<CapitalResponse[]>(this.baseApiUrl);
   }
 
-  getById(id: number): Observable<Capital> {
-    return this.httpClient.get<Capital>(`${this.baseApiUrl}/${id}`);
+  getById(id: number): Observable<CapitalResponse> {
+    return this.httpClient.get<CapitalResponse>(`${this.baseApiUrl}/${id}`);
   }
 
-  add(request: AddCapitalRequest): Observable<number> {
+  create(request: AddCapitalRequest): Observable<number> {
     return this.httpClient.post<number>(this.baseApiUrl, request);
   }
 
@@ -31,7 +31,7 @@ export class CapitalService {
     return this.httpClient.put(`${this.baseApiUrl}/${id}`, request);
   }
 
-  remove(id: number): Observable<Object> {
+  delete(id: number): Observable<Object> {
     return this.httpClient.delete(`${this.baseApiUrl}/${id}`);
   }
 }
