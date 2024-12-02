@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { CurrencyType } from '../../../core/models/currency-type';
+import { CurrencyType } from '../../../core/types/currency-type';
 import { Currency } from './models/currency';
 import { getCurrencies } from './functions/get-currencies.component';
 import { stringToCurrencyEnum } from './functions/string-to-currency-enum';

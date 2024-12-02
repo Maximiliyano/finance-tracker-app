@@ -3,6 +3,15 @@ namespace FinanceTracker.Domain.Entities;
 public sealed class Expense
     : Entity, IAuditableEntity, ISoftDeletableEntity
 {
+    public Expense(int id)
+        : base(id)
+    {
+    }
+
+    public Expense()
+    {
+    }
+
     public required float Amount { get; set; }
 
     public required DateTimeOffset PaymentDate { get; set; }

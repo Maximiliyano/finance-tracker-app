@@ -13,7 +13,8 @@ export class DialogDatePickerComponent {
   constructor(
       private fb: FormBuilder,
       public dialogRef: MatDialogRef<DialogDatePickerComponent>,
-      @Inject(MAT_DIALOG_DATA) public data: DialogDatePickerComponentProps) {
+      @Inject(MAT_DIALOG_DATA) public data: DialogDatePickerComponentProps)
+  {
     this.datePickerForm = this.fb.group({
       startDate: [this.data.startDate, Validators.required],
       endDate: [this.data.endDate, Validators.required],
@@ -34,6 +35,14 @@ export class DialogDatePickerComponent {
       startDate: startDate,
       endDate: endDate,
       allTime: allTimeCheck
+    });
+  }
+
+  cancel(): void {
+    this.dialogRef.close({
+      startDate: this.data.startDate,
+      endDate: this.data.endDate,
+      allTime: this.data.allTime,
     });
   }
 

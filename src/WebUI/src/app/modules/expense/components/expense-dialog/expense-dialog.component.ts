@@ -4,9 +4,9 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Subject, takeUntil} from "rxjs";
 import { ExpenseService } from '../../services/expense.service';
 import { PopupMessageService } from '../../../../shared/services/popup-message.service';
-import { Category } from '../../../../core/models/category-model';
-import { Capital } from '../../../capital/models/capital-model';
 import { DialogService } from '../../../../shared/services/dialog.service';
+import {CapitalResponse} from "../../../capital/models/capital-response";
+import {CategoryResponse} from "../../../../core/models/category-model";
 
 @Component({
   selector: 'app-expense-dialog',
@@ -25,7 +25,7 @@ export class ExpenseDialogComponent implements OnInit, OnDestroy {
     private readonly expenseService: ExpenseService,
     private readonly popupService: PopupMessageService,
     public dialogRef: MatDialogRef<ExpenseDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { capitals: Capital[]; categories: Category[] }) {}
+    @Inject(MAT_DIALOG_DATA) public data: { capitals: CapitalResponse[]; categories: CategoryResponse[] }) {}
 
   ngOnInit(): void {
     this.initializeForm();

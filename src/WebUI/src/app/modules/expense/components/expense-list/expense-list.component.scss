@@ -1,4 +1,5 @@
-.expense-header {
+.expense-header,
+.expense-content {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -6,7 +7,7 @@
   flex-direction: column;
   gap: 5px;
 
-  .capital-select {
+  .capital-selector {
     display: flex;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -18,25 +19,26 @@
       font-size: 15px;
       font-weight: 500;
       outline: none;
+      cursor: pointer;
+    }
+
+    option {
+      padding: 5px;
     }
   }
 
   .capital-totalExpense {
+    margin-top: 5px;
     font-size: 17px;
     font-weight: 700;
   }
 }
 
 .expense-content {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  flex-wrap: wrap;
   margin-top: 15px;
   border: 1px solid #c0c0c0;
   border-radius: 5px;
-  gap: 5px;
+  padding: 5px;
 
   .period-tab-menu {
     display: flex;
@@ -66,16 +68,13 @@
         border-bottom: 1px solid blue;
       }
     }
-
-    .per-tab-time-selector {
-    }
   }
 
-
-  .expense {
+  .expense-diagram {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
     gap: 5px;
 
     .expense-amount {
@@ -84,6 +83,52 @@
     }
 
     .add-expense {
+      cursor: pointer;
+      font-size: 20px;
+
+      &:hover {
+      }
+    }
+  }
+
+  .categories {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    align-items: center;
+
+    .category {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border: 1px solid #c0c0c0;
+      border-radius: 5px;
+      padding: 10px;
+      cursor: pointer;
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: #f9f9f9;
+
+      &:hover {
+        background-color: #f0f0f0;
+      }
+
+      .category-name {
+        flex: 1;
+        text-align: left;
+      }
+
+      .category-expense {
+        flex: 1;
+        text-align: center;
+      }
+
+      .category-percent {
+        flex: 1;
+        text-align: right;
+      }
     }
   }
 }

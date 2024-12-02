@@ -21,8 +21,8 @@ internal static class CapitalExtensions
     internal static IEnumerable<CapitalResponse> ToResponses(this IEnumerable<Capital> capitals)
         => capitals.Select(e => e.ToResponse());
 
-    internal static Capital ToEntity(this CreateCapitalCommand command, int? id = null)
-        => new(id)
+    internal static Capital ToEntity(this CreateCapitalCommand command)
+        => new()
         {
             Name = command.Name.Trim(),
             Balance = command.Balance,

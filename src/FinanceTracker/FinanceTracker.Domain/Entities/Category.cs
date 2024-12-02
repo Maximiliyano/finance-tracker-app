@@ -22,6 +22,14 @@ public sealed class Category
 
     public PerPeriodType Period { get; set; }
 
+    public float TotalExpenses => Expenses?.Sum(x => x.Amount) ?? 0;
+
+    public float TotalIncomes => Incomes?.Sum(x => x.Amount) ?? 0;
+
+    public IEnumerable<Expense>? Expenses { get; init; }
+
+    public IEnumerable<Income>? Incomes { get; init; }
+
     public DateTimeOffset CreatedAt { get; init; }
 
     public int CreatedBy { get; init; }
@@ -34,7 +42,4 @@ public sealed class Category
 
     public bool? IsDeleted { get; init; }
 
-    public IEnumerable<Expense>? Expenses { get; init; }
-
-    public IEnumerable<Income>? Incomes { get; init; }
 }

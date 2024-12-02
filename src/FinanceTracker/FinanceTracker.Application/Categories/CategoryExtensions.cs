@@ -16,6 +16,8 @@ internal static class CategoryExtensions
                     category.Type,
                     category.Period,
                     category.PlannedPeriodAmount,
+                    category.TotalExpenses,
+                    category.TotalIncomes,
                     category.Expenses?.ToResponses() ?? [],
                     category.Incomes?.ToResponses() ?? []);
     }

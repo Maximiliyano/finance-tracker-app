@@ -3,7 +3,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 import { CapitalService } from '../../services/capital.service';
-import { CurrencyType } from '../../../../core/models/currency-type';
+import { CurrencyType } from '../../../../core/types/currency-type';
 import { AddCapitalRequest } from '../../models/add-capital-request';
 import { PopupMessageService } from '../../../../shared/services/popup-message.service';
 

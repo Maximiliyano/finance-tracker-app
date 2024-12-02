@@ -1,7 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ExpenseService} from '../../services/expense.service';
 import {Subject, takeUntil} from 'rxjs';
-import {ExpenseResponse} from '../../models/expense-response';
 import {CapitalResponse} from '../../../capital/models/capital-response';
 import {currencyToSymbol} from '../../../../shared/components/currency/functions/currencyToSymbol.component';
 import {MatDialog} from "@angular/material/dialog";
@@ -12,8 +10,9 @@ import {
 import {CapitalService} from "../../../capital/services/capital.service";
 import {Periods} from "../../models/periods";
 import {CategoryService} from "../../../../shared/services/category.service";
-import {CategoryType} from "../../../../core/models/category-type";
-import {Category} from "../../../../core/models/category-model";
+import {CategoryResponse} from "../../../../core/models/category-model";
+import {CategoryType} from "../../../../core/types/category-type";
+import {ExpenseDialogComponent} from "../expense-dialog/expense-dialog.component";
 
 @Component({
   selector: 'app-expense-list',
@@ -21,41 +20,29 @@ import {Category} from "../../../../core/models/category-model";
   styleUrl: './expense-list.component.scss'
 })
 export class ExpenseListComponent implements OnInit, OnDestroy {
-  expenses: ExpenseResponse[] = [];
   capitals: CapitalResponse[] = [];
-  categories: Category[] = [];
+  categories: CategoryResponse[] = [];
+  selectedCapital: CapitalResponse | null = null;
 
-  capital: CapitalResponse | null = null;
-  totalCapitalsBalance: number;
-  totalExpense: number;
-  periods: string[] = [
-    Periods.Day,
-    Periods.Week,
-    Periods.Month,
-    Periods.Year,
-    Periods.Custom
-  ];
+  totalCapitalsBalance: number = 0;
+  totalCapitalsExpense: number = 0;
 
+  periods: string[] = Object.values(Periods);
   defaultCurrency: string = 'UAH';
   defaultPeriod: string = Periods.Month;
 
   selectedPeriod: string = this.defaultPeriod;
-
   startDate: Date | null = null;
   endDate: Date | null = null;
-
-  allTime: boolean;
+  allTime: boolean = false;
 
   private $unsubscribe = new Subject<void>();
 
-  constructor(private readonly expenseService: ExpenseService,
-              private readonly categoryService: CategoryService,
+  constructor(private readonly categoryService: CategoryService,
               private readonly capitalService: CapitalService,
               private readonly dialog: MatDialog) {}
 
   ngOnInit(): void {
-    //this.fetchExpenses();
-
     this.fetchCapitals();
 
     this.fetchCategories();
@@ -73,8 +60,7 @@ export class ExpenseListComponent implements OnInit, OnDestroy {
 
     switch (this.selectedPeriod) {
       case Periods.Day:
-        this.startDate = today;
-        this.endDate = today;
+        this.startDate = this.endDate = today;
         break;
 
       case Periods.Week:
@@ -92,13 +78,11 @@ export class ExpenseListComponent implements OnInit, OnDestroy {
         this.endDate = new Date();
         break;
 
-      // TODO custom
       case Periods.Custom:
         break;
 
       default:
-        this.startDate = null;
-        this.endDate = null;
+        this.startDate = this.endDate = null;
     }
   }
 
@@ -118,9 +102,8 @@ export class ExpenseListComponent implements OnInit, OnDestroy {
       endDate: this.endDate,
       allTime: this.allTime,
     };
-    let dialogRef = this.dialog.open(DialogDatePickerComponent, {
-      data: dialogProps
-    });
+
+    const dialogRef = this.dialog.open(DialogDatePickerComponent, { data: dialogProps });
 
     dialogRef
       .afterClosed()
@@ -136,14 +119,42 @@ export class ExpenseListComponent implements OnInit, OnDestroy {
   }
 
   openDialogAddExpense(): void {
+    let dialogRef = this.dialog.open(ExpenseDialogComponent, {
+      data: {
+        capitals: this.capitals,
+        categories: this.categories
+      }
+    });
+
+    dialogRef
+      .afterClosed()
+      .pipe(takeUntil(this.$unsubscribe))
+      .subscribe({
+        next: (success: boolean) => {
+          if (success)
+            this.fetchCategories();
+        }
+      })
   }
 
-  symbol(value: string): string {
-    return currencyToSymbol(value);
+  symbol(value?: string): string {
+    return currencyToSymbol(value ?? this.defaultCurrency);
   };
 
   onCapitalChange(capital: CapitalResponse | null): void {
-    this.capital = capital;
+    this.selectedCapital = capital;
+  }
+
+  getCapitalBalance(): number {
+    return this.selectedCapital?.balance ?? this.totalCapitalsBalance;
+  }
+
+  getCapitalTotalExpenses(): number {
+    return this.selectedCapital?.totalExpense ?? this.totalCapitalsExpense;
+  }
+
+  hasExpenses(): boolean {
+    return (this.selectedCapital?.totalExpense ?? this.totalCapitalsExpense) !== 0;
   }
 
   fetchCategories(): void {
@@ -151,7 +162,14 @@ export class ExpenseListComponent implements OnInit, OnDestroy {
       .getAll(CategoryType.Expenses)
       .pipe(takeUntil(this.$unsubscribe))
       .subscribe({
-        next: (response) => this.categories = response
+        next: (response) => {
+          this.categories = response
+            .map(category => {
+              category.totalExpensesPercent = this.calculatePercent(category.totalExpenses);
+              return category;
+            })
+            .sort((a, b) => b.totalExpenses - a.totalExpenses);
+        }
       });
   }
 
@@ -162,21 +180,22 @@ export class ExpenseListComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (response) => {
           this.capitals = response;
-          this.totalCapitalsBalance = this.capitals.reduce((sum, capital) => sum + capital.balance, 0);
-          this.totalExpense = this.capitals.reduce((sum, capital) => sum + capital.totalExpense, 0);
+          this.totalCapitalsBalance = this.calculateCapitalsBalance();
+          this.totalCapitalsExpense = this.calculateCapitalsExpense();
         }
       });
   }
 
-  fetchExpenses(): void {
-    this.expenseService
-      .getAll(this.capital?.id ?? null)
-      .pipe(takeUntil(this.$unsubscribe))
-      .subscribe({
-        next: (response) => {
-          this.expenses = response;
-        }
-      });
+  private calculatePercent(sum: number): string {
+    return ((sum / this.totalCapitalsExpense) * 100).toFixed();
+  }
+
+  private calculateCapitalsBalance(): number {
+    return this.capitals.reduce((sum, capital) => sum + capital.balance, 0);
+  }
+
+  private calculateCapitalsExpense(): number {
+    return this.capitals.reduce((sum, capital) => sum + capital.totalExpense, 0);
   }
 
   protected readonly Periods = Periods;

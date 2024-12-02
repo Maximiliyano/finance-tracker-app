@@ -1,4 +1,4 @@
-import { CurrencyType } from "../../../../core/models/currency-type";
+import { CurrencyType } from "../../../../core/types/currency-type";
 import { Currency } from "../models/currency";
 
 export function getCurrencies(currency: string = 'None'): Currency[] {

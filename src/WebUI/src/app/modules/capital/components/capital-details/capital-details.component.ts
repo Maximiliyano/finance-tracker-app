@@ -6,7 +6,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { PopupMessageService } from '../../../../shared/services/popup-message.service';
 import { UpdateCapitalRequest } from '../../models/update-capital-request';
 import { ConfirmDialogService } from '../../../../shared/services/confirm-dialog.service';
-import { CurrencyType } from '../../../../core/models/currency-type';
+import { CurrencyType } from '../../../../core/types/currency-type';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Currency } from '../../../../shared/components/currency/models/currency';
 import { getCurrencies } from '../../../../shared/components/currency/functions/get-currencies.component';

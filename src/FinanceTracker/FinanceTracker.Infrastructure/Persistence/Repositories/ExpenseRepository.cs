@@ -1,6 +1,8 @@
 using FinanceTracker.Application.Abstractions.Data;
 using FinanceTracker.Domain.Entities;
+using FinanceTracker.Domain.Enums;
 using FinanceTracker.Domain.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace FinanceTracker.Infrastructure.Persistence.Repositories;
 
@@ -12,7 +14,27 @@ internal sealed class ExpenseRepository(
         => await base.GetAsync(specification);
 
     public new async Task<IEnumerable<Expense>> GetAllAsync()
-        => await base.GetAllAsync();
+        => await DbContext.Expenses
+            .AsNoTracking()
+            .Select(e => new Expense(e.Id)
+            {
+                Amount = e.Amount,
+                CapitalId = e.CapitalId,
+                Capital = new Capital(e.Capital!.Id)
+                {
+                    Balance = e.Capital.Balance,
+                    Name = e.Capital.Name,
+                    Currency = e.Capital.Currency
+                },
+                CategoryId = e.CategoryId,
+                Category = new Category(e.Category!.Id)
+                {
+                    Name = e.Category.Name,
+                    Type = e.Category.Type
+                },
+                PaymentDate = e.PaymentDate,
+            })
+            .ToListAsync();
 
     public new void Create(Expense expense)
         => base.Create(expense);

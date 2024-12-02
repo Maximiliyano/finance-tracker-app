@@ -1,12 +1,12 @@
-import { Category } from "../../../core/models/category-model";
-import { Capital } from "../../capital/models/capital-model";
+import { CategoryResponse } from "../../../core/models/category-response";
+import {CapitalResponse} from "../../capital/models/capital-response";
 
-export interface Expense {
+export interface ExpenseResponse {
   id: number;
   categoryId: number;
-  category: Category;
+  category: CategoryResponse;
   capitalId: number;
-  capital: Capital;
+  capital: CapitalResponse;
   amount: number;
   paymentDate: Date;
   purpose: string | null;

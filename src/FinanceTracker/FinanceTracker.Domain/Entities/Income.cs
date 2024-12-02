@@ -2,6 +2,15 @@ namespace FinanceTracker.Domain.Entities;
 
 public sealed class Income : Entity, IAuditableEntity, ISoftDeletableEntity
 {
+    public Income()
+    {
+    }
+
+    public Income(int id)
+        : base(id)
+    {
+    }
+
     public required float Amount { get; set; }
 
     public string? Purpose { get; set; }

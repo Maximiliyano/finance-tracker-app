@@ -1,7 +1,7 @@
 <div class="expense-header">
-  <div class="capital-select">
+  <div class="capital-selector">
     <mat-icon>account_balance_wallet</mat-icon>
-    <select [ngModel]="capital" (ngModelChange)="onCapitalChange($event)">
+    <select [ngModel]="selectedCapital" (ngModelChange)="onCapitalChange($event)">
       <option [value]="null">All</option>
       <option *ngFor="let capital of capitals" [ngValue]="capital">
         {{capital.name}}
@@ -10,7 +10,7 @@
   </div>
 
   <div class="capital-totalExpense">
-    <span>{{ capital?.balance ?? totalCapitalsBalance | currency: symbol(capital?.currency ?? defaultCurrency) }}</span>
+    <span>{{ getCapitalBalance() | currency: symbol(selectedCapital?.currency) }}</span>
   </div>
 </div>
 
@@ -25,7 +25,7 @@
       </li>
     </ul>
 
-    <div class="per-tab-time-selector">
+    <div>
       <p>
         <span *ngIf="startDate && endDate && (!allTime || selectedPeriod !== Periods.Custom)">
           {{ startDate | date }} - {{ endDate | date }}
@@ -38,30 +38,27 @@
     </div>
   </div>
 
-  <div
-    class="expense"
-    *ngIf="capital?.totalExpense ?? totalExpense !== 0; else noExpenses"
-  >
-    <span class="expense-amount">{{capital?.totalExpense ?? totalExpense}}</span>
+  <div class="expense-diagram">
+    <span class="expense-amount" *ngIf="hasExpenses(); else noExpenses">
+      {{ getCapitalTotalExpenses() | currency: symbol(selectedCapital?.currency) }}
+    </span>
 
     <button class="add-expense" (click)="openDialogAddExpense()">
       <mat-icon>add_circle</mat-icon>
     </button>
   </div>
 
-  <div
-    class="categories"
-    *ngFor="let category of categories"
-  >
-    <br />
-    <p>CategoryName: {{category.name}}</p>
-    <br />
-    <p>Total expense by category: {{0}}</p>
-  </div>
-
   <ng-template #noExpenses>
     <p>There was no expenses found.</p>
   </ng-template>
+
+  <div class="categories">
+    <div class="category" *ngFor="let category of categories">
+      <div class="category-name">{{ category.name }}</div>
+      <div class="category-expense">{{ category.totalExpenses | currency: symbol(selectedCapital?.currency) }}</div>
+      <div class="category-percent">{{ category.totalExpensesPercent }} %</div>
+    </div>
+  </div>
 </div>
 
 

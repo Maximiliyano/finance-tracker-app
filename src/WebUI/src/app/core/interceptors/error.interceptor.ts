@@ -1,7 +1,7 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { catchError, throwError } from 'rxjs';
-import { Result } from '../models/result';
+import { Result } from '../models/result-model';
 import { PopupMessageService } from '../../shared/services/popup-message.service';
 
 export const errorInterceptor: HttpInterceptorFn = (req, next) => {

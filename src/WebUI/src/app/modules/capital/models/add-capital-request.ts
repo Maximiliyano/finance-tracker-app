@@ -1,4 +1,4 @@
-import { CurrencyType } from "../../../core/models/currency-type";
+import {CurrencyType} from "../../../core/types/currency-type";
 
 export interface AddCapitalRequest {
     name: string,

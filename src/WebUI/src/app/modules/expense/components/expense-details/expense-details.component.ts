@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Expense } from '../../models/expense-model';
+import {ExpenseResponse} from "../../models/expense-response";
 
 @Component({
   selector: 'app-expense-details',
@@ -7,7 +7,7 @@ import { Expense } from '../../models/expense-model';
   styleUrl: './expense-details.component.scss'
 })
 export class ExpenseDetailsComponent {
-  @Input() expense: Expense | null;
+  @Input() expense: ExpenseResponse | null;
 
   editMode: boolean;
 }

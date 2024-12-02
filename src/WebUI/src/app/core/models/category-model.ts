@@ -1,11 +1,10 @@
-import { Expense } from "../../modules/expense/models/expense-model";
-import { CategoryType } from "./category-type";
-import {Income} from "../../modules/income/models/income";
+import {CategoryType} from "../types/category-type";
 
-export interface Category {
+export interface CategoryResponse {
   id: number;
   name: string;
   type: CategoryType;
-  expenses: Expense[] | null;
-  incomes: Income[] | null;
+  totalExpenses: number;
+  totalExpensesPercent: string;
+  totalIncomes: number;
 }

@@ -5,17 +5,12 @@ namespace FinanceTracker.Domain.Entities;
 public sealed class Capital
     : Entity, IAuditableEntity, ISoftDeletableEntity
 {
-    public Capital(int? id)
-        : base(id ?? 0)
+    public Capital()
     {
     }
 
     public Capital(int id)
         : base(id)
-    {
-    }
-
-    public Capital()
     {
     }
 

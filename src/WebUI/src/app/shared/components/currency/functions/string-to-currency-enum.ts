@@ -1,4 +1,4 @@
-import { CurrencyType } from "../../../../core/models/currency-type";
+import { CurrencyType } from "../../../../core/types/currency-type";
 
 export function stringToCurrencyEnum(currency: string): CurrencyType | null {
   const enumKey = currency.toUpperCase() as keyof typeof CurrencyType;

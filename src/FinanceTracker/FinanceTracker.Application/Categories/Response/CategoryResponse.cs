@@ -10,5 +10,7 @@ public sealed record CategoryResponse(
     CategoryType Type,
     PerPeriodType PeriodType,
     float PeriodAmount,
+    float TotalExpenses,
+    float TotalIncomes,
     IEnumerable<ExpenseResponse> Expenses,
     IEnumerable<IncomeResponse> Incomes);
