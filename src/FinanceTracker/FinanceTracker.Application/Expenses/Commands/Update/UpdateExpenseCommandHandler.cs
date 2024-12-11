@@ -1,4 +1,4 @@
-using FinanceTracker.Application.Abstractions;
+using FinanceTracker.Application.Abstractions.Messaging;
 using FinanceTracker.Application.Expenses.Specifications;
 using FinanceTracker.Domain.Errors;
 using FinanceTracker.Domain.Providers;

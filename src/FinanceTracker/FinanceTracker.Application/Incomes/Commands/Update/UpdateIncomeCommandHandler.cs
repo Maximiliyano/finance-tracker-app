@@ -1,4 +1,4 @@
-using FinanceTracker.Application.Abstractions;
+using FinanceTracker.Application.Abstractions.Messaging;
 using FinanceTracker.Application.Incomes.Specifications;
 using FinanceTracker.Domain.Errors;
 using FinanceTracker.Domain.Repositories;
@@ -9,6 +9,7 @@ namespace FinanceTracker.Application.Incomes.Commands.Update;
 internal sealed class UpdateIncomeCommandHandler(
     IIncomeRepository incomeRepository,
     ICapitalRepository capitalRepository,
+    ICategoryRepository categoryRepository,
     IUnitOfWork unitOfWork)
     : ICommandHandler<UpdateIncomeCommand>
 {
@@ -21,21 +22,28 @@ internal sealed class UpdateIncomeCommandHandler(
             return Result.Failure(DomainErrors.General.NotFound(nameof(income)));
         }
 
-        if (command.Amount is not null)
+        if (command.Amount.HasValue)
         {
             var difference = (float)(command.Amount - income.Amount);
 
             income.Capital!.Balance += difference;
+
+            income.Amount = command.Amount.Value;
+
+            capitalRepository.Update(income.Capital!);
         }
 
-        income.Amount = command.Amount ?? income.Amount;
         income.Purpose = command.Purpose ?? income.Purpose;
         income.PaymentDate = command.PaymentDate ?? income.PaymentDate;
-        income.CategoryId = command.CategoryId ?? income.CategoryId;
+
+        if (command.CategoryId.HasValue)
+        {
+            income.CategoryId = command.CategoryId.Value;
+
+            categoryRepository.Update(income.Category!); // TODO !
+        }
 
         incomeRepository.Update(income);
-
-        capitalRepository.Update(income.Capital!);
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
 

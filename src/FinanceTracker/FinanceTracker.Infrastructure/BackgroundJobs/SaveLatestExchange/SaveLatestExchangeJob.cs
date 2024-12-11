@@ -3,7 +3,7 @@ using FinanceTracker.Domain.Repositories;
 using Microsoft.Extensions.Logging;
 using Quartz;
 
-namespace FinanceTracker.Infrastructure.BackgroundJobs;
+namespace FinanceTracker.Infrastructure.BackgroundJobs.SaveLatestExchange;
 
 [DisallowConcurrentExecution]
 public sealed class SaveLatestExchangeJob(

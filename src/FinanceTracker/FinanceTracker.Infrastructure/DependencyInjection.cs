@@ -1,6 +1,6 @@
 using FinanceTracker.Application.Abstractions.Data;
 using FinanceTracker.Domain.Repositories;
-using FinanceTracker.Infrastructure.BackgroundJobs;
+using FinanceTracker.Infrastructure.BackgroundJobs.SaveLatestExchange;
 using FinanceTracker.Infrastructure.Persistence;
 using FinanceTracker.Infrastructure.Persistence.Interceptors;
 using FinanceTracker.Infrastructure.Persistence.Repositories;

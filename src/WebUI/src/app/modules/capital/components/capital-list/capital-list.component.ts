@@ -96,6 +96,13 @@ export class CapitalListComponent implements OnInit, OnDestroy {
     }, 0) ?? 0;
   }
 
+  toggleVisible(includedInTotal: boolean, event: MouseEvent): void {
+    event.stopPropagation();
+    event.preventDefault();
+
+    includedInTotal = !includedInTotal;
+  }
+
   removeCapital(id: number, event: MouseEvent): void {
     event.stopPropagation();
     event.preventDefault();

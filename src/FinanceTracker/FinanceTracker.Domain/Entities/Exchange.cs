@@ -6,17 +6,26 @@ namespace FinanceTracker.Domain.Entities;
 public sealed class Exchange
     : Entity, IAuditableEntity, ISoftDeletableEntity
 {
+    public Exchange(int id)
+        : base(id)
+    {
+    }
+
+    public Exchange()
+    {
+    }
+
     [JsonPropertyName("base_ccy")]
-    public string NationalCurrencyCode { get; init; }
+    public required string NationalCurrencyCode { get; init; }
 
     [JsonPropertyName("ccy")]
-    public string TargetCurrencyCode { get; init; }
+    public required string TargetCurrencyCode { get; init; }
 
     [JsonConverter(typeof(StringToFloatConverter))]
-    public float Buy { get; init; }
+    public required float Buy { get; init; }
 
     [JsonConverter(typeof(StringToFloatConverter))]
-    public float Sale { get; init; }
+    public required float Sale { get; init; }
 
     public DateTimeOffset CreatedAt { get; init; }
 

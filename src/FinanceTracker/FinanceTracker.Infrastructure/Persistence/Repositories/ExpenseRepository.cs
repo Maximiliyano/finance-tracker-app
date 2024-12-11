@@ -1,6 +1,5 @@
 using FinanceTracker.Application.Abstractions.Data;
 using FinanceTracker.Domain.Entities;
-using FinanceTracker.Domain.Enums;
 using FinanceTracker.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 

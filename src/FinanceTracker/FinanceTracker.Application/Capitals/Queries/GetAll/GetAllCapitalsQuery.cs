@@ -1,4 +1,4 @@
-using FinanceTracker.Application.Abstractions;
+using FinanceTracker.Application.Abstractions.Messaging;
 using FinanceTracker.Application.Capitals.Responses;
 
 namespace FinanceTracker.Application.Capitals.Queries.GetAll;

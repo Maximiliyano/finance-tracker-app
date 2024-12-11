@@ -1,4 +1,4 @@
-﻿using FinanceTracker.Application.Abstractions;
+﻿using FinanceTracker.Application.Abstractions.Messaging;
 using FinanceTracker.Application.Capitals.Responses;
 using FinanceTracker.Application.Capitals.Specifications;
 using FinanceTracker.Domain.Errors;

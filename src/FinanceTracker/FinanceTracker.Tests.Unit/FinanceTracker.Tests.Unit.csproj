@@ -31,8 +31,4 @@
       <ProjectReference Include="..\FinanceTracker.Tests.Common\FinanceTracker.Tests.Common.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Expenses\Commands\" />
-    </ItemGroup>
-
 </Project>

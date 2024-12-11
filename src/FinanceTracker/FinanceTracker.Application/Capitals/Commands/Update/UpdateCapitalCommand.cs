@@ -1,4 +1,4 @@
-﻿using FinanceTracker.Application.Abstractions;
+﻿using FinanceTracker.Application.Abstractions.Messaging;
 
 namespace FinanceTracker.Application.Capitals.Commands.Update;
 

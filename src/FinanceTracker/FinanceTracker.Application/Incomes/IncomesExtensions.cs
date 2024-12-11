@@ -24,6 +24,7 @@ internal static class IncomesExtensions
             Amount = command.Amount,
             Purpose = command.Purpose,
             CategoryId = command.CategoryId,
-            CapitalId = command.CapitalId
+            CapitalId = command.CapitalId,
+            PaymentDate = command.PaymentDate
         };
 }

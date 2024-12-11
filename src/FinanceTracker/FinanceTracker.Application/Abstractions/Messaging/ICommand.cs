@@ -1,7 +1,7 @@
 using FinanceTracker.Domain.Results;
 using MediatR;
 
-namespace FinanceTracker.Application.Abstractions;
+namespace FinanceTracker.Application.Abstractions.Messaging;
 
 public interface ICommand : IRequest<Result>;
 

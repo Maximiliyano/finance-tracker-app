@@ -72,7 +72,7 @@
         <button
           *ngIf="capital.includeInTotal; else notIncludedInTotal"
           class="cp-d-act cp-visible"
-          (click)="capital.includeInTotal = false"
+          (click)="toggleVisible(capital.includeInTotal, $event)"
           title="Included in Total balance">
             <mat-icon>visibility</mat-icon>
         </button>

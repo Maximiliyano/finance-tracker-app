@@ -2,7 +2,7 @@ using FinanceTracker.Application.Abstractions.Settings;
 using Microsoft.Extensions.Options;
 using Quartz;
 
-namespace FinanceTracker.Infrastructure.BackgroundJobs;
+namespace FinanceTracker.Infrastructure.BackgroundJobs.SaveLatestExchange;
 
 public sealed class SaveLatestExchangeJobSetup(
     IOptions<BackgroundJobsSettings> settings)

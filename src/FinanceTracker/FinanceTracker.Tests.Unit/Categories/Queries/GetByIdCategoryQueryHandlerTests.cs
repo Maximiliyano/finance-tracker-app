@@ -22,7 +22,7 @@ public sealed class GetByIdCategoryQueryHandlerTests
     }
 
     [Fact]
-    public async Task Handle_ShouldReturnCategory_WhenCategoryExists()
+    public async Task Handle_ShouldGetCategoryById_WhenCategoryExists_ReturnCategory()
     {
         // Arrange
         const int id = 1;
@@ -50,7 +50,7 @@ public sealed class GetByIdCategoryQueryHandlerTests
     }
 
     [Fact]
-    public async Task Handle_ShouldReturnNotFound_WhenCategoryNotFound()
+    public async Task Handle_ShouldGetCategoryById_WhenNotFound_ReturnNotFound()
     {
         // Arrange
         const int id = -1;
