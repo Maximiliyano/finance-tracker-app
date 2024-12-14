@@ -3,6 +3,7 @@ using FinanceTracker.Application.Exchanges.Queries.GetLatest;
 using FinanceTracker.Application.Exchanges.Service;
 using FinanceTracker.Domain.Entities;
 using FinanceTracker.Domain.Errors;
+using FinanceTracker.Domain.Providers;
 using FinanceTracker.Domain.Repositories;
 using FinanceTracker.Domain.Results;
 using FluentAssertions;
@@ -12,6 +13,7 @@ namespace FinanceTracker.UnitTests.Exchanges.Queries;
 
 public sealed class GetLatestExchangesHandlerTests
 {
+    private readonly IDateTimeProvider _dateTimeProvider = Substitute.For<IDateTimeProvider>();
     private readonly IExchangeHttpService _serviceMock = Substitute.For<IExchangeHttpService>();
     private readonly IExchangeRepository _repositoryMock = Substitute.For<IExchangeRepository>();
     private readonly IUnitOfWork _unitOfWorkMock = Substitute.For<IUnitOfWork>();
@@ -20,7 +22,7 @@ public sealed class GetLatestExchangesHandlerTests
 
     public GetLatestExchangesHandlerTests()
     {
-        _handler = new GetLatestExchangeQueryHandler(_serviceMock, _repositoryMock, _unitOfWorkMock);
+        _handler = new GetLatestExchangeQueryHandler(_dateTimeProvider, _serviceMock, _repositoryMock, _unitOfWorkMock);
     }
 
     [Fact]
@@ -38,6 +40,115 @@ public sealed class GetLatestExchangesHandlerTests
         // Assert
         result.IsSuccess.Should().BeTrue();
         result.Value.Should().BeEmpty();
+    }
+
+    [Fact]
+    public async Task Handle_ShouldReturnExchangesCreatedToday_WhenGetLatest()
+    {
+        // Arrange
+        var utcNow = DateTimeOffset.UtcNow;
+        var exchanges = new List<Exchange>
+        {
+            new()
+            {
+                NationalCurrencyCode = "",
+                TargetCurrencyCode = "",
+                Buy = 0,
+                Sale = 0,
+                CreatedAt = utcNow
+            },
+            new()
+            {
+                NationalCurrencyCode = "",
+                TargetCurrencyCode = "",
+                Buy = 0,
+                Sale = 0,
+                CreatedAt = utcNow
+            }
+        };
+        var responses = exchanges.ToResponses();
+        var query = new GetLatestExchangeQuery();
+
+        _repositoryMock.GetLatestAsync().Returns(exchanges);
+        _dateTimeProvider.UtcNow.Returns(utcNow);
+
+        // Act
+        var result = await _handler.Handle(query, default);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.Should().BeEquivalentTo(responses);
+
+        _repositoryMock.DidNotReceive().RemoveRange(Arg.Any<IEnumerable<Exchange>>());
+        _repositoryMock.DidNotReceive().AddRange(Arg.Any<IEnumerable<Exchange>>());
+
+        await _unitOfWorkMock.DidNotReceive().SaveChangesAsync();
+        await _serviceMock.DidNotReceive().GetCurrencyAsync();
+    }
+
+    [Fact]
+    public async Task Handle_ShouldReturnExchangesCreatedDayBefore_WhenGetLatest()
+    {
+        // Arrange
+        var utcNow = DateTimeOffset.UtcNow;
+        var utcPast = utcNow.AddDays(-1);
+        var exchanges = new List<Exchange>
+        {
+            new()
+            {
+                NationalCurrencyCode = "Old",
+                TargetCurrencyCode = "Old",
+                Buy = 2,
+                Sale = 3,
+                CreatedAt = utcPast
+            },
+            new()
+            {
+                NationalCurrencyCode = "Old",
+                TargetCurrencyCode = "Old",
+                Buy = 1,
+                Sale = 4,
+                CreatedAt = utcPast
+            }
+        };
+        var newExchanges = new List<Exchange>
+        {
+            new()
+            {
+                NationalCurrencyCode = "",
+                TargetCurrencyCode = "",
+                Buy = 0,
+                Sale = 0,
+                CreatedAt = utcNow
+            },
+            new()
+            {
+                NationalCurrencyCode = "",
+                TargetCurrencyCode = "",
+                Buy = 0,
+                Sale = 0,
+                CreatedAt = utcNow
+            }
+        };
+        var responses = newExchanges.ToResponses();
+        var query = new GetLatestExchangeQuery();
+
+        _repositoryMock.GetLatestAsync().Returns(exchanges);
+        _serviceMock.GetCurrencyAsync().Returns(newExchanges);
+        _dateTimeProvider.UtcNow.Returns(utcNow);
+
+        // Act
+        var result = await _handler.Handle(query, default);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.Should().BeEquivalentTo(responses);
+
+        _repositoryMock.Received(1).RemoveRange(exchanges);
+        _repositoryMock.Received(1).AddRange(Arg.Is<IEnumerable<Exchange>>(x => x.Any(c => c.CreatedAt == utcNow)));
+
+        await _unitOfWorkMock.Received(1).SaveChangesAsync();
+        await _serviceMock.Received(1).GetCurrencyAsync();
     }
 
     [Fact]

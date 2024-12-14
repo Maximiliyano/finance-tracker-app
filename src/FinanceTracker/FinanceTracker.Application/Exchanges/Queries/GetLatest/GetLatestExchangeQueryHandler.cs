@@ -1,12 +1,14 @@
 using FinanceTracker.Application.Abstractions.Messaging;
 using FinanceTracker.Application.Exchanges.Responses;
 using FinanceTracker.Application.Exchanges.Service;
+using FinanceTracker.Domain.Providers;
 using FinanceTracker.Domain.Repositories;
 using FinanceTracker.Domain.Results;
 
 namespace FinanceTracker.Application.Exchanges.Queries.GetLatest;
 
 public sealed class GetLatestExchangeQueryHandler(
+    IDateTimeProvider dateTimeProvider,
     IExchangeHttpService service,
     IExchangeRepository repository,
     IUnitOfWork unitOfWork)
@@ -14,11 +16,17 @@ public sealed class GetLatestExchangeQueryHandler(
 {
     public async Task<Result<IEnumerable<ExchangeResponse>>> Handle(GetLatestExchangeQuery query, CancellationToken cancellationToken)
     {
+        var utcNow = dateTimeProvider.UtcNow;
         var exchanges = await repository.GetLatestAsync();
 
-        if (exchanges.Any())
+        if (exchanges.Any(x => x.CreatedAt.Date == utcNow.Date))
         {
             return Result.Success(exchanges.ToResponses());
+        }
+
+        if (exchanges.Any(x => x.CreatedAt.Date < utcNow.Date))
+        {
+            repository.RemoveRange(exchanges);
         }
 
         var result = await service.GetCurrencyAsync();

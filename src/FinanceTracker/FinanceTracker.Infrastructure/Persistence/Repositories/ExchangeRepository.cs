@@ -12,6 +12,9 @@ internal sealed class ExchangeRepository(
     public void AddRange(IEnumerable<Exchange> exchanges)
         => CreateRange(exchanges);
 
+    public void RemoveRange(IEnumerable<Exchange> exchanges)
+        => DeleteRange(exchanges);
+
     public async Task<IEnumerable<Exchange>> GetLatestAsync()
         => await DbContext.Set<Exchange>()
             .AsNoTracking()

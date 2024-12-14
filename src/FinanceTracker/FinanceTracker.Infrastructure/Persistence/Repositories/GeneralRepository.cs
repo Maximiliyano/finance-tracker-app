@@ -32,6 +32,9 @@ internal abstract class GeneralRepository<TEntity>(IFinanceTrackerDbContext cont
     protected void Delete(TEntity entity) =>
         DbContext.Set<TEntity>().Remove(entity);
 
+    protected void DeleteRange(IEnumerable<TEntity> entities) =>
+        DbContext.Set<TEntity>().RemoveRange(entities);
+
     protected async Task<bool> AnyAsync(ISpecification<TEntity> specification) =>
         await ApplySpecification(specification)
             .AnyAsync();
