@@ -15,11 +15,7 @@ internal static class CategoryExtensions
                     category.Name,
                     category.Type,
                     category.Period,
-                    category.PlannedPeriodAmount,
-                    category.TotalExpenses,
-                    category.TotalIncomes,
-                    category.Expenses?.ToResponses() ?? [],
-                    category.Incomes?.ToResponses() ?? []);
+                    category.PlannedPeriodAmount);
     }
 
     internal static IEnumerable<CategoryResponse> ToResponses(this IEnumerable<Category> categories)

@@ -41,5 +41,4 @@ public sealed class Category
     public DateTimeOffset? DeletedAt { get; init; }
 
     public bool? IsDeleted { get; init; }
-
 }

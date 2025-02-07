@@ -7,6 +7,9 @@ import { PopupMessageService } from '../../../../shared/services/popup-message.s
 import { DialogService } from '../../../../shared/services/dialog.service';
 import {CapitalResponse} from "../../../capital/models/capital-response";
 import {CategoryResponse} from "../../../../core/models/category-model";
+import { AddExpenseRequest } from '../../models/add-expense-request';
+import { ExpenseResponse } from '../../models/expense-response';
+import { CategoryType } from '../../../../core/types/category-type';
 
 @Component({
   selector: 'app-expense-dialog',
@@ -82,7 +85,7 @@ export class ExpenseDialogComponent implements OnInit, OnDestroy {
       return;
     }
 
-    let addExpenseRequest = {
+    let addExpenseRequest: AddExpenseRequest = {
       capitalId: this.addExpenseForm.value.CapitalId,
       categoryId: this.addExpenseForm.value.CategoryId,
       amount: this.addExpenseForm.value.Amount,
@@ -90,18 +93,35 @@ export class ExpenseDialogComponent implements OnInit, OnDestroy {
       purpose: this.addExpenseForm.value.Purpose
     };
 
+
     this.expenseService.add(addExpenseRequest)
       .pipe(takeUntil(this.$unsubscribe))
       .subscribe({
-        next: () => {
+        next: (id) => {
           this.popupService.success('The expense is successfully added.');
-          this.onCancel(true);
+
+          let response: ExpenseResponse = {
+            id: id,
+            amount: addExpenseRequest.amount,
+            paymentDate: addExpenseRequest.paymentDate,
+            capitalId: addExpenseRequest.capitalId,
+            category: {
+              id: this.addExpenseForm.value.CategoryId,
+              name: '',
+              type: CategoryType.Expenses,
+              totalExpenses: 0,
+              totalExpensesPercent: '0'
+            },
+            purpose: addExpenseRequest.purpose
+          };
+
+          this.onCancel(response);
         },
-        error: () => this.onCancel(false)
+        error: () => this.onCancel(null)
       });
   }
 
-  onCancel(result: boolean = false): void {
+  onCancel(result: ExpenseResponse | null): void {
     this.dialogRef.close(result);
   }
 

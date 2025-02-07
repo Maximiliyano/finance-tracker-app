@@ -37,7 +37,9 @@ public class Result<TValue> : Result
 
     protected internal Result(TValue value, bool isSuccess, IList<Error> errors)
         : base(isSuccess, errors)
-        => _value = value;
+    {
+        _value = value;
+    }
 
     public static implicit operator Result<TValue>(TValue value) => Success(value);
 

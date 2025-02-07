@@ -76,7 +76,6 @@ export class CapitalListComponent implements OnInit, OnDestroy {
 
   totalCapitalAmount(): number {
     return this.capitals?.reduce((accumulator, capital) => {
-      console.log("include: ", capital.includeInTotal);
       if (capital?.includeInTotal == false) {
         return 0;
       }

@@ -38,7 +38,7 @@ export class CapitalDetailsComponent implements OnInit, OnDestroy {
 
     this.capitalForm = this.formBuilder.group({
       name: [this.capital?.name, [Validators.required, Validators.maxLength(32)]],
-      balance: [this.capital?.balance, [Validators.required, Validators.min(0)]],
+      balance: [this.capital?.balance, [Validators.required]],
       currency: [this.capital?.currency, Validators.required]
     });
 
@@ -50,6 +50,7 @@ export class CapitalDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.unsubscribe.next();
     this.unsubscribe.complete();
   }
 

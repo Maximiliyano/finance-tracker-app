@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Subject, takeUntil} from 'rxjs';
+import {BehaviorSubject, Subject, takeUntil} from 'rxjs';
 import {CapitalResponse} from '../../../capital/models/capital-response';
 import {currencyToSymbol} from '../../../../shared/components/currency/functions/currencyToSymbol.component';
 import {MatDialog} from "@angular/material/dialog";
@@ -9,10 +9,13 @@ import {
 } from "../dialog-date-picker/dialog-date-picker.component";
 import {CapitalService} from "../../../capital/services/capital.service";
 import {Periods} from "../../models/periods";
-import {CategoryService} from "../../../../shared/services/category.service";
 import {CategoryResponse} from "../../../../core/models/category-model";
-import {CategoryType} from "../../../../core/types/category-type";
 import {ExpenseDialogComponent} from "../expense-dialog/expense-dialog.component";
+import { ActivatedRoute } from '@angular/router';
+import { ExpenseService } from '../../services/expense.service';
+import { ExpenseResponse } from '../../models/expense-response';
+import { CategoryService } from '../../../../shared/services/category.service';
+import { CategoryType } from '../../../../core/types/category-type';
 
 @Component({
   selector: 'app-expense-list',
@@ -20,9 +23,15 @@ import {ExpenseDialogComponent} from "../expense-dialog/expense-dialog.component
   styleUrl: './expense-list.component.scss'
 })
 export class ExpenseListComponent implements OnInit, OnDestroy {
+  categories$ = new BehaviorSubject<CategoryResponse[]>([]);
+
   capitals: CapitalResponse[] = [];
   categories: CategoryResponse[] = [];
+  dialogCategories: CategoryResponse[] = [];
   selectedCapital: CapitalResponse | null = null;
+
+  expenses: ExpenseResponse[] = [];
+  totalExpenses: number = 0;
 
   totalCapitalsBalance: number = 0;
   totalCapitalsExpense: number = 0;
@@ -38,14 +47,18 @@ export class ExpenseListComponent implements OnInit, OnDestroy {
 
   private $unsubscribe = new Subject<void>();
 
-  constructor(private readonly categoryService: CategoryService,
+  constructor(private readonly route: ActivatedRoute,
+              private readonly expenseService: ExpenseService,
               private readonly capitalService: CapitalService,
+              private readonly categoryService: CategoryService,
               private readonly dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.fetchCapitals();
 
     this.fetchCategories();
+
+    this.fetchExpenses();
 
     this.updateDateRange();
   }
@@ -122,17 +135,31 @@ export class ExpenseListComponent implements OnInit, OnDestroy {
     let dialogRef = this.dialog.open(ExpenseDialogComponent, {
       data: {
         capitals: this.capitals,
-        categories: this.categories
+        categories: this.dialogCategories
       }
     });
+
+    let category: CategoryResponse | null = null;
 
     dialogRef
       .afterClosed()
       .pipe(takeUntil(this.$unsubscribe))
       .subscribe({
-        next: (success: boolean) => {
-          if (success)
-            this.fetchCategories();
+        next: (response: ExpenseResponse) => {
+          if (response) {
+            category = this.setCategoryById(response.category.id);
+
+            if (category != null) {
+              category.totalExpenses += response.amount;
+              category.totalExpensesPercent = this.calculatePercent(category.totalExpenses);
+              response.category = category;
+
+              this.selectedCapital?.balance ? this.selectedCapital.balance -= response.amount : this.totalCapitalsBalance -= response.amount;
+              this.selectedCapital?.totalExpense ? this.selectedCapital.totalExpense += response.amount : this.totalCapitalsExpense += response.amount;
+              this.expenses.push(response);
+              this.categories = this.constructCategories();
+            }
+          }
         }
       })
   }
@@ -143,6 +170,8 @@ export class ExpenseListComponent implements OnInit, OnDestroy {
 
   onCapitalChange(capital: CapitalResponse | null): void {
     this.selectedCapital = capital;
+
+    this.categories = this.constructCategories();
   }
 
   getCapitalBalance(): number {
@@ -157,37 +186,88 @@ export class ExpenseListComponent implements OnInit, OnDestroy {
     return (this.selectedCapital?.totalExpense ?? this.totalCapitalsExpense) !== 0;
   }
 
-  fetchCategories(): void {
-    this.categoryService
-      .getAll(CategoryType.Expenses)
+  fetchExpenses(): void {
+    this.expenseService
+      .getAll(this.selectedCapital?.id)
       .pipe(takeUntil(this.$unsubscribe))
       .subscribe({
         next: (response) => {
-          this.categories = response
-            .map(category => {
-              category.totalExpensesPercent = this.calculatePercent(category.totalExpenses);
-              return category;
-            })
-            .sort((a, b) => b.totalExpenses - a.totalExpenses);
+          this.expenses = response;
+          this.categories = this.constructCategories();
         }
       });
   }
 
   fetchCapitals(): void {
+    let capitalId: number | null = null;
+
+    this.route.queryParams.subscribe({
+      next: (params) => capitalId = params['capitalId']
+    });
+
     this.capitalService
       .getAll()
       .pipe(takeUntil(this.$unsubscribe))
       .subscribe({
         next: (response) => {
           this.capitals = response;
+          this.selectedCapital = response.find(x => x.id == capitalId) ?? null;
           this.totalCapitalsBalance = this.calculateCapitalsBalance();
           this.totalCapitalsExpense = this.calculateCapitalsExpense();
         }
       });
   }
 
+  fetchCategories(): void {
+    this.categoryService
+      .getAll(CategoryType.Expenses)
+      .pipe(takeUntil(this.$unsubscribe))
+      .subscribe({
+        next: (response) => this.dialogCategories = response
+      })
+  }
+
+  private setCategoryById(categoryId: number): CategoryResponse | null {
+    return this.categories.find(c => c.id == categoryId) ?? null;
+  }
+
+  private constructCategories(): CategoryResponse[] {
+    let expenses: ExpenseResponse[] = this.expenses;
+
+    if (this.selectedCapital?.id != null) {
+      expenses = expenses.filter(e => e.capitalId == this.selectedCapital?.id);
+    }
+
+    const categoryTotals = expenses
+      .reduce((map, expense) => {
+        const { category, amount } = expense;
+
+        if (!map.has(category.name)) {
+          map.set(category.name, {
+            ...category,
+            totalExpenses: 0,
+          });
+        }
+
+        const categoryEntry = map.get(category.name)!;
+
+        categoryEntry.totalExpenses += amount;
+
+        return map;
+    }, new Map<string, CategoryResponse>());
+
+    const totalExpenses = Array.from(categoryTotals.values()).reduce((sum, c) => sum + c.totalExpenses, 0);
+
+    return Array.from(categoryTotals.values())
+      .map((category) => {
+        category.totalExpensesPercent = this.calculatePercent(totalExpenses); // TODO infinity bug
+        return category;
+      })
+      .sort((a, b) => b.totalExpenses - a.totalExpenses);
+  }
+
   private calculatePercent(sum: number): string {
-    return ((sum / this.totalCapitalsExpense) * 100).toFixed();
+    return Math.abs((sum / this.getCapitalBalance()) * 100).toFixed();
   }
 
   private calculateCapitalsBalance(): number {

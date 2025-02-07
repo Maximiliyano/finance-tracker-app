@@ -53,11 +53,11 @@
   </ng-template>
 
   <div class="categories">
-    <div class="category" *ngFor="let category of categories">
+    <a [routerLink]="['/categories', category.id]" class="category" *ngFor="let category of categories">
       <div class="category-name">{{ category.name }}</div>
       <div class="category-expense">{{ category.totalExpenses | currency: symbol(selectedCapital?.currency) }}</div>
       <div class="category-percent">{{ category.totalExpensesPercent }} %</div>
-    </div>
+    </a>
   </div>
 </div>
 

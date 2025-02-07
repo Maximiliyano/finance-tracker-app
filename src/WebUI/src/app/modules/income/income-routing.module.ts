@@ -5,8 +5,7 @@ import { IncomesComponent } from './incomes.component';
 let routes: Routes = [
   {
     path: '',
-    component: IncomesComponent,
-    children: []
+    component: IncomesComponent
   }
 ];
 

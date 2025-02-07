@@ -1,5 +1,3 @@
-using FinanceTracker.Application.Expenses.Responses;
-using FinanceTracker.Application.Incomes.Responses;
 using FinanceTracker.Domain.Enums;
 
 namespace FinanceTracker.Application.Categories.Response;
@@ -9,8 +7,4 @@ public sealed record CategoryResponse(
     string Name,
     CategoryType Type,
     PerPeriodType PeriodType,
-    float PeriodAmount,
-    float TotalExpenses,
-    float TotalIncomes,
-    IEnumerable<ExpenseResponse> Expenses,
-    IEnumerable<IncomeResponse> Incomes);
+    float PeriodAmount);

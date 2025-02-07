@@ -16,7 +16,7 @@ public sealed class Expense
 
     public required DateTimeOffset PaymentDate { get; set; }
 
-    public Category? Category { get; init; }
+    public Category Category { get; init; }
 
     public required int CategoryId { get; set; }
 

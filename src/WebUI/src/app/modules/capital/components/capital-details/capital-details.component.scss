@@ -50,6 +50,16 @@
       gap: 10px;
       width: 100%;
     }
+
+    .btn {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+
+      &:hover {
+        font-weight: 500;
+      }
+    }
   }
 
   .error-message {
@@ -78,7 +88,6 @@
       font-weight: 400;
       font-size: 15px;
       margin: 0 5px;
-
 
       &:hover {
         background-color: #d3d3d3;

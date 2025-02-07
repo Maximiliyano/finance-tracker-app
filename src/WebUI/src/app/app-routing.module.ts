@@ -23,15 +23,20 @@ const routes: Routes = [
       import('./modules/expense/expense.module').then((x) => x.ExpenseModule)
   },
   {
-    path: '**',
-    redirectTo: '404'
+    path: 'categories',
+    loadChildren: () =>
+      import('./modules/category/category.module').then((x) => x.CategoryModule)
   },
   {
     path: '404',
     pathMatch: 'full',
     loadComponent: () =>
       import('./core/layout/not-found/not-found.component').then((x) => x.NotFoundComponent)
-  }
+  },
+  {
+    path: '**',
+    redirectTo: '404'
+  },
 ];
 
 @NgModule({

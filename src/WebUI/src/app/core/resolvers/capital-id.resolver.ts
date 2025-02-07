@@ -2,7 +2,6 @@ import { inject } from '@angular/core';
 import { ActivatedRouteSnapshot, ResolveFn, Router } from '@angular/router';
 import { CapitalService } from '../../modules/capital/services/capital.service';
 import { catchError, of } from 'rxjs';
-import { Capital } from '../../modules/capital/models/capital-model';
 import {CapitalResponse} from "../../modules/capital/models/capital-response";
 
 export const capitalIdResolver: ResolveFn<CapitalResponse> = (route: ActivatedRouteSnapshot) => {
