@@ -31,6 +31,8 @@ jobs:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
           
       - name: Deploy to Fly.io
-        run: flyctl deploy --remote-only --app financetracker --dockerfile ${{ github.workspace }}/src/FinanceTracker/FinanceTracker.Api/Dockerfile
+        run: |
+          cd $GITHUB_WORKSPACE/src/FinanceTracker/FinanceTracker.Api
+          flyctl deploy --remote-only --app financetracker --dockerfile $GITHUB_WORKSPACE/src/FinanceTracker/FinanceTracker.Api/Dockerfile
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
