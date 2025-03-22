@@ -19,9 +19,7 @@ jobs:
         run: echo "GITHUB_WORKSPACE=$GITHUB_WORKSPACE"
         
       - name: Install Fly.io CLI
-        run: |
-          curl -L https://fly.io/install.sh | sh
-          echo "$HOME/.fly/bin" >> $GITHUB_PATH
+        run: curl -L https://fly.io/install.sh | sh
 
       - name: Authenticate with Fly.io
         run: flyctl auth token
@@ -30,6 +28,6 @@ jobs:
           
       - name: Deploy to Fly.io
         working-directory: FinanceTracker.Api
-        run: flyctl deploy --remote-only --app financetracker --dockerfile Dockerfile
+        run: flyctl deploy --remote-only --app financetracker --dockerfile ${{ github.workspace }}/FinanceTracker.Api/Dockerfile
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
