@@ -15,21 +15,22 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Set working directory
-        run: echo "GITHUB_WORKSPACE=$GITHUB_WORKSPACE"
-        
+      - name: Print working directory (for debugging)
+        run: |
+          echo "Workspace: ${{ github.workspace }}"
+          ls -la ${{ github.workspace }}
+
       - name: Install Fly.io CLI
         run: |
           curl -L https://fly.io/install.sh | sh
           echo "$HOME/.fly/bin" >> $GITHUB_PATH
 
       - name: Authenticate with Fly.io
-        run: flyctl auth token
+        run: flyctl auth login --access-token ${{ secrets.FLY_API_TOKEN }}
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-          
+
       - name: Deploy to Fly.io
-        working-directory: FinanceTracker.Api
-        run: flyctl deploy --remote-only --app financetracker --dockerfile ${{ github.workspace }}/FinanceTracker.Api/Dockerfile
+        run: flyctl deploy --remote-only --app financetracker --dockerfile FinanceTracker.Api/Dockerfile
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
