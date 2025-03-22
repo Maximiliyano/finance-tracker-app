@@ -14,7 +14,12 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-        
+
+      - name: Debug Repository Structure
+        run: |
+          echo "GITHUB_WORKSPACE: $GITHUB_WORKSPACE"
+          ls -R $GITHUB_WORKSPACE  # List all files to check structure
+          
       - name: Install Fly.io CLI
         run: |
           curl -L https://fly.io/install.sh | sh
