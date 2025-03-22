@@ -19,7 +19,7 @@ jobs:
           echo "$HOME/.fly/bin" >> $GITHUB_PATH
 
       - name: Authenticate with Fly.io
-        run: flyctl auth token | flyctl auth login --access-token ${{ secrets.FlyV1 fm2_lJPECAAAAAAAAdIxxBDiTq5Z/v/Sm08RKzmiN2BcwrVodHRwczovL2FwaS5mbHkuaW8vdjGWAJLOAAWGbB8Lk7lodHRwczovL2FwaS5mbHkuaW8vYWFhL3YxxDxi7QbBQ/Br4INH6wwHrqOYlJDDZb6Nx7Q4yRL5R4TBIOilzEewx/ptDWMFQp9WtJ+fy0ag+XSCRcsr/ZPEThciWUTAOHUcd1c+i+L2JGOXE3TVPR1Z+/DKA2Cfe/pD/HFJDN/Hcww8YzkmD+pfTwDNGFjLT4GIoRIh42HbH4wVlnsIc/EoK4ZSQ7/BaA2SlAORgc4APwxeHwWRgqdidWlsZGVyH6J3Zx8BxCCw3YwLNLDbWTKDj/XcuSrmeTPzc78iF3g6AkV4JQCMrQ==,fm2_lJPEThciWUTAOHUcd1c+i+L2JGOXE3TVPR1Z+/DKA2Cfe/pD/HFJDN/Hcww8YzkmD+pfTwDNGFjLT4GIoRIh42HbH4wVlnsIc/EoK4ZSQ7/BaMQQ9rFTGS1utFaBh5COzoSJmsO5aHR0cHM6Ly9hcGkuZmx5LmlvL2FhYS92MZgEks5n3v7lzwAAAAEj1x0DF84ABSFSCpHOAAUhUgzEEH1MPKQNmCZqOusy6Yy3Ox7EII8MPiQns3KUjYojcZDpia0e5BkjSb56uXmtDW3CGyEI }}
+        run: flyctl auth token | flyctl auth login --access-token ${{ secrets.FLY_API_TOKEN }}
 
       - name: Deploy to Fly.io
         run: flyctl deploy
