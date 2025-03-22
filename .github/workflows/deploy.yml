@@ -14,11 +14,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
-      - name: Debug Repository Structure
-        run: |
-          echo "GITHUB_WORKSPACE: $GITHUB_WORKSPACE"
-          ls -R $GITHUB_WORKSPACE  # List all files to check structure
         
       - name: Install Fly.io CLI
         run: |
@@ -26,13 +21,13 @@ jobs:
           echo "$HOME/.fly/bin" >> $GITHUB_PATH
 
       - name: Authenticate with Fly.io
-        run: flyctl auth token
+        run: fly tokens create
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
           
       - name: Deploy to Fly.io
         run: |
-          cd $GITHUB_WORKSPACE/FinanceTracker.Api  # Ensure we are in the correct directory
+          cd $GITHUB_WORKSPACE/src/FinanceTracker/FinanceTracker.Api
           flyctl deploy --remote-only --app financetracker --dockerfile Dockerfile
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
