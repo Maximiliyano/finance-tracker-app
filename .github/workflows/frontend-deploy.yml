@@ -34,11 +34,14 @@ jobs:
         uses: nwtgck/actions-netlify@v2
         with:
           publish-dir: "src/WebUI/dist/finance-tracker-app/browser"
-          functions-dir: "src/WebUI/netlify/functions"
-          production-branch: main
+          production-branch: master
           github-token: ${{ secrets.GITHUB_TOKEN }}
           deploy-message: "Deployed Angular App via GitHub Actions 🚀"
           alias: "latest"
+          enable-pull-request-comment: true
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
           enable-pull-request-comment: true
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
