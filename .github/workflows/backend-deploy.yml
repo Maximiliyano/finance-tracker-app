@@ -14,24 +14,17 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-        
-      - name: Debug Repository Structure
-        run: |
-          echo "GITHUB_WORKSPACE: $GITHUB_WORKSPACE"
-          ls -R $GITHUB_WORKSPACE  # List all files to check structure
       
       - name: Install Fly.io CLI
         run: |
           curl -L https://fly.io/install.sh | sh
           echo "$HOME/.fly/bin" >> $GITHUB_PATH
 
-      - name: Authenticate with Fly.io
-        run: fly tokens create deploy
-        env:
-          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+      - name: Set Database Connection in Fly.io
+        run: |
+          flyctl secrets set DATABASE_CONNECTION_STRING=${{ secrets.DB_CONNECTION_STRING }} --app financetracker
           
       - name: Deploy to Fly.io
         run: flyctl deploy --app financetracker
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-          DatabaseSettings.Connection: ${{ secrets.DB_CONNECTION_STRING }}
