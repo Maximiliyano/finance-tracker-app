@@ -13,12 +13,7 @@
     <div class="cp-sort">
       <label>Sort by:</label>
       <select>
-        <option>name</option>
-        <option>balance</option>
-        <option>expenses</option>
-        <option>incomes</option>
-        <option>transfers in</option>
-        <option>transfers out</option>
+        <option *ngFor="let option of sortOptions" [value]="option">{{ option }}</option>
       </select>
     </div>
 
@@ -33,59 +28,46 @@
   </div>
 </div>
 
-<div class="cp-list" *ngIf="capitals?.length">
-  <div *ngFor="let capital of capitals">
+<div class="cp-list" *ngIf="capitals?.length; else noCapitals">
+  <div class="cp-contain" *ngFor="let capital of capitals">
     <a class="cp" [routerLink]="[capital.id]">
       <div class="cp-name">{{ capital.name }}</div>
-
       <div class="cp-balance" title="Balance">
         {{ capital.balance | currency: symbol(capital.currency) }}
       </div>
 
       <div class="cp-props">
-        <div class="cp-props-item cp-incomes" title="Incomes">
-          <mat-icon>attach_money</mat-icon>
-          {{ capital.totalIncome }}
+        <div *ngFor="let propsItem of propsItems"
+          class="cp-props-item"
+          [title]="propsItem.title"
+          [ngClass]="propsItem.style"
+        >
+          <mat-icon>{{ propsItem.icon }}</mat-icon>
+          {{ capital[propsItem.key] }}
         </div>
-
-        <div class="cp-props-item cp-expenses" title="Expenses">
-          <mat-icon>money_off</mat-icon>
-          {{ capital.totalExpense }}
-        </div>
-
-        <div class="cp-props-item" title="Transfer Out">
-          <mat-icon>arrow_upward</mat-icon>
-          {{ capital.totalTransferOut }}
-        </div>
-
-        <div class="cp-props-item" title="Transfer In">
-          <mat-icon>arrow_downward</mat-icon>
-          {{ capital.totalTransferIn }}
-        </div>
-      </div>
-
-      <div class="cp-detail-actions">
-        <button class="cp-d-act cp-delete" (click)="removeCapital(capital.id, $event)" title="Remove">
-            <mat-icon>delete_outline</mat-icon>
-        </button>
-
-        <button
-          *ngIf="capital.includeInTotal; else notIncludedInTotal"
-          class="cp-d-act cp-visible"
-          (click)="toggleVisible(capital.includeInTotal, $event)"
-          title="Included in Total balance">
-            <mat-icon>visibility</mat-icon>
-        </button>
-
-        <ng-template #notIncludedInTotal>
-          <button
-            class="cp-d-act cp-visible"
-            (click)="capital.includeInTotal = true"
-            title="Not Included in Total balance">
-              <mat-icon>visibility_off</mat-icon>
-          </button>
-        </ng-template>
       </div>
     </a>
+
+    <div class="cp-detail-actions">
+      <button
+        title="Remove"
+        class="cp-d-act cp-delete"
+        (click)="removeCapital(capital.id)"
+      >
+        <mat-icon>delete_outline</mat-icon>
+      </button>
+
+      <button
+        title="Toggle Visibility"
+        class="cp-d-act cp-visible"
+        (click)="toggleVisible(capital)"
+      >
+        <mat-icon>{{ capital.includeInTotal ? 'visibility' : 'visibility_off' }}</mat-icon>
+      </button>
+    </div>
   </div>
 </div>
+
+<ng-template #noCapitals>
+  <p class="no-data">No capitals</p>
+</ng-template>

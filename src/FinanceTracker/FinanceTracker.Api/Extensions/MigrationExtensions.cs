@@ -10,7 +10,7 @@ internal static class MigrationExtensions
         using var serviceScope = app.ApplicationServices.CreateScope();
 
         var dbContext = serviceScope.ServiceProvider.GetRequiredService<FinanceTrackerDbContext>();
-
+        
         dbContext.Database.Migrate();
 
         return app;

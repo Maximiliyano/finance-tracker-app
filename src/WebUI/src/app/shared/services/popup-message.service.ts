@@ -45,16 +45,23 @@ export class PopupMessageService {
     messageElement.innerHTML = `
       <div class="popup-icon">${this.getIcon(type)}</div>
       <div class="popup-text">${message}</div>
+      <button class="close-btn">&times;</button>
     `;
 
     this.messageContainer!.prepend(messageElement);
+
+    const closeButton = messageElement.querySelector('.close-btn');
+
+    if (closeButton) {
+      closeButton.addEventListener('click', () => this.removePopup(messageElement));
+    }
 
     setTimeout(() => {
       messageElement.classList.add('fade-out');
 
       setTimeout(() => {
         this.removePopup(messageElement);
-      }, 300);
+      }, duration);
     }, duration)
   }
 

@@ -17,7 +17,7 @@ internal sealed class CategoryConfiguration : IEntityTypeConfiguration<Category>
         builder.ToTable(TableConfigurationConstants.Categories);
     }
 
-    private static IEnumerable<Category> DefaultCategories()
+    private static IEnumerable<Category> DefaultCategories() // TODO convert into json data
     {
         var utcNow = DateTimeOffset.UtcNow;
 

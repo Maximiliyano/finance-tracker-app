@@ -117,7 +117,7 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTimeOffset(new DateTime(2024, 11, 29, 18, 57, 29, 181, DateTimeKind.Unspecified).AddTicks(6397), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2025, 3, 22, 15, 38, 51, 493, DateTimeKind.Unspecified).AddTicks(2833), new TimeSpan(0, 0, 0, 0, 0)),
                             CreatedBy = 0,
                             Name = "Groceries",
                             Period = 0,
@@ -127,7 +127,7 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTimeOffset(new DateTime(2024, 11, 29, 18, 57, 29, 181, DateTimeKind.Unspecified).AddTicks(6397), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2025, 3, 22, 15, 38, 51, 493, DateTimeKind.Unspecified).AddTicks(2833), new TimeSpan(0, 0, 0, 0, 0)),
                             CreatedBy = 0,
                             Name = "Utilities",
                             Period = 0,
@@ -137,7 +137,7 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTimeOffset(new DateTime(2024, 11, 29, 18, 57, 29, 181, DateTimeKind.Unspecified).AddTicks(6397), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2025, 3, 22, 15, 38, 51, 493, DateTimeKind.Unspecified).AddTicks(2833), new TimeSpan(0, 0, 0, 0, 0)),
                             CreatedBy = 0,
                             Name = "Rent",
                             Period = 0,
@@ -147,7 +147,7 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTimeOffset(new DateTime(2024, 11, 29, 18, 57, 29, 181, DateTimeKind.Unspecified).AddTicks(6397), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2025, 3, 22, 15, 38, 51, 493, DateTimeKind.Unspecified).AddTicks(2833), new TimeSpan(0, 0, 0, 0, 0)),
                             CreatedBy = 0,
                             Name = "Transportation",
                             Period = 0,
@@ -157,7 +157,7 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
                         new
                         {
                             Id = 5,
-                            CreatedAt = new DateTimeOffset(new DateTime(2024, 11, 29, 18, 57, 29, 181, DateTimeKind.Unspecified).AddTicks(6397), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2025, 3, 22, 15, 38, 51, 493, DateTimeKind.Unspecified).AddTicks(2833), new TimeSpan(0, 0, 0, 0, 0)),
                             CreatedBy = 0,
                             Name = "Healthcare",
                             Period = 0,
@@ -167,7 +167,7 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
                         new
                         {
                             Id = 6,
-                            CreatedAt = new DateTimeOffset(new DateTime(2024, 11, 29, 18, 57, 29, 181, DateTimeKind.Unspecified).AddTicks(6397), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2025, 3, 22, 15, 38, 51, 493, DateTimeKind.Unspecified).AddTicks(2833), new TimeSpan(0, 0, 0, 0, 0)),
                             CreatedBy = 0,
                             Name = "Entertainment",
                             Period = 0,
@@ -177,7 +177,7 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
                         new
                         {
                             Id = 7,
-                            CreatedAt = new DateTimeOffset(new DateTime(2024, 11, 29, 18, 57, 29, 181, DateTimeKind.Unspecified).AddTicks(6397), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2025, 3, 22, 15, 38, 51, 493, DateTimeKind.Unspecified).AddTicks(2833), new TimeSpan(0, 0, 0, 0, 0)),
                             CreatedBy = 0,
                             Name = "Education",
                             Period = 0,
@@ -187,7 +187,7 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
                         new
                         {
                             Id = 8,
-                            CreatedAt = new DateTimeOffset(new DateTime(2024, 11, 29, 18, 57, 29, 181, DateTimeKind.Unspecified).AddTicks(6397), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2025, 3, 22, 15, 38, 51, 493, DateTimeKind.Unspecified).AddTicks(2833), new TimeSpan(0, 0, 0, 0, 0)),
                             CreatedBy = 0,
                             Name = "Clothing",
                             Period = 0,
@@ -197,7 +197,7 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
                         new
                         {
                             Id = 9,
-                            CreatedAt = new DateTimeOffset(new DateTime(2024, 11, 29, 18, 57, 29, 181, DateTimeKind.Unspecified).AddTicks(6397), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2025, 3, 22, 15, 38, 51, 493, DateTimeKind.Unspecified).AddTicks(2833), new TimeSpan(0, 0, 0, 0, 0)),
                             CreatedBy = 0,
                             Name = "Subscriptions",
                             Period = 0,
@@ -207,7 +207,7 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
                         new
                         {
                             Id = 10,
-                            CreatedAt = new DateTimeOffset(new DateTime(2024, 11, 29, 18, 57, 29, 181, DateTimeKind.Unspecified).AddTicks(6397), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2025, 3, 22, 15, 38, 51, 493, DateTimeKind.Unspecified).AddTicks(2833), new TimeSpan(0, 0, 0, 0, 0)),
                             CreatedBy = 0,
                             Name = "Travel",
                             Period = 0,
@@ -217,7 +217,7 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
                         new
                         {
                             Id = 11,
-                            CreatedAt = new DateTimeOffset(new DateTime(2024, 11, 29, 18, 57, 29, 181, DateTimeKind.Unspecified).AddTicks(6397), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2025, 3, 22, 15, 38, 51, 493, DateTimeKind.Unspecified).AddTicks(2833), new TimeSpan(0, 0, 0, 0, 0)),
                             CreatedBy = 0,
                             Name = "Gifts",
                             Period = 0,
@@ -227,7 +227,7 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
                         new
                         {
                             Id = 12,
-                            CreatedAt = new DateTimeOffset(new DateTime(2024, 11, 29, 18, 57, 29, 181, DateTimeKind.Unspecified).AddTicks(6397), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2025, 3, 22, 15, 38, 51, 493, DateTimeKind.Unspecified).AddTicks(2833), new TimeSpan(0, 0, 0, 0, 0)),
                             CreatedBy = 0,
                             Name = "Donations",
                             Period = 0,
@@ -237,7 +237,7 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
                         new
                         {
                             Id = 13,
-                            CreatedAt = new DateTimeOffset(new DateTime(2024, 11, 29, 18, 57, 29, 181, DateTimeKind.Unspecified).AddTicks(6397), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2025, 3, 22, 15, 38, 51, 493, DateTimeKind.Unspecified).AddTicks(2833), new TimeSpan(0, 0, 0, 0, 0)),
                             CreatedBy = 0,
                             Name = "Salary",
                             Period = 0,
@@ -247,7 +247,7 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
                         new
                         {
                             Id = 14,
-                            CreatedAt = new DateTimeOffset(new DateTime(2024, 11, 29, 18, 57, 29, 181, DateTimeKind.Unspecified).AddTicks(6397), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2025, 3, 22, 15, 38, 51, 493, DateTimeKind.Unspecified).AddTicks(2833), new TimeSpan(0, 0, 0, 0, 0)),
                             CreatedBy = 0,
                             Name = "Gifts",
                             Period = 0,
@@ -257,7 +257,7 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
                         new
                         {
                             Id = 15,
-                            CreatedAt = new DateTimeOffset(new DateTime(2024, 11, 29, 18, 57, 29, 181, DateTimeKind.Unspecified).AddTicks(6397), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2025, 3, 22, 15, 38, 51, 493, DateTimeKind.Unspecified).AddTicks(2833), new TimeSpan(0, 0, 0, 0, 0)),
                             CreatedBy = 0,
                             Name = "Grants",
                             Period = 0,
@@ -267,7 +267,7 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
                         new
                         {
                             Id = 16,
-                            CreatedAt = new DateTimeOffset(new DateTime(2024, 11, 29, 18, 57, 29, 181, DateTimeKind.Unspecified).AddTicks(6397), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2025, 3, 22, 15, 38, 51, 493, DateTimeKind.Unspecified).AddTicks(2833), new TimeSpan(0, 0, 0, 0, 0)),
                             CreatedBy = 0,
                             Name = "Sales",
                             Period = 0,
@@ -321,6 +321,128 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Exchanges", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Buy = 44.63f,
+                            CreatedAt = new DateTimeOffset(new DateTime(2025, 3, 21, 19, 48, 39, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedBy = 0,
+                            NationalCurrencyCode = "UAH",
+                            Sale = 45.45455f,
+                            TargetCurrencyCode = "EUR"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Buy = 41.2f,
+                            CreatedAt = new DateTimeOffset(new DateTime(2025, 3, 21, 19, 48, 39, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedBy = 0,
+                            NationalCurrencyCode = "UAH",
+                            Sale = 34f,
+                            TargetCurrencyCode = "USD"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Buy = 43f,
+                            CreatedAt = new DateTimeOffset(new DateTime(2025, 3, 21, 19, 48, 39, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedBy = 0,
+                            NationalCurrencyCode = "UAH",
+                            Sale = 43f,
+                            TargetCurrencyCode = "PLN"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Buy = 43f,
+                            CreatedAt = new DateTimeOffset(new DateTime(2025, 3, 21, 19, 48, 39, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedBy = 0,
+                            NationalCurrencyCode = "USD",
+                            Sale = 43f,
+                            TargetCurrencyCode = "UAH"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Buy = 32f,
+                            CreatedAt = new DateTimeOffset(new DateTime(2025, 3, 21, 19, 48, 39, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedBy = 0,
+                            NationalCurrencyCode = "USD",
+                            Sale = 32f,
+                            TargetCurrencyCode = "EUR"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Buy = 41f,
+                            CreatedAt = new DateTimeOffset(new DateTime(2025, 3, 21, 19, 48, 39, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedBy = 0,
+                            NationalCurrencyCode = "USD",
+                            Sale = 43f,
+                            TargetCurrencyCode = "PLN"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Buy = 41f,
+                            CreatedAt = new DateTimeOffset(new DateTime(2025, 3, 21, 19, 48, 39, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedBy = 0,
+                            NationalCurrencyCode = "EUR",
+                            Sale = 40f,
+                            TargetCurrencyCode = "USD"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Buy = 39f,
+                            CreatedAt = new DateTimeOffset(new DateTime(2025, 3, 21, 19, 48, 39, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedBy = 0,
+                            NationalCurrencyCode = "EUR",
+                            Sale = 38f,
+                            TargetCurrencyCode = "UAH"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Buy = 30f,
+                            CreatedAt = new DateTimeOffset(new DateTime(2025, 3, 21, 19, 48, 39, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedBy = 0,
+                            NationalCurrencyCode = "EUR",
+                            Sale = 32f,
+                            TargetCurrencyCode = "PLN"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Buy = 20f,
+                            CreatedAt = new DateTimeOffset(new DateTime(2025, 3, 21, 19, 48, 39, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedBy = 0,
+                            NationalCurrencyCode = "PLN",
+                            Sale = 10f,
+                            TargetCurrencyCode = "UAH"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Buy = 7f,
+                            CreatedAt = new DateTimeOffset(new DateTime(2025, 3, 21, 19, 48, 39, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedBy = 0,
+                            NationalCurrencyCode = "PLN",
+                            Sale = 6f,
+                            TargetCurrencyCode = "USD"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Buy = 3f,
+                            CreatedAt = new DateTimeOffset(new DateTime(2025, 3, 21, 19, 48, 39, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedBy = 0,
+                            NationalCurrencyCode = "PLN",
+                            Sale = 20f,
+                            TargetCurrencyCode = "EUR"
+                        });
                 });
 
             modelBuilder.Entity("FinanceTracker.Domain.Entities.Expense", b =>
@@ -384,7 +506,7 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
                     b.Property<float>("Amount")
                         .HasColumnType("real");
 
-                    b.Property<int?>("CapitalId")
+                    b.Property<int>("CapitalId")
                         .HasColumnType("int");
 
                     b.Property<int>("CategoryId")
@@ -491,7 +613,8 @@ namespace FinanceTracker.Infrastructure.Persistence.Migrations
                     b.HasOne("FinanceTracker.Domain.Entities.Capital", "Capital")
                         .WithMany("Incomes")
                         .HasForeignKey("CapitalId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("FinanceTracker.Domain.Entities.Category", "Category")
                         .WithMany("Incomes")

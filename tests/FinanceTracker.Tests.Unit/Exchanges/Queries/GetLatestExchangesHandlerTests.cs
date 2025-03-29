@@ -32,7 +32,7 @@ public sealed class GetLatestExchangesHandlerTests
         var query = new GetLatestExchangeQuery();
 
         _serviceMock.GetCurrencyAsync().Returns(Result.Success<IEnumerable<Exchange>>([]));
-        _repositoryMock.GetLatestAsync().Returns([]);
+        _repositoryMock.GetAllAsync().Returns([]);
 
         // Act
         var result = await _handler.Handle(query, default);
@@ -69,7 +69,7 @@ public sealed class GetLatestExchangesHandlerTests
         var responses = exchanges.ToResponses();
         var query = new GetLatestExchangeQuery();
 
-        _repositoryMock.GetLatestAsync().Returns(exchanges);
+        _repositoryMock.GetAllAsync().Returns(exchanges);
         _dateTimeProvider.UtcNow.Returns(utcNow);
 
         // Act
@@ -133,7 +133,7 @@ public sealed class GetLatestExchangesHandlerTests
         var responses = newExchanges.ToResponses();
         var query = new GetLatestExchangeQuery();
 
-        _repositoryMock.GetLatestAsync().Returns(exchanges);
+        _repositoryMock.GetAllAsync().Returns(exchanges);
         _serviceMock.GetCurrencyAsync().Returns(newExchanges);
         _dateTimeProvider.UtcNow.Returns(utcNow);
 
@@ -166,7 +166,7 @@ public sealed class GetLatestExchangesHandlerTests
         var exchanges = new List<Exchange> { exchange };
         var query = new GetLatestExchangeQuery();
 
-        _repositoryMock.GetLatestAsync().Returns(exchanges);
+        _repositoryMock.GetAllAsync().Returns(exchanges);
 
         var responses = exchanges.ToResponses();
 
@@ -180,7 +180,7 @@ public sealed class GetLatestExchangesHandlerTests
 
         result.Value.First().UpdatedAt.Should().BeCloseTo(utcNow, TimeSpan.FromSeconds(1));
 
-        await _repositoryMock.Received(1).GetLatestAsync();
+        await _repositoryMock.Received(1).GetAllAsync();
         await _serviceMock.DidNotReceive().GetCurrencyAsync();
         await _unitOfWorkMock.DidNotReceive().SaveChangesAsync();
     }
@@ -209,7 +209,7 @@ public sealed class GetLatestExchangesHandlerTests
             }
         };
 
-        _repositoryMock.GetLatestAsync().Returns([]);
+        _repositoryMock.GetAllAsync().Returns([]);
         _serviceMock.GetCurrencyAsync().Returns(Result.Success<IEnumerable<Exchange>>(exchangesFromService));
 
         var responses = exchangesFromService.ToResponses();
@@ -236,7 +236,7 @@ public sealed class GetLatestExchangesHandlerTests
         // Arrange
         var query = new GetLatestExchangeQuery();
 
-        _repositoryMock.GetLatestAsync().Returns([]);
+        _repositoryMock.GetAllAsync().Returns([]);
         _serviceMock.GetCurrencyAsync().Returns(Result.Failure<IEnumerable<Exchange>>(DomainErrors.Exchange.HttpExecution));
 
         // Act
@@ -258,7 +258,7 @@ public sealed class GetLatestExchangesHandlerTests
         // Arrange
         var query = new GetLatestExchangeQuery();
 
-        _repositoryMock.GetLatestAsync().Returns([]);
+        _repositoryMock.GetAllAsync().Returns([]);
         _serviceMock.GetCurrencyAsync().Returns(Result.Failure<IEnumerable<Exchange>>(DomainErrors.Exchange.Serialization));
 
         // Act

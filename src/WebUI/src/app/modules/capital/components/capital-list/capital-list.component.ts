@@ -18,6 +18,13 @@ export class CapitalListComponent implements OnInit, OnDestroy {
   capitals: CapitalResponse[];
   exchanges: Exchange[];
   mainCurrency: string = 'UAH';
+  sortOptions: string[] = ['name', 'balance', 'expenses', 'incomes', 'transfers in', 'transfers out'];
+  propsItems: { key: keyof CapitalResponse; title: string; icon: string, style: string }[] = [
+    { key: 'totalIncome', title: 'Incomes', icon: 'attach_money', style: 'cp-incomes' },
+    { key: 'totalExpense', title: 'Expenses', icon: 'money_off', style: 'cp-expenses' },
+    { key: 'totalTransferOut', title: 'Transfer Out', icon: 'arrow_upward', style: '' },
+    { key: 'totalTransferIn', title: 'Transfer In', icon: 'arrow_downward', style: '' },
+  ];
 
   private unsubcribe$ = new Subject<void>;
 
@@ -50,6 +57,14 @@ export class CapitalListComponent implements OnInit, OnDestroy {
       });
   }
 
+  executeCapitals(): void {
+    this.capitalService.getAll()
+      .pipe(takeUntil(this.unsubcribe$))
+      .subscribe({
+        next: (response) => this.capitals = response
+      });
+  }
+
   symbol(value: string): string {
     return currencyToSymbol(value);
   };
@@ -61,7 +76,7 @@ export class CapitalListComponent implements OnInit, OnDestroy {
   }
 
   openToCreateCapitalDialog(): void {
-    let dialogRef = this.dialog.open(CapitalDialogComponent);
+    const dialogRef = this.dialog.open(CapitalDialogComponent);
 
     dialogRef
       .afterClosed()
@@ -76,56 +91,31 @@ export class CapitalListComponent implements OnInit, OnDestroy {
 
   totalCapitalAmount(): number {
     return this.capitals?.reduce((accumulator, capital) => {
-      if (capital?.includeInTotal == false) {
-        return 0;
-      }
+      if (!capital.includeInTotal) return accumulator;
 
-      if (capital.currency == this.mainCurrency) {
+      if (capital.currency === this.mainCurrency) {
         return accumulator + capital.balance;
       }
 
-      let amount = 0;
-      let exchange = this.exchanges?.find(e => e.nationalCurrency === this.mainCurrency && e.targetCurrency === capital.currency);
-
-      if (exchange) {
-        amount = capital.balance * exchange.sale;
-      }
-
-      return amount + accumulator;
+      const exchange = this.exchanges?.find(e => e.nationalCurrency === this.mainCurrency && e.targetCurrency === capital.currency);
+      return exchange
+        ? accumulator + capital.balance * exchange.sale
+        : accumulator;
     }, 0) ?? 0;
   }
 
-  toggleVisible(includedInTotal: boolean, event: MouseEvent): void {
-    event.stopPropagation();
-    event.preventDefault();
-
-    includedInTotal = !includedInTotal;
+  toggleVisible(capital: CapitalResponse): void {
+    capital.includeInTotal = !capital.includeInTotal;
   }
 
-  removeCapital(id: number, event: MouseEvent): void {
-    event.stopPropagation();
-    event.preventDefault();
-
+  removeCapital(id: number): void {
     this.capitalService
       .delete(id)
       .pipe(takeUntil(this.unsubcribe$))
       .subscribe({
         next: () => {
-          let index = this.capitals.findIndex(x => x.id == id);
-
-          this.capitals.splice(index, 1);
+          this.capitals = this.capitals.filter(x => x.id !== id);
           this.popupMessageService.success("The capital was successful removed.");
         }});
-  }
-
-  private executeCapitals(): void {
-    this.capitalService
-      .getAll()
-      .pipe(takeUntil(this.unsubcribe$))
-      .subscribe({
-        next: (response) => {
-          this.capitals = response;
-        }
-      });
   }
 }

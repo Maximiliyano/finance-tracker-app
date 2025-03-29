@@ -49,7 +49,7 @@ public sealed class GetAllIncomesQueryHandlerTests
         var response = entity.ToResponse();
 
         // Act
-        var result = await _handler.Handle(query, default);
+        var result = await _handler.Handle(query, CancellationToken.None);
 
         // Assert
         result.IsSuccess.Should().BeTrue();

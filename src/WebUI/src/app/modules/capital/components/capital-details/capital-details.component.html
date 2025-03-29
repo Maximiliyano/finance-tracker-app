@@ -37,7 +37,6 @@
         </option>
         <option *ngFor="let currency of currencies" [value]="currency.value">{{ currency.value }}</option>
       </select>
-
     </div>
 
     <div *ngIf="modelInvalidAndTouched('balance')" class="error-message">
@@ -46,7 +45,11 @@
   </div>
 
   <div class="cp-details-col">
-    <button type="button" class="btn">
+    <button
+      class="btn"
+      type="button"
+      (click)="redirectToExpensePage(capital.id)"
+    >
       <span>Redirect to expense page</span>
       <mat-icon>arrow_forward</mat-icon>
     </button>

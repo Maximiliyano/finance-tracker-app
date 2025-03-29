@@ -12,13 +12,15 @@ internal sealed class ExchangeRepository(
     public void AddRange(IEnumerable<Exchange> exchanges)
         => CreateRange(exchanges);
 
+    public new void UpdateRange(IEnumerable<Exchange> updatedExchanges)
+        => base.UpdateRange(updatedExchanges);
+
     public void RemoveRange(IEnumerable<Exchange> exchanges)
         => DeleteRange(exchanges);
 
-    public async Task<IEnumerable<Exchange>> GetLatestAsync()
+    public new async Task<IEnumerable<Exchange>> GetAllAsync()
         => await DbContext.Set<Exchange>()
             .AsNoTracking()
             .OrderBy(x => x.CreatedAt)
-            .Take(2)
             .ToListAsync();
 }

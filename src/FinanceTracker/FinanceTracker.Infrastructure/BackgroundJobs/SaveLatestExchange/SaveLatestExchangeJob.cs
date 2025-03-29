@@ -13,7 +13,7 @@ public sealed class SaveLatestExchangeJob(
     ILogger<SaveLatestExchangeJob> logger)
     : IJob
 {
-    public async Task Execute(IJobExecutionContext context)
+    public async Task Execute(IJobExecutionContext context) // TODO refactor job
     {
         logger.LogInformation("Save latest exchange background job has been started.");
 
@@ -28,10 +28,17 @@ public sealed class SaveLatestExchangeJob(
         }
 
         logger.LogInformation("Executed exchange from API successfully.");
-        logger.LogInformation("Adding current exchange...");
+        logger.LogInformation("Adding / Updating current exchange...");
 
-        repository.AddRange(currentExchangesResult.Value);
-
+        if (currentExchangesResult.Value.Any())
+        {
+            // TODO update
+        }
+        else
+        {
+            repository.AddRange(currentExchangesResult.Value);
+        }
+        
         await unitOfWork.SaveChangesAsync(context.CancellationToken);
 
         logger.LogInformation("Current exchange has added.");

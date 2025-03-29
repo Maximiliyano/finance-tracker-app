@@ -1,5 +1,5 @@
 using System.Text.Json.Serialization;
-using FinanceTracker.Domain.Conventers;
+using FinanceTracker.Domain.Converters;
 
 namespace FinanceTracker.Domain.Entities;
 
@@ -22,10 +22,10 @@ public sealed class Exchange
     public required string TargetCurrencyCode { get; init; }
 
     [JsonConverter(typeof(StringToFloatConverter))]
-    public required float Buy { get; init; }
+    public required float Buy { get; set; }
 
     [JsonConverter(typeof(StringToFloatConverter))]
-    public required float Sale { get; init; }
+    public required float Sale { get; set; }
 
     public DateTimeOffset CreatedAt { get; init; }
 

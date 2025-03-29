@@ -13,7 +13,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\FinanceTracker.Application\FinanceTracker.Application.csproj" />
+      <ProjectReference Include="..\..\src\FinanceTracker\FinanceTracker.Application\FinanceTracker.Application.csproj" />
     </ItemGroup>
 
 </Project>

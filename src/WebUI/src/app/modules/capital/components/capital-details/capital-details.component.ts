@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { Capital } from '../../models/capital-model';
 import { CapitalService } from '../../services/capital.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -10,6 +10,8 @@ import { CurrencyType } from '../../../../core/types/currency-type';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Currency } from '../../../../shared/components/currency/models/currency';
 import { getCurrencies } from '../../../../shared/components/currency/functions/get-currencies.component';
+import { ExchangeService } from '../../../../shared/services/exchange.service';
+import { Exchange } from '../../../../core/models/exchange-model';
 
 @Component({
   selector: 'app-capital-details',
@@ -21,6 +23,7 @@ export class CapitalDetailsComponent implements OnInit, OnDestroy {
   formModified: boolean = false;
   capital: Capital | null;
   currencies: Currency[];
+  exchanges: Exchange[];
 
   unsubscribe = new Subject<void>;
   currencyType = CurrencyType;
@@ -29,6 +32,7 @@ export class CapitalDetailsComponent implements OnInit, OnDestroy {
     private readonly route: ActivatedRoute,
     private readonly router: Router,
     private readonly formBuilder: FormBuilder,
+    private readonly exchangeService: ExchangeService,
     private readonly capitalService: CapitalService,
     private readonly popupMessageService: PopupMessageService,
     private readonly confirmDialogService: ConfirmDialogService) {}
@@ -44,14 +48,39 @@ export class CapitalDetailsComponent implements OnInit, OnDestroy {
 
     this.currencies = getCurrencies(this.capital?.currency);
 
+    this.exchangeService.getAll().subscribe({
+      next: (response) => this.exchanges = response
+    });
+
     this.capitalForm.valueChanges.subscribe(() => {
       this.formModified = !this.isFormEqualToModel();
     });
+
+    this.capitalForm.get("currency")?.valueChanges.subscribe((value) => {
+      const exchange = this.exchanges.find(x => x.targetCurrency === this.capital?.currency); // TODO && nationcurrency == value.currency
+
+      if (value !== this.capital?.currency &&
+          exchange
+      ) {
+        // TODO get exchanges and perform calculation, the best approach to separate logic of calc into separate service
+        const saleAmount = (this.capital?.balance ?? 0) * exchange.sale;
+
+        this.capitalForm.patchValue({ balance: saleAmount });
+      }
+      else if (this.capital?.currency !== this.capitalForm.get("balance")?.value){
+        this.capitalForm.patchValue({ balance: this.capital?.balance });
+      }
+    })
   }
 
   ngOnDestroy(): void {
     this.unsubscribe.next();
     this.unsubscribe.complete();
+  }
+
+  redirectToExpensePage(capitalId: number): void {
+    this.router.navigate(['/expenses'], { queryParams: { capitalId: capitalId }});
+    // TODO complete
   }
 
   saveChanges(): void {

@@ -2,13 +2,13 @@ using System.Globalization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace FinanceTracker.Domain.Conventers;
+namespace FinanceTracker.Domain.Converters;
 
-public class StringToFloatConverter : JsonConverter<float>
+public sealed class StringToFloatConverter : JsonConverter<float>
 {
     public override float Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
-        if (reader.TokenType == JsonTokenType.String && float.TryParse(reader.GetString(), out var value))
+        if (reader.TokenType == JsonTokenType.String && float.TryParse(reader.GetString(), out float value))
         {
             return value;
         }
@@ -18,7 +18,7 @@ public class StringToFloatConverter : JsonConverter<float>
 
     public override void Write(Utf8JsonWriter writer, float value, JsonSerializerOptions options)
     {
-        var roundedValue = Math.Round(value, 2);
+        double roundedValue = Math.Round(value, 2);
 
         writer.WriteStringValue(roundedValue.ToString(CultureInfo.InvariantCulture));
     }

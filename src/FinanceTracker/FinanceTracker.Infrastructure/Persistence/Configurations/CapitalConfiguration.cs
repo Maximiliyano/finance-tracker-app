@@ -17,7 +17,7 @@ internal sealed class CapitalConfiguration : IEntityTypeConfiguration<Capital>
 
         builder
             .Property(c => c.Currency)
-            .HasConversion<string>();
+            .HasConversion<string>(); // TODO add pre-configured entities
 
         builder
             .HasMany(c => c.Incomes)
