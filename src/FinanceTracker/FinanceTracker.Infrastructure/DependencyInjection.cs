@@ -65,7 +65,7 @@ public static class DependencyInjection
             var databaseSettings = sp.GetRequiredService<IOptions<DatabaseSettings>>().Value;
             var auditableInterceptor = sp.GetRequiredService<UpdateAuditableEntitiesInterceptor>();
 
-            options.UseSqlServer(databaseSettings.Connection) // TODO in dev mode should execute appsetting.Develop...
+            options.UseSqlServer(databaseSettings.Connection)
                 .AddInterceptors(auditableInterceptor);
         });
 
