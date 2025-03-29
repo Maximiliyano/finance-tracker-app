@@ -1,13 +1,8 @@
-# fly.toml app configuration file generated for financetracker on 2024-07-31T18:15:40+03:00
-#
-# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
-#
-
 app = 'financetracker'
 
 [build]
   dockerfile = "src/FinanceTracker/FinanceTracker.Api/Dockerfile"
-  build_target = "final" 
+  build_target = "final"
   ignorefile = ".dockerignore"
 
 [http_service]
@@ -22,7 +17,7 @@ app = 'financetracker'
   [checks.health_check]
     type = "http"
     port = 8080
-    interval = "30s"
+    interval = "120s"
     timeout = "5s"
     method = "GET"
     path = "/health"
