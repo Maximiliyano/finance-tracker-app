@@ -1,10 +1,10 @@
-using FinanceTracker.Application.Abstractions;
+using FinanceTracker.Application.Abstractions.Messaging;
 using FinanceTracker.Domain.Repositories;
 using FinanceTracker.Domain.Results;
 
 namespace FinanceTracker.Application.Capitals.Commands.Create;
 
-public sealed class CreateCapitalCommandHandler(
+internal sealed class CreateCapitalCommandHandler(
     ICapitalRepository repository,
     IUnitOfWork unitOfWork)
     : ICommandHandler<CreateCapitalCommand, int>

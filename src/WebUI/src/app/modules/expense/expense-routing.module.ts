@@ -1,11 +1,18 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ExpenseComponent } from './expense.component';
+import { ExpensesComponent } from './expenses.component';
+import { ExpenseListComponent } from './components/expense-list/expense-list.component';
 
 let routes: Routes = [
   {
     path: '',
-    component: ExpenseComponent
+    component: ExpensesComponent,
+    children: [
+      {
+        path: '',
+        component: ExpenseListComponent
+      }
+    ]
   }
 ]
 

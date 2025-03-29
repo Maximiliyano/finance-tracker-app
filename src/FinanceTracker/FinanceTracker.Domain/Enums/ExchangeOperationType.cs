@@ -1,8 +1,3 @@
 namespace FinanceTracker.Domain.Enums;
 
-public enum ExchangeOperationType
-{
-    None,
-    Buy,
-    Sale
-}
+public enum ExchangeOperationType;

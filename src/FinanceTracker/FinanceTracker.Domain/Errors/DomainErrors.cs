@@ -8,9 +8,9 @@ public static class DomainErrors
     {
         public static Error Exception(string message)
             => Error.Failure(nameof(Exception), $"The exception occured with message: {message}");
-        
-        public static Error NotFound
-            => Error.NotFound(nameof(NotFound), "The entity was not found.");
+
+        public static Error NotFound(string name)
+            => Error.NotFound(nameof(NotFound), $"The specific {name} was not found.");
     }
 
     public static class Exchange
@@ -20,14 +20,17 @@ public static class DomainErrors
 
         public static Error Serialization
             => Error.Failure(nameof(Serialization), "The content execution into exchange was failed.");
-        
+
         public static Error AlreadyExists
             => Error.Conflict(nameof(AlreadyExists), "The exchange already exists.");
-        
-        public static Error TargetCurrencyUnavailable
-            => Error.BadRequest(nameof(TargetCurrencyUnavailable), "The target currency unavailable.");
 
         public static Error InvalidOperation
             => Error.BadRequest(nameof(InvalidOperation), "The operation is invalid.");
+    }
+
+    public static class Category
+    {
+        public static Error InvalidPerPeriod
+            => Error.BadRequest(nameof(InvalidPerPeriod), "Category per period is invalid.");
     }
 }

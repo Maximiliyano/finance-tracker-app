@@ -11,7 +11,8 @@ internal static class CapitalExtensions
             capital.Id,
             capital.Name,
             capital.Balance,
-            capital.Currency,
+            capital.Currency.ToString(),
+            capital.IncludeInTotal,
             capital.TotalIncome,
             capital.TotalExpense,
             capital.TotalTransferIn,
@@ -23,8 +24,8 @@ internal static class CapitalExtensions
     internal static Capital ToEntity(this CreateCapitalCommand command)
         => new()
         {
-            Name = command.Name,
+            Name = command.Name.Trim(),
             Balance = command.Balance,
-            Currency = command.Currency.ToString()
+            Currency = command.Currency
         };
 }

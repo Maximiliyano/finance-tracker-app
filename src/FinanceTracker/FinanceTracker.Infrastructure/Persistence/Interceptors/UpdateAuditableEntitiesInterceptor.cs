@@ -42,7 +42,7 @@ internal sealed class UpdateAuditableEntitiesInterceptor(IDateTimeProvider dateT
             }
         }
     }
-    
+
     private static void SetCurrentPropertyValue(
         EntityEntry entry,
         string propertyName,

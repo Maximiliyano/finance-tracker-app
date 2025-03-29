@@ -1,23 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { authGuard } from './core/guards/auth.guard';
 
 const routes: Routes = [
   {
     path: '',
     loadChildren: () =>
       import('./modules/home/home.module').then((x) => x.HomeModule)
-  },
-  {
-    path: 'menu',
-    loadChildren: () =>
-      import('./modules/menu/menu.module').then((x) => x.MenuModule)
-  },
-  {
-    path: 'profile',
-    canActivate: [authGuard],
-    loadChildren: () =>
-      import('./modules/profile/profile.module').then((x) => x.ProfileModule)
   },
   {
     path: 'capitals',
@@ -35,15 +23,20 @@ const routes: Routes = [
       import('./modules/expense/expense.module').then((x) => x.ExpenseModule)
   },
   {
-    path: '**',
-    redirectTo: '404'
+    path: 'categories',
+    loadChildren: () =>
+      import('./modules/category/category.module').then((x) => x.CategoryModule)
   },
   {
     path: '404',
     pathMatch: 'full',
     loadComponent: () =>
       import('./core/layout/not-found/not-found.component').then((x) => x.NotFoundComponent)
-  }
+  },
+  {
+    path: '**',
+    redirectTo: '404'
+  },
 ];
 
 @NgModule({

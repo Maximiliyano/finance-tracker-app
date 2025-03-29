@@ -1,4 +1,4 @@
-using FinanceTracker.Application.Abstractions;
+using FinanceTracker.Application.Abstractions.Messaging;
 using FinanceTracker.Application.Incomes.Specifications;
 using FinanceTracker.Domain.Errors;
 using FinanceTracker.Domain.Repositories;
@@ -6,32 +6,44 @@ using FinanceTracker.Domain.Results;
 
 namespace FinanceTracker.Application.Incomes.Commands.Update;
 
-public sealed class UpdateIncomeCommandHandler(
+internal sealed class UpdateIncomeCommandHandler(
     IIncomeRepository incomeRepository,
     ICapitalRepository capitalRepository,
+    ICategoryRepository categoryRepository,
     IUnitOfWork unitOfWork)
     : ICommandHandler<UpdateIncomeCommand>
 {
-    public async Task<Result> Handle(UpdateIncomeCommand request, CancellationToken cancellationToken)
+    public async Task<Result> Handle(UpdateIncomeCommand command, CancellationToken cancellationToken)
     {
-        var income = await incomeRepository.GetAsync(new IncomeByIdSpecification(request.Id));
+        var income = await incomeRepository.GetAsync(new IncomeByIdSpecification(command.Id));
 
         if (income is null)
         {
-            return Result.Failure(DomainErrors.General.NotFound);
+            return Result.Failure(DomainErrors.General.NotFound(nameof(income)));
         }
 
-        var difference = request.Amount - income.Amount;
-        
-        income.Capital!.Balance += difference;
+        if (command.Amount.HasValue)
+        {
+            var difference = (float)(command.Amount - income.Amount);
 
-        income.Amount = request.Amount;
-        income.Purpose = request.Purpose;
-        income.Type = request.Type;
+            income.Capital!.Balance += difference;
+
+            income.Amount = command.Amount.Value;
+
+            capitalRepository.Update(income.Capital!);
+        }
+
+        income.Purpose = command.Purpose ?? income.Purpose;
+        income.PaymentDate = command.PaymentDate ?? income.PaymentDate;
+
+        if (command.CategoryId.HasValue)
+        {
+            income.CategoryId = command.CategoryId.Value;
+
+            categoryRepository.Update(income.Category!); // TODO !
+        }
 
         incomeRepository.Update(income);
-        
-        capitalRepository.Update(income.Capital);
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
 

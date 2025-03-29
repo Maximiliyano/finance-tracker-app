@@ -1,12 +1,17 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Capital } from '../../../menu/models/capital-model';
-import { CapitalService } from '../../../menu/services/capital.service';
+import { Component, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { Capital } from '../../models/capital-model';
+import { CapitalService } from '../../services/capital.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { PopupMessageService } from '../../../../shared/services/popup-message.service';
 import { UpdateCapitalRequest } from '../../models/update-capital-request';
 import { ConfirmDialogService } from '../../../../shared/services/confirm-dialog.service';
-import { CurrencyType } from '../../../../core/models/currency-type';
+import { CurrencyType } from '../../../../core/types/currency-type';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Currency } from '../../../../shared/components/currency/models/currency';
+import { getCurrencies } from '../../../../shared/components/currency/functions/get-currencies.component';
+import { ExchangeService } from '../../../../shared/services/exchange.service';
+import { Exchange } from '../../../../core/models/exchange-model';
 
 @Component({
   selector: 'app-capital-details',
@@ -14,15 +19,20 @@ import { CurrencyType } from '../../../../core/models/currency-type';
   styleUrl: './capital-details.component.scss'
 })
 export class CapitalDetailsComponent implements OnInit, OnDestroy {
-  isModified: boolean;
+  capitalForm: FormGroup;
+  formModified: boolean = false;
   capital: Capital | null;
-  backupCapital: any;
+  currencies: Currency[];
+  exchanges: Exchange[];
+
   unsubscribe = new Subject<void>;
   currencyType = CurrencyType;
 
   constructor(
     private readonly route: ActivatedRoute,
     private readonly router: Router,
+    private readonly formBuilder: FormBuilder,
+    private readonly exchangeService: ExchangeService,
     private readonly capitalService: CapitalService,
     private readonly popupMessageService: PopupMessageService,
     private readonly confirmDialogService: ConfirmDialogService) {}
@@ -30,71 +40,120 @@ export class CapitalDetailsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.capital = this.route.snapshot.data['capital'];
 
-    this.backupOriginalCapital();
+    this.capitalForm = this.formBuilder.group({
+      name: [this.capital?.name, [Validators.required, Validators.maxLength(32)]],
+      balance: [this.capital?.balance, [Validators.required]],
+      currency: [this.capital?.currency, Validators.required]
+    });
+
+    this.currencies = getCurrencies(this.capital?.currency);
+
+    this.exchangeService.getAll().subscribe({
+      next: (response) => this.exchanges = response
+    });
+
+    this.capitalForm.valueChanges.subscribe(() => {
+      this.formModified = !this.isFormEqualToModel();
+    });
+
+    this.capitalForm.get("currency")?.valueChanges.subscribe((value) => {
+      const exchange = this.exchanges.find(x => x.targetCurrency === this.capital?.currency); // TODO && nationcurrency == value.currency
+
+      if (value !== this.capital?.currency &&
+          exchange
+      ) {
+        // TODO get exchanges and perform calculation, the best approach to separate logic of calc into separate service
+        const saleAmount = (this.capital?.balance ?? 0) * exchange.sale;
+
+        this.capitalForm.patchValue({ balance: saleAmount });
+      }
+      else if (this.capital?.currency !== this.capitalForm.get("balance")?.value){
+        this.capitalForm.patchValue({ balance: this.capital?.balance });
+      }
+    })
   }
 
   ngOnDestroy(): void {
+    this.unsubscribe.next();
     this.unsubscribe.complete();
   }
 
-  onInputChange(): void {
-    this.isModified = JSON.stringify(this.capital) !== JSON.stringify(this.backupCapital);
+  redirectToExpensePage(capitalId: number): void {
+    this.router.navigate(['/expenses'], { queryParams: { capitalId: capitalId }});
+    // TODO complete
   }
 
-  saveChanges(): void { // TODO add confirm dialog
-    if (!this.capital) {
+  saveChanges(): void {
+    if (this.capitalForm.invalid || !this.capital) {
       this.popupMessageService.error('The capital was empty.');
       return;
     }
 
+    const capitalId = this.capital.id;
+    const updatedCapital = this.capitalForm.value;
+
     const request: UpdateCapitalRequest = {
-      name: this.capital.name,
-      balance: this.capital.balance,
-      currency: this.capital.currency
+      name: this.capital.name == updatedCapital.name ? null : updatedCapital.name,
+      balance: this.capital.balance == updatedCapital.name ? null : updatedCapital.balance,
+      currency: this.capital.currency == updatedCapital.currency ? null : updatedCapital.currency
     };
 
-    this.capitalService
-      .update(this.capital.id, request)
-      .pipe(takeUntil(this.unsubscribe))
-      .subscribe(() => {
-        this.popupMessageService.success('The capital was successfull updated.');
-        this.backupOriginalCapital();
-        this.isModified = false;
-      }, (error) => this.popupMessageService.error(error));
+    this.confirmDialogService.toggle('update capital', 'update')
+      .then((confirmed) => {
+        if (confirmed) {
+          this.capitalService
+            .update(capitalId, request)
+            .pipe(takeUntil(this.unsubscribe))
+            .subscribe(() => {
+              this.popupMessageService.success('The capital was successfully updated.');
+              this.formModified = false;
+            });
+        } else {
+          this.cancelChanges();
+        }
+      });
   }
 
   cancelChanges(): void {
-    this.revertOriginalCapital();
-    this.isModified = false;
+    this.capitalForm.reset(this.capital);
+    this.formModified = false;
     this.popupMessageService.warning('The changes was reverted.')
   }
 
-  delete(id: number): void { // TODO add confirm dialog
-    this.confirmDialogService.toggle('Delete', 'delete').then((value) => {
-      if (value) {
-        this.capitalService
-          .remove(id)
-          .pipe(takeUntil(this.unsubscribe))
-          .subscribe(() => {
-            this.popupMessageService.success('The capital was successfull deleted.');
-            this.router.navigate(['/capitals']);
-          }, (error) => this.popupMessageService.error(error));
-      } else {
-        this.popupMessageService.warning('The deletetion of capital was canceled.');
-      }
-    });
+  remove(id: number): void {
+    this.confirmDialogService.toggle('delete capital', 'delete')
+      .then((confirmed) => {
+        if (confirmed) {
+          this.capitalService
+            .delete(id)
+            .pipe(takeUntil(this.unsubscribe))
+            .subscribe(() => {
+              this.popupMessageService.success('The capital was successfully deleted.');
+              this.router.navigate(['/capitals']);
+            });
+        } else {
+          this.popupMessageService.warning('The deletion of capital was canceled.');
+        }
+      });
   }
 
-  backupOriginalCapital(): void {
-    this.backupCapital = {... this.capital };
+  isFormEqualToModel(): boolean {
+    const capitalForm = this.capitalForm.value;
+
+    return (
+      capitalForm.name == this.capital?.name &&
+      capitalForm.balance == this.capital?.balance &&
+      capitalForm.currency == this.capital?.currency
+    );
   }
 
-  revertOriginalCapital(): void {
-    this.capital = {... this.backupCapital };
+  modelInvalidAndTouched(controlName: string): boolean | undefined {
+    return this.capitalForm.get(controlName)?.invalid &&
+          (this.capitalForm.get(controlName)?.dirty ||
+          this.capitalForm.get(controlName)?.touched);
   }
 
-  getCurrencyValues(): string[] {
-    return Object.keys(this.currencyType)
-      .filter((key) => isNaN(Number(key)) && key !== "None" && key !== this.capital?.currency);
+  modelError(controlName: string, error: string): boolean {
+    return (this.capitalForm.get(controlName)?.hasError(error) && this.capitalForm.get(controlName)?.touched)!;
   }
 }

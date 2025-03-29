@@ -1,4 +1,4 @@
-using FinanceTracker.Application.Abstractions;
+using FinanceTracker.Application.Abstractions.Settings;
 using Microsoft.Extensions.Options;
 
 namespace FinanceTracker.Api.Extensions;

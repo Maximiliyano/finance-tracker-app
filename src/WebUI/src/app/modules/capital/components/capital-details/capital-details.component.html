@@ -1,5 +1,4 @@
-<div class="cp-details" *ngIf="capital">
-
+<form [formGroup]="capitalForm" class="cp-details" *ngIf="capital" (ngSubmit)="saveChanges()">
   <div class="cp-header">
     <button class="cp-return" routerLink="../">
       <mat-icon>exit_to_app</mat-icon>
@@ -7,41 +6,68 @@
   </div>
 
   <div class="cp-details-col">
-    <span class="cp-text">Balance</span>
-    <div class="balance-input">
-      <input
-        type="number"
-        [(ngModel)]="capital.balance"
-        (ngModelChange)="onInputChange()"
-        placeholder="Balance"
-      /> <!-- TODO validation -->
+    <label class="cp-text">Name</label>
+    <input
+      id="name"
+      type="text"
+      formControlName="name"
+      placeholder="Name"
+    />
 
-      <select class="currency" [(ngModel)]="capital.currency" (change)="onInputChange()">
-        <option [value]="capital.currency">
-          {{ capital.currency }}
-        </option>
-        <option *ngFor="let currency of getCurrencyValues()" [value]="currency">{{ currency }}</option>
-      </select>
-
+    <div *ngIf="modelInvalidAndTouched('name')" class="error-message">
+      <span *ngIf="modelError('name', 'required')">Name is required.</span>
+      <span *ngIf="modelError('name', 'maxlength')">Name must be less than 32.</span>
+      <!-- <span *ngIf="modelError('name', 'exists')">Name already exists.</span> TODO -->
     </div>
   </div>
 
   <div class="cp-details-col">
-    <span class="cp-text">Name</span>
-    <input
-      type="text"
-      [(ngModel)]="capital.name"
-      (ngModelChange)="onInputChange()"
-      placeholder="Name"
-    />
-  </div> <!-- TODO validation -->
+    <label class="cp-text" for="balance">Balance</label>
+    <div class="balance-input">
+      <input
+        id="balance"
+        type="number"
+        formControlName="balance"
+        placeholder="Balance"
+      />
 
-  <div class="cp-actions" *ngIf="isModified">
-    <button class="cp-act-item save" (click)="saveChanges()">Save</button>
-    <button class="cp-act-item cancel" (click)="cancelChanges()">Cancel</button>
+      <select class="currency" formControlName="currency">
+        <option [value]="capital.currency">
+          {{ capital.currency }}
+        </option>
+        <option *ngFor="let currency of currencies" [value]="currency.value">{{ currency.value }}</option>
+      </select>
+    </div>
+
+    <div *ngIf="modelInvalidAndTouched('balance')" class="error-message">
+      <span *ngIf="modelError('balance', 'required')">Balance is required.</span>
+    </div>
   </div>
 
-  <div class="cp-actions" *ngIf="!isModified">
-    <button class="cp-act-item delete" (click)="delete(capital.id)">Delete</button>
+  <div class="cp-details-col">
+    <button
+      class="btn"
+      type="button"
+      (click)="redirectToExpensePage(capital.id)"
+    >
+      <span>Redirect to expense page</span>
+      <mat-icon>arrow_forward</mat-icon>
+    </button>
   </div>
-</div>
+
+  <div class="cp-actions">
+    <ng-container *ngIf="formModified; else nonModifiedActions">
+      <button
+        class="cp-act-item save"
+        type="submit"
+        [disabled]="capitalForm.invalid">
+          Save
+        </button>
+      <button type="button" class="cp-act-item cancel" (click)="cancelChanges()">Cancel</button>
+    </ng-container>
+
+    <ng-template #nonModifiedActions>
+      <button type="button" class="cp-act-item delete" (click)="remove(capital.id)">Delete</button>
+    </ng-template>
+  </div>
+</form>

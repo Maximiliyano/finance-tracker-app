@@ -6,7 +6,8 @@ using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Serilog;
 using AssemblyReference = FinanceTracker.Api.AssemblyReference;
-
+// TODO https://next.privat24.ua/api/p24/pub/exchangerates/all?xref=bbb96a1785c0641b3684b9fe26a59a7a
+// TODO change it on localhost when deploy
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Host.UseSerilogDependencies();
@@ -20,13 +21,11 @@ builder.Services.AddEndpoints(AssemblyReference.Assembly);
 
 var app = builder.Build();
 
-/*if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment())
 {
-}*/
-
-app.UseSwaggerDependencies();
-
-app.ApplyMigrations();
+    app.UseSwaggerDependencies();
+    app.ApplyMigrations();
+}
 
 app.MapHealthChecks("health", new HealthCheckOptions
 {

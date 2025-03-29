@@ -1,9 +1,8 @@
-using FinanceTracker.Domain.Enums;
-
 namespace FinanceTracker.Application.Incomes.Requests;
 
 public sealed record CreateIncomeRequest(
     int CapitalId,
+    int CategoryId,
     float Amount,
-    string Purpose,
-    IncomeType Type);
+    DateTimeOffset PaymentDate,
+    string? Purpose);

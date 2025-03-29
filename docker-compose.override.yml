@@ -1,5 +1,3 @@
-version: '3.4'
-
 services:
   financetracker.api:
     environment:
@@ -7,7 +5,7 @@ services:
       - ASPNETCORE_HTTP_PORTS=8000
       - ASPNETCORE_HTTPS_PORTS=8001
     ports:
-      - "8000"
-      - "8001"
+      - "8000:8000"
+      - "8001:8001"
     volumes:
       - /var/https:/root/.aspnet/https:ro

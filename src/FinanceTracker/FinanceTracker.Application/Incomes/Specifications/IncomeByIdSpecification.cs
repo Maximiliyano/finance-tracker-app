@@ -9,6 +9,5 @@ internal sealed class IncomeByIdSpecification
     public IncomeByIdSpecification(int id)
         : base(i => i.Id == id)
     {
-        AddInclude(i => i.Capital);
     }
 }

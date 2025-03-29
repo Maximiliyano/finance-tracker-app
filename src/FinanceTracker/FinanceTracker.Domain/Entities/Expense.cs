@@ -1,14 +1,30 @@
-using FinanceTracker.Domain.Enums;
-
 namespace FinanceTracker.Domain.Entities;
 
-public sealed class Expense : Entity, IAuditableEntity, ISoftDeletableEntity
+public sealed class Expense
+    : Entity, IAuditableEntity, ISoftDeletableEntity
 {
+    public Expense(int id)
+        : base(id)
+    {
+    }
+
+    public Expense()
+    {
+    }
+
     public required float Amount { get; set; }
 
-    public string? Purpose { get; set; }
+    public required DateTimeOffset PaymentDate { get; set; }
 
-    public ExpenseType Type { get; init; }
+    public Category Category { get; init; }
+
+    public required int CategoryId { get; set; }
+
+    public Capital? Capital { get; init; }
+
+    public required int CapitalId { get; init; }
+
+    public string? Purpose { get; set; }
 
     public DateTimeOffset CreatedAt { get; init; }
 
@@ -21,8 +37,4 @@ public sealed class Expense : Entity, IAuditableEntity, ISoftDeletableEntity
     public DateTimeOffset? DeletedAt { get; init; }
 
     public bool? IsDeleted { get; init; }
-
-    public int CapitalId { get; init; }
-
-    public Capital? Capital { get; init; }
 }

@@ -1,22 +1,73 @@
 <div class="cp-lh">
-    <span>Total:</span>
-    <span class="total-amount">{{ totalCapitalAmount() | currency: mainCurrency }}</span>
-</div>
+  <div class="ta">
+    <span class="ta-text">Total:</span>
+    <span class="ta-sum">{{ totalCapitalAmount() | currency: symbol(mainCurrency) }}</span>
+  </div>
 
-<div class="cp-list" *ngIf="capitals?.length">
-    <div *ngFor="let capital of capitals">
-        <a [routerLink]="[capital.id]" class="cp">
-          <span class="cp-name">{{ capital.name }}</span>
-          <span class="cp-balance">{{ capital.balance | currency: capital.currency }}</span>
-          <button class="cp-menu" (click)="removeCapital(capital.id, $event)">
-              <mat-icon>delete_outline</mat-icon>
-          </button>
-        </a>
+  <div class="cp-bar">
+    <div class="cp-search">
+      <mat-icon>search</mat-icon>
+      <input placeholder="Search for..." maxlength="24" />
     </div>
+
+    <div class="cp-sort">
+      <label>Sort by:</label>
+      <select>
+        <option *ngFor="let option of sortOptions" [value]="option">{{ option }}</option>
+      </select>
+    </div>
+
+    <div class="cp-currency">
+      <span>Default currency:</span>
+      <app-currency [currency]="mainCurrency" (currencyChange)="onCurrencyChange($event)"></app-currency>
+    </div>
+
+    <button (click)="openToCreateCapitalDialog()" title="Create new">
+      <mat-icon class="btn-create-icon">add_circle</mat-icon>
+    </button>
+  </div>
 </div>
 
-<div class="cp-actions">
-    <button class="cp-act-item" (click)="openToCreateCapitalDialog()">
-        <mat-icon>add_circle</mat-icon>
-    </button>
+<div class="cp-list" *ngIf="capitals?.length; else noCapitals">
+  <div class="cp-contain" *ngFor="let capital of capitals">
+    <a class="cp" [routerLink]="[capital.id]">
+      <div class="cp-name">{{ capital.name }}</div>
+      <div class="cp-balance" title="Balance">
+        {{ capital.balance | currency: symbol(capital.currency) }}
+      </div>
+
+      <div class="cp-props">
+        <div *ngFor="let propsItem of propsItems"
+          class="cp-props-item"
+          [title]="propsItem.title"
+          [ngClass]="propsItem.style"
+        >
+          <mat-icon>{{ propsItem.icon }}</mat-icon>
+          {{ capital[propsItem.key] }}
+        </div>
+      </div>
+    </a>
+
+    <div class="cp-detail-actions">
+      <button
+        title="Remove"
+        class="cp-d-act cp-delete"
+        (click)="removeCapital(capital.id)"
+      >
+        <mat-icon>delete_outline</mat-icon>
+      </button>
+
+      <button
+        title="Toggle Visibility"
+        class="cp-d-act cp-visible"
+        (click)="toggleVisible(capital)"
+      >
+        <mat-icon>{{ capital.includeInTotal ? 'visibility' : 'visibility_off' }}</mat-icon>
+      </button>
+    </div>
+  </div>
 </div>
+
+<ng-template #noCapitals>
+  <p class="no-data">No capitals</p>
+</ng-template>

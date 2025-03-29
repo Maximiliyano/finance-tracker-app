@@ -1,11 +1,10 @@
-﻿using FinanceTracker.Application.Abstractions;
-using FinanceTracker.Domain.Enums;
+﻿using FinanceTracker.Application.Abstractions.Messaging;
 
 namespace FinanceTracker.Application.Capitals.Commands.Update;
 
 public sealed record UpdateCapitalCommand(
     int Id,
-    string? Name,
-    float? Balance,
-    string? Currency)
+    string? Name = null,
+    float? Balance = null,
+    string? Currency = null)
     : ICommand;

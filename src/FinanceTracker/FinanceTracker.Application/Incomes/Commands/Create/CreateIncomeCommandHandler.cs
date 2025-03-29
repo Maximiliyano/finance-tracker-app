@@ -1,4 +1,4 @@
-using FinanceTracker.Application.Abstractions;
+using FinanceTracker.Application.Abstractions.Messaging;
 using FinanceTracker.Application.Capitals.Specifications;
 using FinanceTracker.Domain.Errors;
 using FinanceTracker.Domain.Repositories;
@@ -6,7 +6,7 @@ using FinanceTracker.Domain.Results;
 
 namespace FinanceTracker.Application.Incomes.Commands.Create;
 
-public sealed class CreateIncomeCommandHandler(
+internal sealed class CreateIncomeCommandHandler(
     ICapitalRepository capitalRepository,
     IIncomeRepository incomeRepository,
     IUnitOfWork unitOfWork)
@@ -18,17 +18,17 @@ public sealed class CreateIncomeCommandHandler(
 
         if (capital is null)
         {
-            return Result.Failure<int>(DomainErrors.General.NotFound);
+            return Result.Failure<int>(DomainErrors.General.NotFound(nameof(capital)));
         }
 
         var income = command.ToEntity();
-        
+
         capital.Balance += command.Amount;
 
         incomeRepository.Create(income);
-        
+
         capitalRepository.Update(capital);
-        
+
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
         return income.Id;

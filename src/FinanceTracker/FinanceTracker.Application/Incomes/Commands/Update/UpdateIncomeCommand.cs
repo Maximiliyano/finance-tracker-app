@@ -1,11 +1,11 @@
-using FinanceTracker.Application.Abstractions;
-using FinanceTracker.Domain.Enums;
+using FinanceTracker.Application.Abstractions.Messaging;
 
 namespace FinanceTracker.Application.Incomes.Commands.Update;
 
 public sealed record UpdateIncomeCommand(
     int Id,
-    float Amount,
-    string Purpose,
-    IncomeType Type)
+    int? CategoryId = null,
+    float? Amount = null,
+    string? Purpose = null,
+    DateTimeOffset? PaymentDate = null)
     : ICommand;

@@ -1,9 +1,11 @@
-using FinanceTracker.Domain.Enums;
+using FinanceTracker.Application.Categories.Response;
 
 namespace FinanceTracker.Application.Expenses.Responses;
 
 public sealed record ExpenseResponse(
+    int Id,
     int CapitalId,
+    CategoryResponse Category,
     float Amount,
-    string? Purpose,
-    ExpenseType Type);
+    DateTimeOffset PaymentDate,
+    string? Purpose);

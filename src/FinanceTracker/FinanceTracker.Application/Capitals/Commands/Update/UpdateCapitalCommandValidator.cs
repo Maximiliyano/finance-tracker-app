@@ -1,6 +1,7 @@
 using FinanceTracker.Application.Abstractions;
 using FinanceTracker.Application.Capitals.Specifications;
 using FinanceTracker.Domain.Constants;
+using FinanceTracker.Domain.Enums;
 using FinanceTracker.Domain.Errors;
 using FinanceTracker.Domain.Repositories;
 using FluentValidation;
@@ -15,9 +16,15 @@ internal sealed class UpdateCapitalCommandValidator : AbstractValidator<UpdateCa
             .GreaterThanOrEqualTo(ValidationConstants.ZeroValue);
 
         RuleFor(c => c.Name)
-            .NotEmpty()
-            .MaximumLength(ValidationConstants.MaxLenghtName)
-            .MustAsync(async (name, _) => !await repository.AnyAsync(new CapitalByNameSpecification(name)))
-            .WithError(ValidationErrors.Capital.NameAlreadyExists);
+            .MustAsync(async (name, _) => !await repository
+                .AnyAsync(new CapitalByNameSpecification(name!)))
+            .When(c => !string.IsNullOrEmpty(c.Name))
+            .WithError(ValidationErrors.General.NameAlreadyExists)
+            .MaximumLength(ValidationConstants.MaxLenghtName);
+
+        RuleFor(c => c.Currency)
+            .Must(currency => !int.TryParse(currency, out _) && Enum.TryParse<CurrencyType>(currency, out _))
+            .When(c => !string.IsNullOrEmpty(c.Currency))
+            .WithError(ValidationErrors.Capital.InvalidCurrencyType);
     }
 }

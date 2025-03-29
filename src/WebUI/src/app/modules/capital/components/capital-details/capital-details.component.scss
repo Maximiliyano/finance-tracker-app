@@ -49,14 +49,23 @@
       justify-content: space-between;
       gap: 10px;
       width: 100%;
+    }
 
-      .currency {
-        font-size: 16px;
+    .btn {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+
+      &:hover {
         font-weight: 500;
-        white-space: nowrap;
-        align-self: center;
       }
     }
+  }
+
+  .error-message {
+    color: #e53935;
+    font-size: 12px;
+    font-weight: bold;
   }
 
   .cp-actions {
@@ -80,7 +89,6 @@
       font-size: 15px;
       margin: 0 5px;
 
-
       &:hover {
         background-color: #d3d3d3;
       }
@@ -89,10 +97,15 @@
     .save {
       color: #ffffff;
       background-color: #377e21;
-      border-color: #377e21;
 
       &:hover {
         background-color: #47a42b;
+      }
+
+      &:disabled {
+        background-color: #ccc;
+        border: #ccc;
+        cursor:no-drop;
       }
     }
 
@@ -126,11 +139,16 @@ select, input {
 
   &:focus {
     outline: none;
-    border-color: #111812;
-    box-shadow: 0 0 5px #111812;
+    border-color: #6896e5;
+    box-shadow: 0 0 2px #111812;
   }
 }
 
 input {
   width: 100%;
+}
+
+input.ng-invalid.ng-touched {
+  border-color: #e53935;
+  box-shadow: 0 0 5px #e53935;
 }

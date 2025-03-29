@@ -11,7 +11,12 @@ internal sealed class Create : IEndpoint
     {
         app.MapPost("api/incomes", async (CreateIncomeRequest request, ISender sender) =>
             (await sender
-                .Send(new CreateIncomeCommand(request.CapitalId, request.Amount, request.Purpose, request.Type)))
+                .Send(new CreateIncomeCommand(
+                    request.CapitalId,
+                    request.CategoryId,
+                    request.Amount,
+                    request.PaymentDate,
+                    request.Purpose)))
                 .Process())
             .WithTags(nameof(Incomes));
     }

@@ -13,7 +13,7 @@
       justify-content: space-between;
 
       @include respond-to('xs') {
-        padding: 15px 0;
+        padding: 10px 0;
       }
 
       .head {
@@ -24,6 +24,7 @@
 
         .logo {
           display: none;
+          align-items: center;
           font-size: 15px;
           font-weight: 500;
           color: $text-color;
@@ -58,15 +59,14 @@
         }
       }
 
-
       .exchanges {
         display: flex;
         justify-content: center;
-        gap: 5px;
+        gap: 10px;
 
         .exchange {
           display: none;
-          gap: 5px;
+          gap: 3px;
           border: 1px solid $exchange-border-color;
           border-radius: 5px;
           padding: 5px;
@@ -101,8 +101,8 @@
             align-items: center;
             color: rgb(34, 34, 34);
             font-weight: 500;
-            font-size: 15px;
-            padding: 10px;
+            font-size: 13px;
+            padding: 3px;
             gap: 5px;
             border-radius: 5px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -114,7 +114,7 @@
             }
 
             @include respond-to('md') {
-              padding: 12px;
+              padding: 5px;
             }
           }
         }
@@ -126,7 +126,7 @@
         gap: 5px;
         color: black;
         font-weight: 500;
-        font-size: 15px;
+        font-size: 13px;
 
         .balance {
           display: flex;
@@ -141,7 +141,7 @@
           display: flex;
           align-items: center;
           gap: 5px;
-          padding: 10px;
+          padding: 5px;
           border-radius: 5px;
           box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
           color: rgb(49, 40, 40);
@@ -169,6 +169,7 @@
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
     transition: left 0.3s ease-in-out;
+    z-index: 9999;
 
     &.expanded {
       left: 0;
@@ -180,11 +181,11 @@
       align-items: center;
       background-color: #e7e6e6;
       border-bottom: 1px solid #ccc;
-      padding: 6px;
+      padding: 29px 21px 23px 20px;
 
       span {
         font-weight: 500;
-        font-size: 15px;
+        font-size: 17px;
       }
     }
 

@@ -1,5 +1,6 @@
+using FinanceTracker.Application.Abstractions.Data;
 using FinanceTracker.Domain.Repositories;
-using FinanceTracker.Infrastructure.BackgroundJobs;
+using FinanceTracker.Infrastructure.BackgroundJobs.SaveLatestExchange;
 using FinanceTracker.Infrastructure.Persistence;
 using FinanceTracker.Infrastructure.Persistence.Interceptors;
 using FinanceTracker.Infrastructure.Persistence.Repositories;
@@ -32,7 +33,7 @@ public static class DependencyInjection
             => options.WaitForJobsToComplete = true);
 
         services.ConfigureOptions<SaveLatestExchangeJobSetup>();
-        
+
         return services;
     }
 
@@ -45,6 +46,8 @@ public static class DependencyInjection
         services.AddTransient<IExchangeRepository, ExchangeRepository>();
 
         services.AddTransient<IIncomeRepository, IncomeRepository>();
+
+        services.AddTransient<ICategoryRepository, CategoryRepository>();
 
         return services;
     }
@@ -62,11 +65,12 @@ public static class DependencyInjection
             var databaseSettings = sp.GetRequiredService<IOptions<DatabaseSettings>>().Value;
             var auditableInterceptor = sp.GetRequiredService<UpdateAuditableEntitiesInterceptor>();
 
-            options.UseSqlServer(databaseSettings.Connection)
+            options.UseSqlServer(databaseSettings.Connection) // TODO in dev mode should execute appsetting.Develop...
                 .AddInterceptors(auditableInterceptor);
         });
 
         services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<FinanceTrackerDbContext>());
+        services.AddScoped<IFinanceTrackerDbContext>(sp => sp.GetRequiredService<FinanceTrackerDbContext>());
 
         return services;
     }

@@ -390,3 +390,13 @@ dotnet_diagnostic.S6605.severity = none
 
 # S6781: JWT secret keys should not be disclosed
 dotnet_diagnostic.S6781.severity = none
+
+# Don't use var instead of explicit type
+[*.{cs,vb}]
+dotnet_diagnostic.IDE0005.severity = none
+dotnet_diagnostic.IDE0007.severity = none
+dotnet_diagnostic.IDE0022.severity = none
+dotnet_diagnostic.IDE0058.severity = none
+
+# Allow implicit types (var)
+dotnet_diagnostic.IDE0008.severity = none

@@ -1,4 +1,4 @@
-﻿using FinanceTracker.Application.Abstractions;
+﻿using FinanceTracker.Application.Abstractions.Messaging;
 using FinanceTracker.Application.Capitals.Specifications;
 using FinanceTracker.Domain.Errors;
 using FinanceTracker.Domain.Repositories;
@@ -18,7 +18,7 @@ internal sealed class CreateExpenseCommandHandler(
 
         if (capital is null)
         {
-            return Result.Failure<int>(DomainErrors.General.NotFound);
+            return Result.Failure<int>(DomainErrors.General.NotFound(nameof(capital)));
         }
 
         var expense = command.ToEntity();
@@ -26,7 +26,7 @@ internal sealed class CreateExpenseCommandHandler(
         capital.Balance -= expense.Amount;
 
         capitalRepository.Update(capital);
-        
+
         expenseRepository.Create(expense);
 
         await unitOfWork.SaveChangesAsync(cancellationToken);

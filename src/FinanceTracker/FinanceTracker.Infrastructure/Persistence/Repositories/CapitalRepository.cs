@@ -1,37 +1,18 @@
-using FinanceTracker.Domain.Constants;
+using FinanceTracker.Application.Abstractions.Data;
 using FinanceTracker.Domain.Entities;
 using FinanceTracker.Domain.Repositories;
-using Microsoft.EntityFrameworkCore;
 
 namespace FinanceTracker.Infrastructure.Persistence.Repositories;
 
 internal sealed class CapitalRepository(
-    FinanceTrackerDbContext context)
+    IFinanceTrackerDbContext context)
     : GeneralRepository<Capital>(context), ICapitalRepository
 {
     public new async Task<IEnumerable<Capital>> GetAllAsync()
-    {
-        var capitals = await DbContext.Capitals.AsNoTracking().ToListAsync();
-
-        return capitals;
-    }
+        => await base.GetAllAsync();
 
     public new async Task<Capital?> GetAsync(ISpecification<Capital> specification)
-    {
-        var capital = await base.GetAsync(specification);
-
-        if (capital is null)
-        {
-            return capital;
-        }
-
-        capital.TotalExpense = capital.Expenses?.Sum(e => e.Amount) ?? ValidationConstants.ZeroValue;
-        capital.TotalIncome = capital.Incomes?.Sum(i => i.Amount) ?? ValidationConstants.ZeroValue;
-        capital.TotalTransferIn = capital.TransfersIn?.Sum(t => t.Amount) ?? ValidationConstants.ZeroValue;
-        capital.TotalTransferOut = capital.TransfersOut?.Sum(t => t.Amount) ?? ValidationConstants.ZeroValue;
-
-        return capital;
-    }
+        => await base.GetAsync(specification);
 
     public new void Create(Capital capital)
         => base.Create(capital);

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Income } from '../models/income';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { environment } from '../../../../environments/environment.development';
 
 @Injectable({
@@ -16,7 +16,11 @@ export class IncomeService {
     return this.http.post(this.baseApiUrl, request);
   }
 
-  getAll(id: number): Observable<Income[]> {
+  getAll(): Observable<Income[]> {
     return this.http.get<Income[]>(this.baseApiUrl);
+  }
+
+  getIncomesByPeriod(period: string): Observable<Income[]> {
+    return of([]);
   }
 }

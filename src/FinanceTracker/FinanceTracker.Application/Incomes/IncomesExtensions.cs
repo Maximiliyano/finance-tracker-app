@@ -9,9 +9,9 @@ internal static class IncomesExtensions
     internal static IncomeResponse ToResponse(this Income entity)
         => new(
             entity.Id,
+            entity.CategoryId,
             entity.Amount,
             entity.Purpose,
-            entity.Type.ToString(),
             entity.CreatedAt,
             entity.CapitalId);
 
@@ -23,7 +23,8 @@ internal static class IncomesExtensions
         {
             Amount = command.Amount,
             Purpose = command.Purpose,
-            Type = command.Type,
-            CapitalId = command.CapitalId
+            CategoryId = command.CategoryId,
+            CapitalId = command.CapitalId,
+            PaymentDate = command.PaymentDate
         };
 }
