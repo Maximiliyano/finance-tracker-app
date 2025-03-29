@@ -7,7 +7,6 @@ on:
   workflow_dispatch:
 env:
   FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-  DATABASE_CONNECTION_STRING: ${{ secrets.DB_CONNECTION_STRING }}
 
 jobs:
   deploy:
@@ -16,10 +15,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
-      - name: Update appsettings.json
-        run: |
-          sed -i 's|"Database": ""|"Database": "${{ secrets.DB_CONNECTION_STRING }}"|' src/FinanceTracker/FinanceTracker.Api/appsettings.json
 
       - name: Install CLI
         run: |
