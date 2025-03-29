@@ -9,6 +9,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Quartz;
+using Serilog;
+using Serilog.Core;
 
 namespace FinanceTracker.Infrastructure;
 
@@ -65,6 +67,8 @@ public static class DependencyInjection
             var databaseSettings = sp.GetRequiredService<IConfiguration>().GetConnectionString("Database");
             var auditableInterceptor = sp.GetRequiredService<UpdateAuditableEntitiesInterceptor>();
 
+            Console.WriteLine($"Database connection string: {databaseSettings}");            
+            
             options.UseSqlServer(databaseSettings)
                 .AddInterceptors(auditableInterceptor);
         });
