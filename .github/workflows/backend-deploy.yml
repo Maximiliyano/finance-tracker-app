@@ -15,7 +15,11 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      
+
+      - name: Update appsettings.json
+        run: |
+          sed -i 's|"Database": ""|"Database": "${{ secrets.DB_CONNECTION_STRING }}"|' src/FinanceTracker/FinanceTracker.Api/appsettings.json
+
       - name: Install CLI
         run: |
           curl -L https://fly.io/install.sh | sh
