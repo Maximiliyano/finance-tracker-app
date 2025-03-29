@@ -20,6 +20,11 @@ jobs:
           curl -L https://fly.io/install.sh | sh
           echo "$HOME/.fly/bin" >> $GITHUB_PATH
 
+      - name: Authenticate with Fly.io
+        run: fly tokens create deploy
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+
       - name: Set Database Connection in Fly.io
         run: |
           flyctl secrets set DATABASE_CONNECTION_STRING=${{ secrets.DB_CONNECTION_STRING }} --app financetracker
