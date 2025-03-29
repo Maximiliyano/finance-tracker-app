@@ -29,9 +29,6 @@ jobs:
         run: fly tokens create
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-
-      - name: Verify environment variable
-        run: echo "Database Connection: $DATABASE_CONNECTION_STRING"
           
       - name: Deploy to Fly.io
         run: flyctl deploy --app financetracker
