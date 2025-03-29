@@ -18,6 +18,7 @@ RUN dotnet build "FinanceTracker.Api.csproj" -c $BUILD_CONFIGURATION -o /app/bui
 FROM build AS publish
 RUN dotnet publish "FinanceTracker.Api.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
+ENV DATABASE_CONNECTION_STRING=${DATABASE_CONNECTION_STRING}
 ENV ASPNETCORE_URLS=http://+:8000;https://+:8001
 ENV ASPNETCORE_ENVIRONMENT=Production
 
