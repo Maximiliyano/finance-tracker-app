@@ -6,9 +6,6 @@
 app = 'deed'
 primary_region = 'fra'
 
-[build]
-  dockerfile = 'src/FinanceTracker/FinanceTracker.Api/Dockerfile'
-
 [env]
   ASPNETCORE_ENVIRONMENT = 'Production'
 
