@@ -12,6 +12,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Host.UseSerilogDependencies();
 
+builder.Configuration.AddEnvironmentVariables();
+
 builder.Services
     .AddApplication()
     .AddApi()
