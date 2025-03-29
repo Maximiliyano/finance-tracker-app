@@ -25,6 +25,6 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 
-ENV ASPNETCORE_URLS="http://+:8000;https://+:8001"
+ENV ASPNETCORE_URLS="http://+:8000"
 
 ENTRYPOINT ["dotnet", "FinanceTracker.Api.dll"]

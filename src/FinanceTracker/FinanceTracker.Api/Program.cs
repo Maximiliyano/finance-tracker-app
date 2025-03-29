@@ -12,6 +12,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Host.UseSerilogDependencies();
 
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ListenAnyIP(8000);
+    options.ListenAnyIP(8001, listenOptions =>
+        listenOptions.UseHttps("/app/https.crt", "/app/https.key"));
+});
+
 builder.Services
     .AddApplication()
     .AddApi()
