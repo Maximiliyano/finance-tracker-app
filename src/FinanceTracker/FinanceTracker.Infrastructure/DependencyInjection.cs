@@ -56,18 +56,12 @@ public static class DependencyInjection
 
     private static IServiceCollection AddDbDependencies(this IServiceCollection services)
     {
-        var configuration = services.BuildServiceProvider().GetRequiredService<IConfiguration>();
-
-        services.Configure<DatabaseSettings>(configuration.GetSection(nameof(DatabaseSettings)));
-
         services.AddSingleton<UpdateAuditableEntitiesInterceptor>();
 
         services.AddDbContext<FinanceTrackerDbContext>((sp, options) =>
         {
-            var databaseSettings = sp.GetRequiredService<IConfiguration>().GetConnectionString("Database");
+            var databaseSettings = sp.GetRequiredService<IConfiguration>().GetValue<string>("DATABASE_CONNECTION_STRING");
             var auditableInterceptor = sp.GetRequiredService<UpdateAuditableEntitiesInterceptor>();
-
-            Console.WriteLine($"Database connection string: {databaseSettings}");            
             
             options.UseSqlServer(databaseSettings)
                 .AddInterceptors(auditableInterceptor);
