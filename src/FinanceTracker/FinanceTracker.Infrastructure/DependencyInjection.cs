@@ -62,10 +62,10 @@ public static class DependencyInjection
 
         services.AddDbContext<FinanceTrackerDbContext>((sp, options) =>
         {
-            var databaseSettings = sp.GetRequiredService<IOptions<DatabaseSettings>>().Value;
+            var databaseSettings = sp.GetRequiredService<IConfiguration>().GetConnectionString("Database");
             var auditableInterceptor = sp.GetRequiredService<UpdateAuditableEntitiesInterceptor>();
 
-            options.UseSqlServer(databaseSettings.Connection)
+            options.UseSqlServer(databaseSettings)
                 .AddInterceptors(auditableInterceptor);
         });
 

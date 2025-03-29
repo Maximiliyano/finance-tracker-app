@@ -4,7 +4,7 @@ services:
   financetracker.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=http://+:8000;https://+:8001
+      - ASPNETCORE_URLS=http://+:8000;https://+:8001;http://0.0.0.0:8080
     ports:
       - "8000:8000"
       - "8001:8001"

@@ -10,6 +10,9 @@ using AssemblyReference = FinanceTracker.Api.AssemblyReference;
 // TODO change it on localhost when deploy
 var builder = WebApplication.CreateBuilder(args);
 
+builder.WebHost.ConfigureKestrel(options => options
+    .ListenAnyIP(8080));
+
 builder.Host.UseSerilogDependencies();
 
 builder.Configuration.AddEnvironmentVariables();
