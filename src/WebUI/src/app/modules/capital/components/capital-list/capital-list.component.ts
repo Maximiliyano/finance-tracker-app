@@ -18,13 +18,18 @@ export class CapitalListComponent implements OnInit, OnDestroy {
   capitals: CapitalResponse[];
   exchanges: Exchange[];
   mainCurrency: string = 'UAH';
-  sortOptions: string[] = ['name', 'balance', 'expenses', 'incomes', 'transfers in', 'transfers out'];
   propsItems: { key: keyof CapitalResponse; title: string; icon: string, style: string }[] = [
     { key: 'totalIncome', title: 'Incomes', icon: 'attach_money', style: 'cp-incomes' },
     { key: 'totalExpense', title: 'Expenses', icon: 'money_off', style: 'cp-expenses' },
     { key: 'totalTransferOut', title: 'Transfer Out', icon: 'arrow_upward', style: '' },
     { key: 'totalTransferIn', title: 'Transfer In', icon: 'arrow_downward', style: '' },
   ];
+
+  searchTerm: string = '';
+
+  selectedSortOption: keyof CapitalResponse = 'name';
+  sortDirection: 'asc' | 'desc' = 'asc';
+  sortOptions: string[] = ['name', 'balance', 'expenses', 'incomes', 'transfers in', 'transfers out'];
 
   private unsubcribe$ = new Subject<void>;
 
@@ -34,18 +39,41 @@ export class CapitalListComponent implements OnInit, OnDestroy {
     private readonly popupMessageService: PopupMessageService,
     private readonly exchangeService: ExchangeService) { }
 
-  ngOnInit(): void {
-    // TODO execute user capitals
-    this.executeCapitals();
+    ngOnInit(): void {
+      // TODO execute user capitals
+      this.executeCapitals();
 
-    this.executeExchanges();
+      this.executeExchanges();
 
-    // TODO execute currency by default from user settings for 'mainCurrency'
-  }
+      // TODO execute currency by default from user settings for 'mainCurrency'
+    }
 
-  ngOnDestroy(): void {
-    this.unsubcribe$.next();
-    this.unsubcribe$.complete();
+    ngOnDestroy(): void {
+      this.unsubcribe$.next();
+      this.unsubcribe$.complete();
+    }
+
+    onSearchChange() {
+      const term = this.searchTerm.trim().toLowerCase();
+
+      this.capitals = this.capitals.filter(capital =>
+        capital.name.toLowerCase().includes(term)
+      );
+
+      this.sortCapitals(this.selectedSortOption);
+    }
+
+    onSortChange(event: Event): void {
+      const selectElement = event.target as HTMLSelectElement;
+      const key = selectElement.value as keyof CapitalResponse;
+
+      this.sortCapitals(key);
+    }
+
+  toggleSortDirection(): void {
+    this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+
+    this.sortCapitals(this.selectedSortOption);
   }
 
   executeExchanges(): void {
@@ -61,7 +89,9 @@ export class CapitalListComponent implements OnInit, OnDestroy {
     this.capitalService.getAll()
       .pipe(takeUntil(this.unsubcribe$))
       .subscribe({
-        next: (response) => this.capitals = response
+        next: (response) => {
+          this.capitals = response;
+        }
       });
   }
 
@@ -118,4 +148,21 @@ export class CapitalListComponent implements OnInit, OnDestroy {
           this.popupMessageService.success("The capital was successful removed.");
         }});
   }
+
+  sortCapitals(key: keyof CapitalResponse) {
+    if (!this.capitals) return;
+
+    const dir = this.sortDirection === 'asc' ? 1 : -1;
+    this.capitals = [...this.capitals].sort((a, b) => {
+      const aVal = a[key];
+      const bVal = b[key];
+
+      if (typeof aVal === 'string') {
+        return (aVal as string).localeCompare(bVal as string) * dir;
+      }
+
+      return ((aVal as number) - (bVal as number)) * dir;
+    });
+  }
+
 }

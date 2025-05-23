@@ -7,14 +7,20 @@
   <div class="cp-bar">
     <div class="cp-search">
       <mat-icon>search</mat-icon>
-      <input placeholder="Search for..." maxlength="24" />
+      <input placeholder="Search for..." maxlength="24" [(ngModel)]="searchTerm" (ngModelChange)="onSearchChange()" />
     </div>
 
     <div class="cp-sort">
       <label>Sort by:</label>
-      <select>
+      <select [(ngModel)]="selectedSortOption" (change)="onSortChange($event)">
         <option *ngFor="let option of sortOptions" [value]="option">{{ option }}</option>
       </select>
+
+      <button class="sort-direction" (click)="toggleSortDirection()" [title]="sortDirection === 'asc' ? 'Ascending' : 'Descending'">
+        <mat-icon>
+          {{ sortDirection === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
+        </mat-icon>
+      </button>
     </div>
 
     <div class="cp-currency">

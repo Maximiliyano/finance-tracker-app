@@ -60,7 +60,7 @@ public static class DependencyInjection
 
         services.AddDbContext<FinanceTrackerDbContext>((sp, options) =>
         {
-            var databaseSettings = sp.GetRequiredService<IConfiguration>().GetValue<string>("DATABASE_CONNECTION_STRING");
+            var databaseSettings = sp.GetRequiredService<IConfiguration>().GetValue<string>("DATABASE_CONNECTION_STRING"); // TODO execute different connection string if not using docker
             var auditableInterceptor = sp.GetRequiredService<UpdateAuditableEntitiesInterceptor>();
             
             options.UseSqlServer(databaseSettings)
