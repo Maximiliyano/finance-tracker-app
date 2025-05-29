@@ -23,7 +23,7 @@ public sealed class ExchangeHttpService(
     };
 
     private readonly PBApiSettings _settings = options.Value;
-    
+
     private const string LogMessage = "Error getting currencies with reason: {Message}";
 
     public async Task<Result<IEnumerable<Exchange>>> GetCurrencyAsync()
@@ -62,7 +62,7 @@ public sealed class ExchangeHttpService(
                     Sale = x.SaleRate.HasValue ? (float)x.SaleRate : (float)x.SaleRateNB,
                     CreatedAt = dateTimeProvider.UtcNow
                 });
-            
+
             logger.LogInformation("Currencies successfully retrieved.");
             return Result.Success(newExchanges);
         }

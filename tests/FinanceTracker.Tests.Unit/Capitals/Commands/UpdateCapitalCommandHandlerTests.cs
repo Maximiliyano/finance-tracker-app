@@ -22,7 +22,7 @@ public sealed class UpdateCapitalCommandHandlerTests
     }
 
     [Fact]
-    public async Task Handle_ShouldReturnFailure_WhenCapitalNotFound()
+    public async Task Handle_GivenNonExistentCapital_ShouldReturnFailure()
     {
         // Arrange
         var command = new UpdateCapitalCommand(1);
@@ -102,5 +102,21 @@ public sealed class UpdateCapitalCommandHandlerTests
         _repositoryMock.Received(1).Update(capital);
 
         await _unitOfWorkMock.Received(1).SaveChangesAsync(Arg.Any<CancellationToken>());
+    }
+
+    [Fact]
+    public async Task Handle_ShouldReturnFailure_WhenCurrencyIsInvalid()
+    {
+        // Arrange
+        var capital = new Capital(1) { Name = "Test", Balance = 100, Currency = CurrencyType.USD };
+        var command = new UpdateCapitalCommand(1, "Test", 100, "INVALID");
+        _repositoryMock.GetAsync(Arg.Any<CapitalByIdSpecification>()).Returns(capital);
+
+        // Act
+        var result = await _handler.Handle(command, default);
+
+        // Assert
+        result.IsSuccess.Should().BeFalse();
+        result.Errors.Should().Contain(e => e == DomainErrors.Capital.InvalidCurrency);
     }
 }

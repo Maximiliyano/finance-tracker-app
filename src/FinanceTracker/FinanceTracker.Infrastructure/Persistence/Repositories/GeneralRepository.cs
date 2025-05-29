@@ -26,10 +26,10 @@ internal abstract class GeneralRepository<TEntity>(IFinanceTrackerDbContext cont
     protected void CreateRange(IEnumerable<TEntity> entities) =>
         DbContext.Set<TEntity>().AddRange(entities);
 
-    
+
     protected void Update(TEntity entity) =>
         DbContext.Set<TEntity>().Update(entity);
-    
+
     protected void UpdateRange(IEnumerable<TEntity> entities) =>
         DbContext.Set<TEntity>().UpdateRange(entities);
 

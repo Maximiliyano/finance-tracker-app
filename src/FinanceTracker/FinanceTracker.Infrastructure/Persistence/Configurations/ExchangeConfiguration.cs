@@ -19,7 +19,7 @@ internal sealed class ExchangeConfiguration : IEntityTypeConfiguration<Exchange>
     private static IEnumerable<Exchange> DefaultExchanges()
     {
         var createdAt = new DateTimeOffset(2025, 03, 21, 19, 48, 39, TimeSpan.Zero);
-        
+
         return
         [
             new(1)
@@ -36,7 +36,7 @@ internal sealed class ExchangeConfiguration : IEntityTypeConfiguration<Exchange>
                 TargetCurrencyCode = "USD",
                 Buy = 41.2f,
                 Sale = 34f,
-                CreatedAt = createdAt   
+                CreatedAt = createdAt
             },
             new (3)
             {

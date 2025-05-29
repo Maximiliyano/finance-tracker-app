@@ -13,6 +13,12 @@ public static class DomainErrors
             => Error.NotFound(nameof(NotFound), $"The specific {name} was not found.");
     }
 
+    public static class Capital
+    {
+        public static Error InvalidCurrency
+            => Error.BadRequest(nameof(InvalidCurrency), "The currency is invalid.");
+    }
+
     public static class Exchange
     {
         public static Error HttpExecution

@@ -1,7 +1,5 @@
 using FinanceTracker.Application.Categories.Commands.Create;
 using FinanceTracker.Application.Categories.Response;
-using FinanceTracker.Application.Expenses;
-using FinanceTracker.Application.Incomes;
 using FinanceTracker.Domain.Entities;
 
 namespace FinanceTracker.Application.Categories;

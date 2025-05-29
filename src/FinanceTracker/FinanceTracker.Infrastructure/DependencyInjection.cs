@@ -2,15 +2,13 @@ using FinanceTracker.Application.Abstractions.Data;
 using FinanceTracker.Domain.Repositories;
 using FinanceTracker.Infrastructure.BackgroundJobs.SaveLatestExchange;
 using FinanceTracker.Infrastructure.Persistence;
+using FinanceTracker.Infrastructure.Persistence.Constants;
 using FinanceTracker.Infrastructure.Persistence.Interceptors;
 using FinanceTracker.Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 using Quartz;
-using Serilog;
-using Serilog.Core;
 
 namespace FinanceTracker.Infrastructure;
 
@@ -60,9 +58,9 @@ public static class DependencyInjection
 
         services.AddDbContext<FinanceTrackerDbContext>((sp, options) =>
         {
-            var databaseSettings = sp.GetRequiredService<IConfiguration>().GetValue<string>("DATABASE_CONNECTION_STRING"); // TODO execute different connection string if not using docker
+            var databaseSettings = sp.GetRequiredService<IConfiguration>().GetValue<string>(TableConfigurationConstants.DBConnection);
             var auditableInterceptor = sp.GetRequiredService<UpdateAuditableEntitiesInterceptor>();
-            
+
             options.UseSqlServer(databaseSettings)
                 .AddInterceptors(auditableInterceptor);
         });

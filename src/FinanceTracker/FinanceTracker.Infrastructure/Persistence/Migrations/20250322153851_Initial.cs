@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -198,7 +197,7 @@ public partial class Initial : Migration
 
         migrationBuilder.InsertData(
             table: "Exchanges",
-            columns: [ "Id", "Buy", "CreatedAt", "CreatedBy", "DeletedAt", "IsDeleted", "NationalCurrencyCode", "Sale", "TargetCurrencyCode", "UpdatedAt", "UpdatedBy" ],
+            columns: ["Id", "Buy", "CreatedAt", "CreatedBy", "DeletedAt", "IsDeleted", "NationalCurrencyCode", "Sale", "TargetCurrencyCode", "UpdatedAt", "UpdatedBy"],
             values: new object[,]
             {
                 { 1, 44.63f, new DateTimeOffset(new DateTime(2025, 3, 21, 19, 48, 39, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), 0, null, null, "UAH", 45.45455f, "EUR", null, null },

@@ -38,7 +38,7 @@ public sealed class SaveLatestExchangeJob(
         {
             repository.AddRange(currentExchangesResult.Value);
         }
-        
+
         await unitOfWork.SaveChangesAsync(context.CancellationToken);
 
         logger.LogInformation("Current exchange has added.");

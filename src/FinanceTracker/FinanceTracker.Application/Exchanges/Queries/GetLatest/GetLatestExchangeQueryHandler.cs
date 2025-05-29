@@ -23,18 +23,18 @@ public sealed class GetLatestExchangeQueryHandler(
         {
             return Result.Success(actualExchanges.ToResponses());
         }
-        
+
         // TODO execute different exchanges and concat in oen
-        var newExchangesResult = await service.GetCurrencyAsync(); 
-        
+        var newExchangesResult = await service.GetCurrencyAsync();
+
         if (!newExchangesResult.IsSuccess)
         {
             return Result.Failure<IEnumerable<ExchangeResponse>>(newExchangesResult.Errors);
         }
-        
+
         var newExchanges = newExchangesResult.Value.ToList();
         var entitiesForUpdate = new List<Exchange>();
-        
+
         // TODO assign newExchanges to existing ids
         foreach (var newExchange in newExchanges)
         {
@@ -49,12 +49,12 @@ public sealed class GetLatestExchangeQueryHandler(
 
             actualExchange.Buy = newExchange.Buy; // TODO finish
             actualExchange.Sale = newExchange.Sale;
-            
+
             entitiesForUpdate.Add(actualExchange);
         }
-        
+
         repository.UpdateRange(entitiesForUpdate);
-        
+
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
         return Result.Success(actualExchanges.Where(x => x.NationalCurrencyCode == "UAH").ToResponses());
