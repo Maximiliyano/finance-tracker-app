@@ -1,0 +1,248 @@
+@import '../../../../assets/scss/variables.scss';
+@import '../../../../assets/scss/mixins.scss';
+
+.header {
+  background-color: $header-background;
+  border-bottom: 2px solid $header-border-color;
+  width: 100%;
+
+  .header-container {
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      @include respond-to('xs') {
+        padding: 10px 0;
+      }
+
+      .head {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+
+        .logo {
+          display: none;
+          align-items: center;
+          font-size: 15px;
+          font-weight: 500;
+          color: $text-color;
+          text-shadow: $text-shadow;
+
+          @include respond-to('sm') {
+            display: flex;
+            font-size: 20px;
+          }
+        }
+
+        .home {
+          display: flex;
+
+          @include respond-to('sm') {
+            display: none;
+          }
+        }
+
+        .burger-menu {
+          display: flex;
+
+          @include respond-to('xl') {
+            display: none;
+          }
+        }
+
+        .exchange-button {
+          @include respond-to('sm') {
+            display: none;
+          }
+        }
+      }
+
+      .exchanges {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+
+        .exchange {
+          display: none;
+          gap: 3px;
+          border: 1px solid $exchange-border-color;
+          border-radius: 5px;
+          padding: 5px;
+
+          @include respond-to('sm') {
+            display: inline-flex;
+          }
+
+          .prices {
+            display: flex;
+            flex-direction: column;
+            font-weight: 500;
+          }
+
+          .currencies {
+            display: flex;
+            flex-direction: column;
+            color: $exchange-border-color;
+          }
+        }
+      }
+
+      .navigation {
+        .list {
+          display: flex;
+          flex-direction: row;
+          border-radius: 10px;
+          gap: 15px;
+
+          .item {
+            display: flex;
+            align-items: center;
+            color: rgb(34, 34, 34);
+            font-weight: 500;
+            font-size: 13px;
+            padding: 3px;
+            gap: 5px;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease-in-out;
+
+            &:hover {
+              background-color: $navigation-item-hover-color;
+              cursor: pointer;
+            }
+
+            @include respond-to('md') {
+              padding: 5px;
+            }
+          }
+        }
+      }
+
+      .profile {
+        display: flex;
+        justify-content: center;
+        gap: 5px;
+        color: black;
+        font-weight: 500;
+        font-size: 13px;
+
+        .balance {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border-radius: 5px;
+          background-color: #e7e6e6;
+          padding: 5px;
+        }
+
+        .account-button {
+          display: flex;
+          align-items: center;
+          gap: 5px;
+          padding: 5px;
+          border-radius: 5px;
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+          color: rgb(49, 40, 40);
+          transition: background-color 0.3s ease-in-out;
+
+          &.active {
+            color: $button-active-color;
+          }
+
+          &:hover {
+            background-color: $navigation-item-hover-color;
+          }
+        }
+      }
+    }
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: -250px;
+    width: 250px;
+    height: 100%;
+    background-color: $header-background;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    transition: left 0.3s ease-in-out;
+    z-index: 9999;
+
+    &.expanded {
+      left: 0;
+    }
+
+    .sidebar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #e7e6e6;
+      border-bottom: 1px solid #ccc;
+      padding: 29px 21px 23px 20px;
+
+      span {
+        font-weight: 500;
+        font-size: 17px;
+      }
+    }
+
+    .sidebar-content {
+      .sidebar-nav {
+        .sidebar-nav-list {
+          display: flex;
+          flex-direction: column;
+          padding: 20px;
+          gap: 10px;
+
+          .sidebar-nav-item {
+            display: flex;
+            justify-content: left;
+            align-items: center;
+            gap: 5px;
+            padding: 10px;
+            border: 1px #ccc solid;
+            border-radius: 5px;
+            cursor: pointer;
+            transition:
+              transform 0.3s ease,
+              background-color 0.3s ease;
+
+            &:hover {
+              background-color: #dba736;
+              transform: scale(105%);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  @media (max-width: 1200px) {
+    .navigation {
+      display: none;
+    }
+
+    .burger-menu {
+      display: block;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .exchange {
+      display: none;
+    }
+
+    .exchange-button {
+      display: flex;
+    }
+  }
+
+  @media (max-width: 320px) {
+    .logo {
+      display: none;
+    }
+  }
+}
