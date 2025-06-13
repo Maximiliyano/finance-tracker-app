@@ -9,9 +9,6 @@ using AssemblyReference = FinanceTracker.Api.AssemblyReference;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.WebHost.ConfigureKestrel(options => options
-    .ListenAnyIP(8080));
-
 builder.Host.UseSerilogDependencies();
 
 builder.Configuration.AddEnvironmentVariables();

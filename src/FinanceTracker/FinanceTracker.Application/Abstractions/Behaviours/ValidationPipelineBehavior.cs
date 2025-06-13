@@ -17,7 +17,7 @@ internal sealed class ValidationPipelineBehavior<TRequest, TResponse>(
     {
         if (!validators.Any())
         {
-            return await next();
+            return await next(cancellationToken);
         }
 
         var errors = validators
@@ -35,7 +35,7 @@ internal sealed class ValidationPipelineBehavior<TRequest, TResponse>(
             return CreateResult<TResponse>(errors);
         }
 
-        return await next();
+        return await next(cancellationToken);
     }
 
     private static TResult CreateResult<TResult>(IList<Error> errors)
