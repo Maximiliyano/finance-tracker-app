@@ -21,8 +21,7 @@ internal static class ApplicationBuilderExtensions
             .AllowAnyMethod()
             .AllowAnyHeader()
             .WithOrigins(
-              webUiSettings.BaseAddress,
-              webUiSettings.LocalAddress));
+                webUiSettings.UIUrl));
 
         return builder;
     }
