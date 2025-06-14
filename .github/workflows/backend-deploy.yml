@@ -26,7 +26,8 @@ jobs:
         run: dotnet build --no-restore --configuration Release
 
       - name: Run tests
-        run: dotnet test --no-build --configuration Release --logger:"console;verbosity=detailed"
+        run: dotnet test --no-build --configuration Release
+        working-directory: ../
 
       - name: Install Fly.io CLI
         run: |
