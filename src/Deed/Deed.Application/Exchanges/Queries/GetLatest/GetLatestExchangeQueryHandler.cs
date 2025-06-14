@@ -24,7 +24,7 @@ public sealed class GetLatestExchangeQueryHandler(
             return Result.Success(actualExchanges.ToResponses());
         }
 
-        // TODO execute different exchanges and concat in oen
+        // TODO execute different exchanges and concat in oen, remove this update shit
         var newExchangesResult = await service.GetCurrencyAsync();
 
         if (!newExchangesResult.IsSuccess)

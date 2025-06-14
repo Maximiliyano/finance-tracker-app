@@ -12,7 +12,7 @@ internal static class ExpenseExtensions
         => new(
             expense.Id,
             expense.CapitalId,
-            expense.Category.ToResponse(),
+            expense.Category?.ToResponse(),
             expense.Amount,
             expense.PaymentDate,
             expense.Purpose);
