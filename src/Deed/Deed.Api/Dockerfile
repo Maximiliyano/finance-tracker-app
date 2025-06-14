@@ -1,6 +1,6 @@
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS base
 WORKDIR /app
-EXPOSE 8000
+EXPOSE 8000 8080
 
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
@@ -18,7 +18,7 @@ RUN dotnet build "Deed.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
 FROM build AS publish
 RUN dotnet publish "Deed.Api.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
-ENV ASPNETCORE_URLS=http://+:8000
+ENV ASPNETCORE_URLS=http://+:8080
 ENV ASPNETCORE_ENVIRONMENT=Production
 
 FROM base AS final
