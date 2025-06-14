@@ -1,6 +1,6 @@
 version: '3.4'
 
 services:
-  financetracker.api:
+  deed.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development

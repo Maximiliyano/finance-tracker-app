@@ -1,7 +1,7 @@
-app = 'financetracker'
+app = 'deed'
 
 [build]
-  dockerfile = "src/FinanceTracker/FinanceTracker.Api/Dockerfile"
+  dockerfile = "src/Deed/Deed.Api/Dockerfile"
   build_target = "final"
   ignorefile = ".dockerignore"
 
