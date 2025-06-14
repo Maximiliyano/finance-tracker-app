@@ -25,6 +25,14 @@ jobs:
       - name: Build
         run: dotnet build --no-restore --configuration Release
 
+      - name: List current directory
+        run: ls -la
+
+      - name: Recursively list full directory tree
+        run: |
+          echo "Full directory structure:"
+          find .
+
       - name: Run tests
         run: dotnet test --no-build --configuration Release
         working-directory: tests/Deed.Tests.Unit/Deed.Tests.Unit.csproj
