@@ -6,7 +6,7 @@ app = 'deed'
   ignorefile = ".dockerignore"
 
 [http_service]
-  internal_port = 8080
+  internal_port = 8000
   force_https = true
   auto_stop_machines = false
   auto_start_machines = true
@@ -16,7 +16,7 @@ app = 'deed'
 [checks]
   [checks.health_check]
     type = "http"
-    port = 8080
+    port = 8000
     interval = "120s"
     timeout = "5s"
     method = "GET"
