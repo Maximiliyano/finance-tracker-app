@@ -27,7 +27,7 @@ jobs:
 
       - name: Run tests
         run: dotnet test --no-build --configuration Release
-        working-directory: ../
+        working-directory: tests
 
       - name: Install Fly.io CLI
         run: |
