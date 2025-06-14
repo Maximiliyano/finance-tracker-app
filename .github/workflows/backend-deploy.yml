@@ -27,7 +27,7 @@ jobs:
 
       - name: Run tests
         run: dotnet test --no-build --configuration Release
-        working-directory: tests
+        working-directory: tests/Deed.Tests.Unit/Deed.Tests.Unit.csproj
 
       - name: Install Fly.io CLI
         run: |
