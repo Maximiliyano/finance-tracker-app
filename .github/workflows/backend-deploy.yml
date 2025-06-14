@@ -5,21 +5,38 @@ on:
     branches:
       - master
   workflow_dispatch:
-env:
-  FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
 
 jobs:
   deploy:
-    name: Deploy to Fly
-    runs-on: ubuntu-22.04
+    name: Deploy to Fly.io
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install CLI
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore
+        working-directory: src/Deed
+
+      - name: Build
+        run: dotnet build --no-restore --configuration Release
+        working-directory: src/Deed
+
+      - name: Run tests
+        run: dotnet test --no-build --verbosity normal
+        working-directory: src/Deed
+
+      - name: Install Fly.io CLI
         run: |
           curl -L https://fly.io/install.sh | sh
           echo "$HOME/.fly/bin" >> $GITHUB_PATH
 
-      - name: Deploy
-        run: flyctl deploy --app financetracker
+      - name: Deploy with Fly.io
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: flyctl deploy --remote-only --app deed
