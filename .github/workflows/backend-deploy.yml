@@ -21,9 +21,11 @@ jobs:
 
       - name: Restore dependencies
         run: dotnet restore
+        working-directory: src/
 
       - name: Build
         run: dotnet build --no-restore --configuration Release
+        working-directory: src/
         
       - name: Run tests
         run: dotnet test --no-build --configuration Release
