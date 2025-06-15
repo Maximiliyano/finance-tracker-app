@@ -36,7 +36,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         takeUntil(this.unsubscribe))
       .subscribe(
         (exchanges) => {
-          this.exchanges = exchanges;
+          this.exchanges = exchanges.slice(0, 3);
         },
       (error) => console.error(error));
   }

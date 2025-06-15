@@ -1,4 +1,5 @@
 using Deed.Application.Exchanges.Service;
+using Deed.Domain.Entities;
 using Deed.Domain.Repositories;
 using Microsoft.Extensions.Logging;
 using Quartz;
@@ -13,15 +14,15 @@ public sealed class SaveLatestExchangeJob(
     ILogger<SaveLatestExchangeJob> logger)
     : IJob
 {
-    public async Task Execute(IJobExecutionContext context) // TODO refactor job
+    public async Task Execute(IJobExecutionContext context)
     {
         logger.LogInformation("Save latest exchange background job has been started.");
 
         logger.LogInformation("Executing exchange from API...");
 
-        var currentExchangesResult = await service.GetCurrencyAsync();
+        var latestExchangesResult = await service.GetCurrencyAsync();
 
-        if (!currentExchangesResult.IsSuccess)
+        if (!latestExchangesResult.IsSuccess)
         {
             logger.LogError("Error occured during executing exchange from API.");
             return;
@@ -30,14 +31,27 @@ public sealed class SaveLatestExchangeJob(
         logger.LogInformation("Executed exchange from API successfully.");
         logger.LogInformation("Adding / Updating current exchange...");
 
-        if (currentExchangesResult.Value.Any())
+        var exchanges = (await repository.GetAllAsync()).ToList();
+        var entitiesToUpdate = new HashSet<Exchange>();
+
+        foreach (var latestExchange in latestExchangesResult.Value)
         {
-            // TODO update
+            var exchange = exchanges.Find(x =>
+                x.NationalCurrencyCode.Equals(latestExchange.NationalCurrencyCode, StringComparison.OrdinalIgnoreCase) &&
+                x.TargetCurrencyCode.Equals(latestExchange.TargetCurrencyCode, StringComparison.OrdinalIgnoreCase));
+
+            if (exchange is null)
+            {
+                continue;
+            }
+
+            exchange.Buy = latestExchange.Buy;
+            exchange.Sale = latestExchange.Sale;
+
+            entitiesToUpdate.Add(exchange);
         }
-        else
-        {
-            repository.AddRange(currentExchangesResult.Value);
-        }
+
+        repository.UpdateRange(entitiesToUpdate);
 
         await unitOfWork.SaveChangesAsync(context.CancellationToken);
 
