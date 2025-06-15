@@ -1,4 +1,5 @@
-app = 'deed'
+app = 'deed=api'
+primary_region = 'waw'
 
 [build]
   dockerfile = "src/Deed/Deed.Api/Dockerfile"
