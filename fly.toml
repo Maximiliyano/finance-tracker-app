@@ -1,4 +1,4 @@
-app = 'deed=api'
+app = 'deed-api'
 primary_region = 'waw'
 
 [build]
