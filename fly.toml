@@ -6,9 +6,6 @@ primary_region = 'waw'
   build_target = "final"
   ignorefile = ".dockerignore"
 
-[env]
-  ASPNETCORE_URLS = "http://0.0.0.0:8080"
-
 [http_service]
   internal_port = 8080
   force_https = true
