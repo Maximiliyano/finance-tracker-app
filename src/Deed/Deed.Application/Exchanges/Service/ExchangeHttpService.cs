@@ -1,5 +1,6 @@
 using System.Globalization;
 using System.Text.Json;
+using Deed.Application.Abstractions.Settings;
 using Deed.Application.Exchanges.Responses;
 using Deed.Domain.Entities;
 using Deed.Domain.Errors;
@@ -13,7 +14,7 @@ namespace Deed.Application.Exchanges.Service;
 public sealed class ExchangeHttpService(
     IDateTimeProvider dateTimeProvider,
     ILogger<ExchangeHttpService> logger,
-    IOptions<PBApiSettings> options,
+    IOptions<WebUrlSettings> options,
     HttpClient client)
     : IExchangeHttpService
 {
@@ -22,8 +23,6 @@ public sealed class ExchangeHttpService(
         PropertyNameCaseInsensitive = true
     };
 
-    private readonly PBApiSettings _settings = options.Value;
-
     private const string LogMessage = "Error getting currencies with reason: {Message}";
 
     public async Task<Result<IEnumerable<Exchange>>> GetCurrencyAsync()
@@ -31,7 +30,7 @@ public sealed class ExchangeHttpService(
         try
         {
             logger.LogInformation("Start getting currencies");
-            using var request = new HttpRequestMessage(HttpMethod.Get, string.Format(CultureInfo.CurrentCulture, _settings.ExchangeRateRoute, $"{dateTimeProvider.UtcNow.Day:D2}.{dateTimeProvider.UtcNow.Month:D2}.{dateTimeProvider.UtcNow.Year}"));
+            using var request = new HttpRequestMessage(HttpMethod.Get, string.Format(CultureInfo.CurrentCulture, options.Value.ExchangeRatesPrivatAPIUrl, $"{dateTimeProvider.UtcNow.Day:D2}.{dateTimeProvider.UtcNow.Month:D2}.{dateTimeProvider.UtcNow.Year}"));
 
             logger.LogInformation("Sending request to Privat24API");
             using var response = await client.SendAsync(request);

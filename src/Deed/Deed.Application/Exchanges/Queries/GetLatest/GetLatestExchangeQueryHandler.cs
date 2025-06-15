@@ -5,58 +5,27 @@ using Deed.Domain.Entities;
 using Deed.Domain.Providers;
 using Deed.Domain.Repositories;
 using Deed.Domain.Results;
+using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Logging;
 
 namespace Deed.Application.Exchanges.Queries.GetLatest;
 
 public sealed class GetLatestExchangeQueryHandler(
-    IDateTimeProvider dateTimeProvider,
-    IExchangeHttpService service,
     IExchangeRepository repository,
-    IUnitOfWork unitOfWork)
+    IMemoryCache memoryCache)
     : IQueryHandler<GetLatestExchangeQuery, IEnumerable<ExchangeResponse>>
 {
     public async Task<Result<IEnumerable<ExchangeResponse>>> Handle(GetLatestExchangeQuery query, CancellationToken cancellationToken)
     {
-        var actualExchanges = (await repository.GetAllAsync()).ToList();
-
-        if (actualExchanges.TrueForAll(x => x.CreatedAt.Date == dateTimeProvider.UtcNow.Date))
+        if (!memoryCache.TryGetValue(nameof(Exchanges), out IEnumerable<ExchangeResponse> cachedExchanges))
         {
-            return Result.Success(actualExchanges.ToResponses());
+            var actualExchanges = (await repository.GetAllAsync()).ToResponses();
+
+            memoryCache.Set<IEnumerable<ExchangeResponse>>(nameof(Exchanges), actualExchanges, TimeSpan.FromHours(3));
+
+            return Result.Success(actualExchanges);
         }
 
-        // TODO execute different exchanges and concat in oen, remove this update shit
-        var newExchangesResult = await service.GetCurrencyAsync();
-
-        if (!newExchangesResult.IsSuccess)
-        {
-            return Result.Failure<IEnumerable<ExchangeResponse>>(newExchangesResult.Errors);
-        }
-
-        var newExchanges = newExchangesResult.Value.ToList();
-        var entitiesForUpdate = new List<Exchange>();
-
-        // TODO assign newExchanges to existing ids
-        foreach (var newExchange in newExchanges)
-        {
-            var actualExchange = actualExchanges.Find(x =>
-                string.Equals(x.NationalCurrencyCode, newExchange.NationalCurrencyCode, StringComparison.OrdinalIgnoreCase) &&
-                string.Equals(x.TargetCurrencyCode, newExchange.TargetCurrencyCode, StringComparison.OrdinalIgnoreCase));
-
-            if (actualExchange is null)
-            {
-                continue;
-            }
-
-            actualExchange.Buy = newExchange.Buy; // TODO finish
-            actualExchange.Sale = newExchange.Sale;
-
-            entitiesForUpdate.Add(actualExchange);
-        }
-
-        repository.UpdateRange(entitiesForUpdate);
-
-        await unitOfWork.SaveChangesAsync(cancellationToken);
-
-        return Result.Success(actualExchanges.Where(x => x.NationalCurrencyCode == "UAH").ToResponses());
+        return Result.Success(cachedExchanges!);
     }
 }

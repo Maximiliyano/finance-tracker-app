@@ -19,7 +19,7 @@ internal sealed class CategoryConfiguration : IEntityTypeConfiguration<Category>
 
     private static IEnumerable<Category> DefaultCategories() // TODO convert into json data
     {
-        DateTimeOffset utcNow = DateTimeOffset.UtcNow;
+        var utcNow = DateTimeOffset.UtcNow;
 
         return [
             new Category(1)

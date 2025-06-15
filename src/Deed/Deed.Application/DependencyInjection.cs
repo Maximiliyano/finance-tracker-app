@@ -41,8 +41,6 @@ public static class DependencyInjection
     {
         var configuration = services.BuildServiceProvider().GetRequiredService<IConfiguration>();
 
-        services.Configure<PBApiSettings>(configuration.GetRequiredSection(nameof(PBApiSettings)));
-
         services.Configure<WebUrlSettings>(configuration.GetRequiredSection(nameof(WebUrlSettings)));
 
         services.Configure<BackgroundJobsSettings>(configuration.GetRequiredSection(nameof(BackgroundJobsSettings)));

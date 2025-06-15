@@ -18,7 +18,7 @@ internal sealed class ExchangeConfiguration : IEntityTypeConfiguration<Exchange>
 
     private static IEnumerable<Exchange> DefaultExchanges()
     {
-        var createdAt = new DateTimeOffset(2025, 03, 21, 19, 48, 39, TimeSpan.Zero);
+        var createdAt = DateTime.UtcNow;
 
         return
         [
