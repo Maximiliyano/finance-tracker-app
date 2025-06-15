@@ -27,15 +27,6 @@ public sealed class DeedDbContext(DbContextOptions<DeedDbContext> options)
         where TEntity : Entity
             => base.Set<TEntity>();
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        base.OnConfiguring(optionsBuilder);
-
-        optionsBuilder
-            .ConfigureWarnings(w => w
-                .Ignore(RelationalEventId.PendingModelChangesWarning));
-    }
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);

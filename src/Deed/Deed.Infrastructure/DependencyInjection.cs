@@ -59,6 +59,7 @@ public static class DependencyInjection
         services.AddDbContext<DeedDbContext>((sp, options) =>
         {
             var databaseSettings = sp.GetRequiredService<IConfiguration>().GetValue<string>("DatabaseConnection");
+            Console.WriteLine("data {0}", databaseSettings);
             var auditableInterceptor = sp.GetRequiredService<UpdateAuditableEntitiesInterceptor>();
 
             options.UseSqlServer(databaseSettings)
